@@ -121,6 +121,8 @@ int main(int argc, char **argv) {
    if (!strncmp(argv[1],"toad4",5)) machine_type=SANDYBRIDGE;
    if (!strncmp(argv[1],"pianoman",8)) machine_type=BOBCAT;
    if (!strncmp(argv[1],"macbook",8)) machine_type=NEHALEM;
+   /* Actually, westmere, but same */
+   if (!strncmp(argv[1],"mirasol",8)) machine_type=NEHALEM;
 
 
    /* Read in all the results */
