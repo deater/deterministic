@@ -1,0 +1,47 @@
+
+This code is an attempt at a generic assembly language
+generation utility.  Currently it is x86 only but it
+should be straightforward to extend to other architectures.
+
+The "make_hello" program will generate to standard out
+a hello world assembly program.  This is just to enable
+simple testing of the infrastructure.
+
+The "make_allocate" program will generate an assembly language
+program that allocates memory in one of various ways,
+initialized the memory, then strides across the memory
+adding to get a result.
+
+
+Quick start:
+
+   Just run "make" and a sample executable will be generated for each
+   type of allocation scheme.
+
+To use:
+   ./make_allocate name type size init_value stride > out.s
+
+   "name" is the base name used in the generated code (mostly unused)
+   "type" is one of "data", "bss", "heap", "stack" or "mmap"
+   "size" is the size of the integer array you want allocated
+   "init_value" is the value each element of the array will be initialized to
+   "stride" is the stride used when stepping through the array, adding up.
+
+For example:
+    ./make_allocate allocate_dataseg data 8192 2 4 > allocate_dataseg.s
+
+    Will create allocate_dataseg.s
+    Compile with:
+    	    as -o allocate_dataseg.o allocate_dataseg.s
+    	    ld -o allocate_dataseg   allocate_dataseg.o
+    Then run.  It should give the proper result of "4096" which is the
+       sum of adding 2 2048 times (2048 is 8192 / stride of 4).
+
+Some limitations:
+
++ Must be compiled on a 32-bit x86 system (for now)
++ Probably won't work with memory allocations bigger than 2GB
+
+
+Vince Weaver
+vince@csl.cornell.edu

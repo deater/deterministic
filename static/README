@@ -1,0 +1,62 @@
+These tests operate on a large hand-coded assembly benchmark.
+
+This benchmark attempts to comprehensively check all of the available
+instructions on an architecture, and then count them with performance
+counters to validate that the various retired instruction counters
+are working.
+
+Currently only x86_64 is implememnted.
+
+
+Directories Included
+~~~~~~~~~~~~~~~~~~~~
+  binaries/   -- precompiled versions of the benchmark.  Provided
+                 so that you can reproduce results using the same
+                 binaries that I used
+  results/    -- results I gathered, plus some analysis programs
+                 that interpret the results
+  sample_code/ - other code I used when tracking down corner-cases
+                 in the results
+  mov_graph/  -- code to generate the graphs of the weird pentium D
+                 string instruction behavior
+  objects/    -- holds the .o files
+  src/        -- holds the source code
+
+
+
+To Build
+~~~~~~~~
+  run "make"
+  To force a rebuild, run "touch ./src/retired_instr.i386.s"
+
+
+To Analyze Results
+~~~~~~~~~~~~~~~~~~
+  First gather data.  Run the appropriate script.  For example
+  on a Core2 system run
+     ./make_results_core2.sh 5
+  This can take a while, as it runs each sub-benchmark 10 times.
+
+  Enter the results directory
+  Run "make"
+  Run "./make_summary deater all"
+    (Unfortunately the results directory are named after
+     the machines I used, rather than CPU type.  I should fix that).
+  The "Adjusted diff" lines are the more interesting ones.  Some
+    of the results (like uops) are known to not be determinsitic.
+
+References
+~~~~~~~~~~
+  This work is described in my FHPM2010 paper.
+      V. Weaver and J. Dongarra.  Can Hardware Performance Counters 
+         Produce Expected, Deterministic Results?  FHPM2010, 
+         December 2010, Atlanta GA.
+
+   Additional info can be found here:
+      http://web.eecs.utk.edu/~vweaver1/projects/deterministic/
+
+
+Author
+~~~~~~
+  Vince Weaver  vweaver1 _at_ eecs.utk.edu
+  19 January 2011
