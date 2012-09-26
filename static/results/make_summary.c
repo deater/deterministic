@@ -66,7 +66,8 @@ struct stat_type{
 #define NEHALEM     5
 #define SANDYBRIDGE 6
 #define BOBCAT      7
-
+#define WESTMERE    8
+#define IVYBRIDGE   9
 
 long long remove_commas(char *temp_string) {
 
@@ -120,10 +121,11 @@ int main(int argc, char **argv) {
    if (!strncmp(argv[1],"saturn",6)) machine_type=NEHALEM;
    if (!strncmp(argv[1],"toad4",5)) machine_type=SANDYBRIDGE;
    if (!strncmp(argv[1],"pianoman",8)) machine_type=BOBCAT;
-   if (!strncmp(argv[1],"macbook",8)) machine_type=NEHALEM;
-   /* Actually, westmere, but same */
-   if (!strncmp(argv[1],"mirasol",8)) machine_type=NEHALEM;
+   if (!strncmp(argv[1],"macbook",7)) machine_type=NEHALEM;
+   if (!strncmp(argv[1],"mirasol",7)) machine_type=WESTMERE;
+   if (!strncmp(argv[1],"vincent-weaver-1",17)) machine_type=IVYBRIDGE;
 
+   printf("Machine type %d\n",machine_type);
 
    /* Read in all the results */
 
@@ -236,6 +238,12 @@ int main(int argc, char **argv) {
 	   /* don't adjust */
              stats[j].adj_average=stats[j].raw_average;
 	 }
+	 else if ((machine_type==IVYBRIDGE || machine_type==SANDYBRIDGE) &&
+		  (j==COND_BRANCHES)) {
+	    	   /* don't adjust */
+             stats[j].adj_average=stats[j].raw_average;
+	 }
+	 
          else if (
                   (machine_type==CORE2) && 
                   (
@@ -278,9 +286,13 @@ int main(int argc, char **argv) {
 
          printf("Adjustments:\n");
 
+	 /* No adjustments for PentiumD RETIRED_INSTRUCTIONS */
          if ((machine_type==PENTIUMD) && (j==RETIRED_INSTRUCTIONS)) {
 	   /* don't adjust */
+	    	       printf("\tNo hwint adjustment\n");
+	    	       hwint_adjust=0;
 	 }
+	 /* No adjustments for CORE2 RETIRED_STORES or COND_BRANCHES */
          else if (
                   (machine_type==CORE2) && 
                   (
@@ -289,7 +301,17 @@ int main(int argc, char **argv) {
                    (j==COND_BRANCHES)
                    ) 
                  ) {
+	    	       printf("\tNo hwint adjustment\n");
+	    	       hwint_adjust=0;
 	 }
+	    /* No adjustments for IVY/SANDY Bridge and COND_BRANCHES */
+	 else if ((machine_type==IVYBRIDGE || machine_type==WESTMERE || machine_type==SANDYBRIDGE) &&
+		  (j==COND_BRANCHES)) {
+	       printf("\tNo hwint adjustment\n");
+	       hwint_adjust=0;
+
+	 }
+	  
 	 else {
             for(i=0;i<RUNS;i++) {
 	       hwint_adjust+=stats[j].hw_interrupts[i];
@@ -563,6 +585,12 @@ int main(int argc, char **argv) {
               )
              ) {
 	 }
+	 if ( (machine_type==SANDYBRIDGE || machine_type==WESTMERE || machine_type==IVYBRIDGE) &&
+	     (j==COND_BRANCHES)) 
+	      {
+		 
+	      }
+	    
 	 else {
 
             if ((machine_type==PENTIUMD) && (j==RETIRED_LOADS)) {
@@ -590,7 +618,7 @@ int main(int argc, char **argv) {
 
          printf("\tAdjusted Average: %lld +/- %lld (",stats[j].adj_average,range);
          for(i=0;i<3;i++) printf("%lld, ",stats[j].value1[i]-stats[j].hw_interrupts[i]);
-         printf(")\n");      
+         printf(")\n");
          printf("\t==============================\n");
          printf("\tAdjusted diff: %lld +/- %lld\n",stats[j].adj_average-stats[j].expected[bench_type],range);
       
