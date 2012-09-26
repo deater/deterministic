@@ -184,7 +184,7 @@ done
 
 # Muls
 
-for i in seq 0 9 ; do 
+for i in `seq 0 9` ; do 
 
 cat /proc/interrupts > results/$HOST/$1/run.$i.muls_retired.int.before && \
 $PERF_COMMAND -e $INTERRUPT_EVENT,$MUL_EVENT,cs:u ./binaries/retired_instr.int.x86_64 &> results/$HOST/$1/run.$i.muls_retired.int.counts && \
