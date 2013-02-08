@@ -277,6 +277,7 @@ static int generate_results(char *directory, char *name,
    if (fff==NULL) return -1;
    fprintf(fff,"### System info\n");
    fprintf(fff,"Kernel:    %s %s\n",uname_buf.sysname,uname_buf.release);
+   fprintf(fff,"Interface: perf_event\n");
    fprintf(fff,"Hostname:  %s\n",uname_buf.nodename);
    fprintf(fff,"Family:    %d\n",cpuinfo.family);
    fprintf(fff,"Model:     %d\n",cpuinfo.model);
