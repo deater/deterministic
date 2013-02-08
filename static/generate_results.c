@@ -78,6 +78,33 @@ struct event_table_t atom_event_table = {
    .sse_event =			"r501fc7:u",
 };
 
+struct event_table_t wsm_event_table = {
+   .hw_int_name = 		"HW_INTERRUPTS (Dropped from Documentation",
+   .hw_int_event =		"r50011d:u",
+   .ret_instr_name =		"INSTRUCTION_RETIRED",
+   .ret_instr_event =		"instructions:u",
+   .branches_name =		"BRANCH_INSTRUCTIONS_RETIRED",
+   .branches_event =		"branches:u",
+   .cond_branches_name =	"BR_INST_RETIRED:CONDITIONAL",
+   .cond_branches_event =	"r5301c4:u",
+   .loads_name =		"MEM_INST_RETIRED:LOADS",
+   .loads_event =		"r53010b:u",
+   .stores_name =		"MEM_INST_RETIRED:STORES",
+   .stores_event =		"r53020b:u",
+   .uops_name =			"UOPS_RETIRED:ANY",
+   .uops_event =		"r5301c2:u",
+   .muls_name =			"ARITH:MUL",
+   .muls_event =		"r530214:u",
+   .divs_name =			"ARITH:DIV",
+   .divs_event =		"r1d70114:u",
+   .fp1_name =			"FP_COMP_OPS_EXE:X87",
+   .fp1_event =			"r530110:u",
+   .fp2_name =			"INST_RETIRED:X87",
+   .fp2_event =			"r5302c0:u",
+   .sse_name =			"FP_COMP_OPS_EXE:SSE_FP",
+   .sse_event =			"r530410:u",
+};
+
 struct event_table_t ivb_event_table = {
    .hw_int_name = 		"HW_INTERRUPTS",
    .hw_int_event =		"r5301cb:u",
@@ -153,9 +180,20 @@ static int set_generic_modelname(int vendor, int family, int model) {
             case 28: strcpy(cpuinfo.generic_modelname,"atom");
                      event_table=&atom_event_table;
                      break;
+
+            case 37: 
+            case 44: strcpy(cpuinfo.generic_modelname,"westmere");
+                     event_table=&wsm_event_table;
+                     break;
+
+            case 47: strcpy(cpuinfo.generic_modelname,"westmere-ex");
+                     event_table=&wsm_event_table;
+                     break;
+
             case 58: strcpy(cpuinfo.generic_modelname,"ivybridge");
                      event_table=&ivb_event_table;
                      break;
+
             default: strcpy(cpuinfo.generic_modelname,"UNKNOWN"); break;
          }
          return 0;
@@ -184,9 +222,10 @@ static int get_cpuinfo(void) {
 
       if (!strncmp(temp_string,"vendor_id",9)) {
          sscanf(temp_string,"%*s%*s%s",temp_string2);
+
          if (!strncmp(temp_string2,"GenuineIntel",12)) {
             cpuinfo.vendor=VENDOR_INTEL;
-         }
+         } else
          if (!strncmp(temp_string2,"AuthenticAMD",12)) {
             cpuinfo.vendor=VENDOR_AMD;
          }
@@ -553,7 +592,6 @@ int main (int argc, char **argv) {
                     event_table->uops_name,
                     event_table->hw_int_name,
                     "all", RUNS);
-
 
    /* Retired Multiplies */
    /* flipped hw/mul due to scheduling bug on older perf_event and core2 */
