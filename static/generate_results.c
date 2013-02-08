@@ -52,63 +52,97 @@ struct event_table_t {
 
 
 struct event_table_t atom_event_table = {
-   .hw_int_name = "HW_INT_RCV", /* Warning, overcounts x2 */
-   .hw_int_event = "r5100c8:u",
-   .ret_instr_name = "INSTRUCTION_RETIRED",
-   .ret_instr_event = "instructions:u",
-   .branches_name = "BRANCH_INSTRUCTIONS_RETIRED",
-   .branches_event = "branches:u",
-   .cond_branches_name = "NONE",
-   .cond_branches_event = "NONE",
-   .loads_name = "MEM_LOAD_RETIRED:L2_MISS:L2_HIT",
-   .loads_event = "r5303cb:u",
-   .stores_name = "NONE",
-   .stores_event = "NONE",
-   .uops_name="UOPS_RETIRED",
-   .uops_event="r5010c2:u",
-   .muls_name="MUL:AR",
-   .muls_event="r538112:u",
-   .divs_name="DIV:AR",
-   .divs_event="r538113:u",
-   .fp1_name="X87_COMP_OPS_EXE:ANY_AR",
-   .fp1_event="r508110:u",
-   .fp2_name="X87_COMP_OPS_EXE:ANY_S",
-   .fp2_event="r530110:u",
-   .sse_name="SIMD_INST_RETIRED",
-   .sse_event="r501fc7:u",
+   .hw_int_name =		"HW_INT_RCV", /* Warning, overcounts x2 */
+   .hw_int_event =		"r5100c8:u",
+   .ret_instr_name =		"INSTRUCTION_RETIRED",
+   .ret_instr_event =		"instructions:u",
+   .branches_name =		"BRANCH_INSTRUCTIONS_RETIRED",
+   .branches_event =		"branches:u",
+   .cond_branches_name =	"NONE",
+   .cond_branches_event =	"NONE",
+   .loads_name =		"MEM_LOAD_RETIRED:L2_MISS:L2_HIT",
+   .loads_event =		"r5303cb:u",
+   .stores_name =		"NONE",
+   .stores_event =		"NONE",
+   .uops_name =			"UOPS_RETIRED",
+   .uops_event =		"r5010c2:u",
+   .muls_name =			"MUL:AR",
+   .muls_event = 		"r538112:u",
+   .divs_name = 		"DIV:AR",
+   .divs_event =		"r538113:u",
+   .fp1_name =			"X87_COMP_OPS_EXE:ANY_AR",
+   .fp1_event =			"r508110:u",
+   .fp2_name =			"X87_COMP_OPS_EXE:ANY_S",
+   .fp2_event =			"r530110:u",
+   .sse_name =			"SIMD_INST_RETIRED",
+   .sse_event =			"r501fc7:u",
 };
 
 struct event_table_t ivb_event_table = {
-   .hw_int_name="HW_INTERRUPTS",
-   .hw_int_event="r5301cb:u",
-   .ret_instr_name="INSTRUCTION_RETIRED",
-   .ret_instr_event="instructions:u",
-   .branches_name="BR_INST_RETIRED",
-   .branches_event="branches:u",
-   .cond_branches_name="BR_INST_RETIRED:COND",
-   .cond_branches_event="r5301c4:u",
-   .loads_name="MEM_UOPS_RETIRED:ALL_LOADS",
-   .loads_event="r5381d0:u",
-   .stores_name="MEM_UOPS_RETIRED:ALL_STORES",
-   .stores_event="r5382d0:u",
-   .uops_name="UOPS_RETIRED:ALL",
-   .uops_event="r5301c2:u",
-   .muls_name="UOPS_ISSUED:SINGLE_MUL",
-   .muls_event="r53400e:u",
-   .divs_name="ARITH:FPU_DIV",
-   .divs_event="r1570114:u",
-   .fp1_name="FP_COMP_OPS_EXE:X87 (SNB)",
-   .fp1_event="r530110:u",
-   .fp2_name="INST_RETIRED:X87 (SNB)",
-   .fp2_event="r5302c0:u",
-   .sse_name="FP_COMP_OPS_EXE:SSE_DOUBLE_PRECISION (SNB)",
-   .sse_event="r538010:u",
+   .hw_int_name = 		"HW_INTERRUPTS",
+   .hw_int_event =		"r5301cb:u",
+   .ret_instr_name =		"INSTRUCTION_RETIRED",
+   .ret_instr_event =		"instructions:u",
+   .branches_name =		"BR_INST_RETIRED",
+   .branches_event =		"branches:u",
+   .cond_branches_name =	"BR_INST_RETIRED:COND",
+   .cond_branches_event =	"r5301c4:u",
+   .loads_name =		"MEM_UOPS_RETIRED:ALL_LOADS",
+   .loads_event =		"r5381d0:u",
+   .stores_name =		"MEM_UOPS_RETIRED:ALL_STORES",
+   .stores_event =		"r5382d0:u",
+   .uops_name =			"UOPS_RETIRED:ALL",
+   .uops_event =		"r5301c2:u",
+   .muls_name =			"UOPS_ISSUED:SINGLE_MUL",
+   .muls_event =		"r53400e:u",
+   .divs_name =			"ARITH:FPU_DIV",
+   .divs_event =		"r1570114:u",
+   .fp1_name =			"FP_COMP_OPS_EXE:X87 (SNB)",
+   .fp1_event =			"r530110:u",
+   .fp2_name =			"INST_RETIRED:X87 (SNB)",
+   .fp2_event =			"r5302c0:u",
+   .sse_name =			"FP_COMP_OPS_EXE:SSE_DOUBLE_PRECISION (SNB)",
+   .sse_event =			"r538010:u",
+};
+
+struct event_table_t bobcat_event_table = {
+   .hw_int_name = 		"INTERRUPTS_TAKEN",
+   .hw_int_event =		"r5000cf:u",
+   .ret_instr_name =		"RETIRED_INSTRUCTIONS",
+   .ret_instr_event =		"instructions:u",
+   .branches_name =		"RETIRED_BRANCH_INSTRUCTIONS",
+   .branches_event =		"branches:u",
+   .cond_branches_name =	"NONE",
+   .cond_branches_event =	"NONE",
+   .loads_name =		"NONE",
+   .loads_event =		"NONE",
+   .stores_name =		"NONE",
+   .stores_event =		"NONE",
+   .uops_name =			"RETIRED_UOPS",
+   .uops_event =		"r5000c1:u",
+   /* RETIRED_X87_FPU_OPS:MULT_OPS?*/
+   .muls_name =			"RETIRED_SSE_OPERATIONS:SINGLE_MUL_OPS:DOUBLE_MUL_OPS",
+   .muls_event =		"r531203:u",
+   .divs_name =			"RETIRED_SSE_OPERATIONS:SINGLE_DIV_OPS:DOUBLE_DIV_OPS",
+   .divs_event =		"r532403:u",
+   .fp1_name =			"RETIRED_FLOATING_POINT_INSTRUCTIONS",
+   .fp1_event =			"r5303cb:u",
+   .fp2_name =			"DISPATCHED_FPU:ANY",
+   .fp2_event =			"r530300:u",
+   .sse_name =			"RETIRED_SSE_OPERATIONS:ALL",
+   .sse_event =			"r507f03:u",
 };
 
 
 static int set_generic_modelname(int vendor, int family, int model) {
 
    if (vendor==VENDOR_AMD) {
+      /* 14h */
+      if (family==20) {
+         strcpy(cpuinfo.generic_modelname,"bobcat");
+         event_table=&bobcat_event_table;
+         return 0;
+      }
       strcpy(cpuinfo.generic_modelname,"UNKNOWN");
       return 0;
    }
@@ -152,6 +186,9 @@ static int get_cpuinfo(void) {
          sscanf(temp_string,"%*s%*s%s",temp_string2);
          if (!strncmp(temp_string2,"GenuineIntel",12)) {
             cpuinfo.vendor=VENDOR_INTEL;
+         }
+         if (!strncmp(temp_string2,"AuthenticAMD",12)) {
+            cpuinfo.vendor=VENDOR_AMD;
          }
          else {
             cpuinfo.vendor=VENDOR_UNKNOWN;
