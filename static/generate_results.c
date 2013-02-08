@@ -8,6 +8,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include <sys/utsname.h>
+
 struct cpuinfo_t {
    int vendor;
    int family;
@@ -259,6 +261,7 @@ static int generate_results(char *directory, char *name,
    int i;
    char filename[BUFSIZ],temp_string[BUFSIZ];
    FILE *fff;
+   struct utsname uname_buf;
 
    sprintf(filename,"%s/%s.%s",directory,name,type);
    printf("Generating file %s (%s/%s) ",filename,name1,name2);
@@ -268,14 +271,19 @@ static int generate_results(char *directory, char *name,
       return 0;
    }
 
+   uname(&uname_buf);
+
    fff=fopen(filename,"w");
    if (fff==NULL) return -1;
    fprintf(fff,"### System info\n");
+   fprintf(fff,"Kernel:    %s %s\n",uname_buf.sysname,uname_buf.release);
+   fprintf(fff,"Hostname:  %s\n",uname_buf.nodename);
    fprintf(fff,"Family:    %d\n",cpuinfo.family);
    fprintf(fff,"Model:     %d\n",cpuinfo.model);
    fprintf(fff,"Stepping:  %d\n",cpuinfo.stepping);
    fprintf(fff,"Modelname: %s\n",cpuinfo.modelname);
    fprintf(fff,"Generic:   %s\n",cpuinfo.generic_modelname);
+   fprintf(fff,"Counters used: %s/%s\n",name1,name2);
    fclose(fff);
 
    for(i=0;i<count;i++) {
