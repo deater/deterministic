@@ -245,5 +245,6 @@ $(OBJDIR)/retired_instr.valgrind.$(ARCH).o:	$(SRCDIR)/retired_instr.x86_64.s
 clean:		
 	rm -f *~ *.o generate_results
 	rm -f $(SRCDIR)/~ $(OBJDIR)/*.o
+	rm -rf binaries/retired*x86_64
 	cd results && make clean
 
