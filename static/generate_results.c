@@ -46,7 +46,7 @@ struct event_table_t {
    char fp2_name[BUFSIZ];
    char sse_event[BUFSIZ];
    char sse_name[BUFSIZ];
-} *event_table;
+} *event_table = NULL;
 
 
 struct event_table_t atom_event_table = {
@@ -288,6 +288,11 @@ static int generate_results(char *directory, char *name,
 int main (int argc, char **argv) {
 
    create_output_dir();
+
+   if (event_table==NULL) {
+      fprintf(stderr,"Error!  Unknown machine type!\n");
+      return -1;
+   }
 
    /* Retired Instructions */
 
