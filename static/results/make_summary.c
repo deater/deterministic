@@ -171,6 +171,107 @@ void adjust_for_hw_interrupts(int j) {
    printf("\tAdjusting %lld for hwints\n",hwint_adjust);
 }
 
+/****************************/
+/* Read Stats               */
+/****************************/
+
+static int read_stats(char *machine_type,
+                      int which,
+                      char *filename,
+                      char *benchmark_type) {
+
+   char path[BUFSIZ];
+   char string[BUFSIZ],temp_string[BUFSIZ];
+   FILE *fff;
+   int i,j,k,lines;
+   char *ignore;
+
+   sprintf(path,"./%s/%d/%s.%s",
+                machine_type,which,filename,benchmark_type);
+   fff=fopen(path,"r");
+   if (fff==NULL) {
+      fprintf(stderr,"Error opening %s\n",path);
+      return -1;
+   }
+
+   /*************************/
+   /* try perf_events first */
+   lines=0;
+   stats[j].value1[i]=0;
+   stats[j].hw_interrupts[i]=-1;
+
+   while(1) {
+      if (fgets(string,BUFSIZ,fff)==NULL) break;
+
+      if (!strncmp(string," Performance counter",20)) {
+         if (fgets(string,BUFSIZ,fff)==NULL) break;
+	 if (fgets(string,BUFSIZ,fff)==NULL) break;
+
+	 /* Read in the first value */
+	 sscanf(string,"%s",temp_string);
+
+	 /* If comma delimited, then we have to remove the commas */
+	 if (strstr(temp_string,",")) {
+	    stats[j].value1[i]=remove_commas(temp_string);
+	 }
+	 else {
+	    stats[j].value1[i]=atoll(temp_string);
+	 }
+
+	 if (fgets(string,BUFSIZ,fff)==NULL) break;
+
+	 /* Read in second value */
+	 sscanf(string,"%s",temp_string);
+	 if (strstr(temp_string,",")) {
+	    stats[j].hw_interrupts[i]=remove_commas(temp_string);
+	 }
+	 else {
+	    stats[j].hw_interrupts[i]=atoll(temp_string);
+	 }
+	 break;
+      }
+      lines++;
+   }
+
+   /******************************/
+   /* try perfmon2 if that fails */
+   if (stats[j].value1[i]==0) {
+      rewind(fff);
+      for(k=0;k<lines-2;k++) {
+         ignore=fgets(string,BUFSIZ,fff);
+      }
+      ignore=fgets(string,BUFSIZ,fff);
+      if (sscanf(string,"%lld",&stats[j].value1[i])==0) {
+	 /* handle if only one stat in file */
+	 ignore=fgets(string,BUFSIZ,fff);
+	 sscanf(string,"%lld",&stats[j].value1[i]);
+         stats[j].hw_interrupts[i]=-1;
+      }
+      else {
+         ignore=fgets(string,BUFSIZ,fff);
+         if (sscanf(string,"%lld",&stats[j].hw_interrupts[i])!=1) {
+	    stats[j].hw_interrupts[i]=-1;
+         }
+      }
+   }
+#if 0
+   /**************************************************/
+   /* check to see if getting interrupt count failed */
+   if (stats[j].hw_interrupts[i]<1) {
+      sprintf(path,"./%s/5/run.%i.%s.%s",
+              argv[1],i,stats[j].filename,argv[2]);
+      stats[j].hw_interrupts[i]=calc_interrupts_file(path);
+      if (!warn_intr_already) {
+	 printf("Warning!: Using /proc/interrupts for int count %lld!\n",
+                stats[j].hw_interrupts[i]);
+         warn_intr_already=1;
+      }
+	 //exit(-5);
+   }
+#endif
+}
+
+
 /*********************************/
 /* Main Routine                  */
 /*********************************/
@@ -183,11 +284,16 @@ int main(int argc, char **argv) {
 
    char *ignore;
    int machine_type=UNKNOWN;
+   int which=0;
    (void) ignore;
 
    if (argc<3) {
-      printf("Usage: %s machine bench\n\n",argv[0]);
+      printf("Usage: %s machine bench which\n\n",argv[0]);
       exit(-1);
+   }
+
+   if (argc>3) {
+      which=atoi(argv[3]);
    }
 
    /* Detect which benchmark we are using */
@@ -211,7 +317,8 @@ int main(int argc, char **argv) {
    else if (!strncmp(argv[1],"ivybridge",17)) machine_type=IVYBRIDGE;
    else machine_type=UNKNOWN;
 
-   printf("Machine type %s\n",machine_names[machine_type]);
+   printf("Generating results for %s machine #%d\n",
+          machine_names[machine_type],which);
 
    /***************************/
    /* Read in all the results */
@@ -219,85 +326,10 @@ int main(int argc, char **argv) {
 
    for(j=0;j<NUM_STATS;j++) {
 
-      for(i=0;i<RUNS;i++) {
+      read_stats(argv[1],which,stats[j].filename,argv[2]);
+   }
 
-         sprintf(path,"./%s/5/run.%i.%s.%s.counts",argv[1],i,stats[j].filename,argv[2]);
-         fff=fopen(path,"r");
-         if (fff==NULL) {
-	    printf("Error opening %s\n",path);
-	    continue;
-         }
-
-	 /* try perf_events first */
-	 lines=0;
-	 stats[j].value1[i]=0;
-         stats[j].hw_interrupts[i]=-1;
-
-         while(1) {
- 	   if (fgets(string,BUFSIZ,fff)==NULL) break;
-
-	   if (!strncmp(string," Performance counter",20)) {
-	      if (fgets(string,BUFSIZ,fff)==NULL) break;
-	      if (fgets(string,BUFSIZ,fff)==NULL) break;
-
-	      /* Read in the first value */
-	      sscanf(string,"%s",temp_string);
-
-	      /* If comma delimited, then we have to remove the commas */
-	      if (strstr(temp_string,",")) {
-	         stats[j].value1[i]=remove_commas(temp_string);
-	      }
-	      else {
-	         stats[j].value1[i]=atoll(temp_string);
-	      }
-
-	      if (fgets(string,BUFSIZ,fff)==NULL) break;
-
-	      /* Read in second value */
-	      sscanf(string,"%s",temp_string);
-	      if (strstr(temp_string,",")) {
-	         stats[j].hw_interrupts[i]=remove_commas(temp_string);
-	      }
-	      else {
-	         stats[j].hw_interrupts[i]=atoll(temp_string);
-	      }
-	      break;
-	   }
-	   lines++;
-	 }
-
-	 /* try perfmon2 if that fails */
-	 if (stats[j].value1[i]==0) {
-	    rewind(fff);
-	    for(k=0;k<lines-2;k++) {
-               ignore=fgets(string,BUFSIZ,fff);
-	    }
-	    ignore=fgets(string,BUFSIZ,fff);
-	    if (sscanf(string,"%lld",&stats[j].value1[i])==0) {
-	       /* handle if only one stat in file */
-	       ignore=fgets(string,BUFSIZ,fff);
-	       sscanf(string,"%lld",&stats[j].value1[i]);
-               stats[j].hw_interrupts[i]=-1;
-	    }
-            else {
-               ignore=fgets(string,BUFSIZ,fff);
-               if (sscanf(string,"%lld",&stats[j].hw_interrupts[i])!=1) 
-	          stats[j].hw_interrupts[i]=-1;
-	    }
-	 }
-
-	 /* check to see if getting interrupt count failed */
-	 if (stats[j].hw_interrupts[i]<1) {
-            sprintf(path,"./%s/5/run.%i.%s.%s",argv[1],i,stats[j].filename,argv[2]);
-            stats[j].hw_interrupts[i]=calc_interrupts_file(path);
-            if (!warn_intr_already) {
-	       printf("Warning!: Using /proc/interrupts for int count %lld!\n",stats[j].hw_interrupts[i]);
-               warn_intr_already=1;
-	    }
-	    //exit(-5);
-	 }
-      }
-
+#if 0
 
    /* Adjust and print values */
 
@@ -850,6 +882,7 @@ int main(int argc, char **argv) {
          printf("\tRaw diff: %lld +/- %lld\n",stats[j].raw_average-stats[j].expected[bench_type],range);
       }
    }
+#endif
 
    return 0;
 }
