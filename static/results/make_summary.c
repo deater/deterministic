@@ -171,6 +171,9 @@ void adjust_for_hw_interrupts(int j) {
    printf("\tAdjusting %lld for hwints\n",hwint_adjust);
 }
 
+/*********************************/
+/* Main Routine                  */
+/*********************************/
 
 int main(int argc, char **argv) {
 
@@ -194,20 +197,19 @@ int main(int argc, char **argv) {
    if (!strncmp(argv[2],"all",3)) bench_type=BENCH_ALL;
 
    /* detect machine */
-   if (!strncmp(argv[1],"domori",6)) machine_type=PENTIUMD;
-   if (!strncmp(argv[1],"domori2",7)) machine_type=PENTIUM4;
-   if (!strncmp(argv[1],"venchi",6)) machine_type=PHENOM;
-   if (!strncmp(argv[1],"ig",2)) machine_type=ISTANBUL;
-   if (!strncmp(argv[1],"deater",6)) machine_type=CORE2;
-   if (!strncmp(argv[1],"cl320",5)) machine_type=CORE2;
-   if (!strncmp(argv[1],"gonzo",5)) machine_type=NEHALEM;
-   if (!strncmp(argv[1],"saturn",6)) machine_type=NEHALEMEX;
-   if (!strncmp(argv[1],"server",6)) machine_type=ATOM;
-   if (!strncmp(argv[1],"toad4",5)) machine_type=SANDYBRIDGE;
-   if (!strncmp(argv[1],"pianoman",8)) machine_type=BOBCAT;
-   if (!strncmp(argv[1],"macbook",7)) machine_type=NEHALEM;
-   if (!strncmp(argv[1],"mirasol",7)) machine_type=WESTMERE;
-   if (!strncmp(argv[1],"vincent-weaver-1",17)) machine_type=IVYBRIDGE;
+   if (!strncmp(argv[1],"pentiumd",6)) machine_type=PENTIUMD;
+   else if (!strncmp(argv[1],"pentium4",7)) machine_type=PENTIUM4;
+   else if (!strncmp(argv[1],"phenom",6)) machine_type=PHENOM;
+   else if (!strncmp(argv[1],"istanbul",2)) machine_type=ISTANBUL;
+   else if (!strncmp(argv[1],"core2",6)) machine_type=CORE2;
+   else if (!strncmp(argv[1],"nehalem",5)) machine_type=NEHALEM;
+   else if (!strncmp(argv[1],"nehalem-ex",6)) machine_type=NEHALEMEX;
+   else if (!strncmp(argv[1],"atom",6)) machine_type=ATOM;
+   else if (!strncmp(argv[1],"sandybridge",5)) machine_type=SANDYBRIDGE;
+   else if (!strncmp(argv[1],"bobcat",8)) machine_type=BOBCAT;
+   else if (!strncmp(argv[1],"westmere",7)) machine_type=WESTMERE;
+   else if (!strncmp(argv[1],"ivybridge",17)) machine_type=IVYBRIDGE;
+   else machine_type=UNKNOWN;
 
    printf("Machine type %s\n",machine_names[machine_type]);
 
