@@ -178,12 +178,13 @@ void adjust_for_hw_interrupts(int j) {
 static int read_stats(char *machine_type,
                       int which,
                       char *filename,
-                      char *benchmark_type) {
+                      char *benchmark_type,
+                      int which_stat) {
 
    char path[BUFSIZ];
    char string[BUFSIZ],temp_string[BUFSIZ];
    FILE *fff;
-   int i,j,k,lines;
+   int i,k,lines;
    char *ignore;
 
    sprintf(path,"./%s/%d/%s.%s",
@@ -194,11 +195,20 @@ static int read_stats(char *machine_type,
       return -1;
    }
 
+   /**********************/
+   /* Read System Header */
+   /**********************/
+   while(1) {
+      break;
+   }
+
+   i=0;
+
    /*************************/
    /* try perf_events first */
    lines=0;
-   stats[j].value1[i]=0;
-   stats[j].hw_interrupts[i]=-1;
+   stats[which_stat].value1[i]=0;
+   stats[which_stat].hw_interrupts[i]=-1;
 
    while(1) {
       if (fgets(string,BUFSIZ,fff)==NULL) break;
@@ -212,10 +222,10 @@ static int read_stats(char *machine_type,
 
 	 /* If comma delimited, then we have to remove the commas */
 	 if (strstr(temp_string,",")) {
-	    stats[j].value1[i]=remove_commas(temp_string);
+	    stats[which_stat].value1[i]=remove_commas(temp_string);
 	 }
 	 else {
-	    stats[j].value1[i]=atoll(temp_string);
+	    stats[which_stat].value1[i]=atoll(temp_string);
 	 }
 
 	 if (fgets(string,BUFSIZ,fff)==NULL) break;
@@ -223,10 +233,10 @@ static int read_stats(char *machine_type,
 	 /* Read in second value */
 	 sscanf(string,"%s",temp_string);
 	 if (strstr(temp_string,",")) {
-	    stats[j].hw_interrupts[i]=remove_commas(temp_string);
+	    stats[which_stat].hw_interrupts[i]=remove_commas(temp_string);
 	 }
 	 else {
-	    stats[j].hw_interrupts[i]=atoll(temp_string);
+	    stats[which_stat].hw_interrupts[i]=atoll(temp_string);
 	 }
 	 break;
       }
@@ -235,22 +245,22 @@ static int read_stats(char *machine_type,
 
    /******************************/
    /* try perfmon2 if that fails */
-   if (stats[j].value1[i]==0) {
+   if (stats[which_stat].value1[i]==0) {
       rewind(fff);
       for(k=0;k<lines-2;k++) {
          ignore=fgets(string,BUFSIZ,fff);
       }
       ignore=fgets(string,BUFSIZ,fff);
-      if (sscanf(string,"%lld",&stats[j].value1[i])==0) {
+      if (sscanf(string,"%lld",&stats[which_stat].value1[i])==0) {
 	 /* handle if only one stat in file */
 	 ignore=fgets(string,BUFSIZ,fff);
-	 sscanf(string,"%lld",&stats[j].value1[i]);
-         stats[j].hw_interrupts[i]=-1;
+	 sscanf(string,"%lld",&stats[which_stat].value1[i]);
+         stats[which_stat].hw_interrupts[i]=-1;
       }
       else {
          ignore=fgets(string,BUFSIZ,fff);
-         if (sscanf(string,"%lld",&stats[j].hw_interrupts[i])!=1) {
-	    stats[j].hw_interrupts[i]=-1;
+         if (sscanf(string,"%lld",&stats[which_stat].hw_interrupts[i])!=1) {
+	    stats[which_stat].hw_interrupts[i]=-1;
          }
       }
    }
@@ -269,6 +279,8 @@ static int read_stats(char *machine_type,
 	 //exit(-5);
    }
 #endif
+   (void) ignore;
+   return 0;
 }
 
 
@@ -278,9 +290,7 @@ static int read_stats(char *machine_type,
 
 int main(int argc, char **argv) {
 
-   int i,j,k,lines=0,bench_type=BENCH_ALL;
-   char path[BUFSIZ],string[BUFSIZ],temp_string[BUFSIZ];
-   FILE *fff;
+   int j,bench_type=BENCH_ALL;
 
    char *ignore;
    int machine_type=UNKNOWN;
@@ -326,7 +336,7 @@ int main(int argc, char **argv) {
 
    for(j=0;j<NUM_STATS;j++) {
 
-      read_stats(argv[1],which,stats[j].filename,argv[2]);
+      read_stats(argv[1],which,stats[j].filename,argv[2],j);
    }
 
 #if 0
