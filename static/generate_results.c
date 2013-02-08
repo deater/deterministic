@@ -285,6 +285,7 @@ static int generate_results(char *directory, char *name,
    fprintf(fff,"Modelname: %s\n",cpuinfo.modelname);
    fprintf(fff,"Generic:   %s\n",cpuinfo.generic_modelname);
    fprintf(fff,"Counters used: %s/%s\n",name1,name2);
+   fprintf(fff,"Runs:      %d\n",count);
    fclose(fff);
 
    for(i=0;i<count;i++) {
