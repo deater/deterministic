@@ -3,6 +3,7 @@
 #include <string.h>
 
 #define RUNS 10
+#define MAX_CPUS 128
 
 #define NUM_STATS 13
 #define VALUE_INTS 1
@@ -19,6 +20,20 @@ long long calc_interrupts_file();
 
 int warn_intr_already=0;
 
+struct interrupts {
+   long long hw[MAX_CPUS];
+   long long nmi[MAX_CPUS];
+   long long loc[MAX_CPUS];
+   long long res[MAX_CPUS];
+   long long cal[MAX_CPUS];
+   long long tlb[MAX_CPUS];
+   long long trm[MAX_CPUS];
+   long long thr[MAX_CPUS];
+   long long spu[MAX_CPUS];
+   long long total[MAX_CPUS];
+};
+
+
 struct stat_type{
    char name[256];
    char filename[256];
@@ -26,6 +41,8 @@ struct stat_type{
    long long expected[NUM_BENCH];
    long long value1[RUNS];
    long long hw_interrupts[RUNS];
+   struct interrupts before_interrupts[RUNS];
+   struct interrupts after_interrupts[RUNS];
    long long raw_average;
    long long adj_average;
    long long raw_diff;
@@ -49,7 +66,7 @@ struct stat_type{
 
 #define RETIRED_INSTRUCTIONS 0
 #define RETIRED_BRANCHES     1
-#define COND_BRANCHES        2 
+#define COND_BRANCHES        2
 #define RETIRED_UOPS         3
 #define RETIRED_LOADS        4
 #define RETIRED_STORES       5
@@ -171,9 +188,92 @@ void adjust_for_hw_interrupts(int j) {
    printf("\tAdjusting %lld for hwints\n",hwint_adjust);
 }
 
+static char string[BUFSIZ];
+
+
+/***********************/
+/* Read Interrupts     */
+/***********************/
+
+static void read_interrupts(FILE *fff, int *cpus,
+                            struct interrupts *intr,
+                            int run) {
+
+   int i;
+   char *ptr,*endptr,*type,*ignore;
+   long long temp_interrupts=0;
+
+   *cpus=0;
+   ignore=fgets(string,BUFSIZ,fff);
+   strtok(string," \t");
+   while (strtok(NULL," \t")) (*cpus)++;
+   //   printf("%d cpus\n",*cpus);
+
+   while(1) {
+       ignore=fgets(string,BUFSIZ,fff);
+       if (!strncmp(string,"###",3)) break;
+
+       type=strtok(string," \t");
+       //printf("%s",ptr);
+
+       temp_interrupts=0;
+
+       for(i=0;i<*cpus;i++) {
+          ptr=strtok(NULL," \t");
+          if (ptr!=NULL) temp_interrupts=strtol(ptr,&endptr,10);
+
+          if (!strncmp(type,"LOC",3)) {
+	     intr[run].loc[i]+=temp_interrupts;
+          }
+          else if (!strncmp(type,"NMI",3)) {
+	     intr[run].nmi[i]+=temp_interrupts;
+          }
+          else if (!strncmp(type,"RES",3)) {
+	     intr[run].res[i]+=temp_interrupts;
+          }
+          else if (!strncmp(type,"CAL",3)) {
+	     intr[run].cal[i]+=temp_interrupts;
+          }
+          else if (!strncmp(type,"TLB",3)) {
+	     intr[run].tlb[i]+=temp_interrupts;
+          }
+          else {
+	     intr[run].hw[i]+=temp_interrupts;
+          }
+	  intr[run].total[i]+=temp_interrupts;
+       }
+
+//       printf("%s %lld\n",type,(*intr)[0].total);
+
+
+      if (feof(fff)) break;
+   }
+
+   (void) ignore;
+}
+
+
+
+
+struct cpuinfo_t {
+   int vendor;
+   int family;
+   int model;
+   int stepping;
+   char modelname[BUFSIZ];
+   char generic_modelname[BUFSIZ];
+   int num_cpus;
+} cpuinfo;
+
+#define INTERFACE_PERF_EVENT 0
+#define INTERFACE_PERFMON    1
+#define INTERFACE_UNKNOWN    2
+
 /****************************/
 /* Read Stats               */
 /****************************/
+
+static int first_header=1;
 
 static int read_stats(char *machine_type,
                       int which,
@@ -182,10 +282,13 @@ static int read_stats(char *machine_type,
                       int which_stat) {
 
    char path[BUFSIZ];
-   char string[BUFSIZ],temp_string[BUFSIZ];
+   char temp_string[BUFSIZ];
    FILE *fff;
-   int i,k,lines;
-   char *ignore;
+   int i,k,lines,runs=10;
+   char *ignore,*result;
+
+   char hostname[BUFSIZ];
+   int interface=INTERFACE_PERF_EVENT;
 
    sprintf(path,"./%s/%d/%s.%s",
                 machine_type,which,filename,benchmark_type);
@@ -196,89 +299,157 @@ static int read_stats(char *machine_type,
    }
 
    /**********************/
+   /* Find System Header */
+   /**********************/
+   while(1) {
+      result=fgets(string,BUFSIZ,fff);
+      if (result==NULL) return -1;
+
+      if (!strncmp(string,"### System info",15)) {
+         break;
+      }
+   }
+
+
+   /**********************/
    /* Read System Header */
    /**********************/
    while(1) {
-      break;
-   }
+      result=fgets(string,BUFSIZ,fff);
+      if (result==NULL) return -1;
 
-   i=0;
-
-   /*************************/
-   /* try perf_events first */
-   lines=0;
-   stats[which_stat].value1[i]=0;
-   stats[which_stat].hw_interrupts[i]=-1;
-
-   while(1) {
-      if (fgets(string,BUFSIZ,fff)==NULL) break;
-
-      if (!strncmp(string," Performance counter",20)) {
-         if (fgets(string,BUFSIZ,fff)==NULL) break;
-	 if (fgets(string,BUFSIZ,fff)==NULL) break;
-
-	 /* Read in the first value */
-	 sscanf(string,"%s",temp_string);
-
-	 /* If comma delimited, then we have to remove the commas */
-	 if (strstr(temp_string,",")) {
-	    stats[which_stat].value1[i]=remove_commas(temp_string);
-	 }
-	 else {
-	    stats[which_stat].value1[i]=atoll(temp_string);
-	 }
-
-	 if (fgets(string,BUFSIZ,fff)==NULL) break;
-
-	 /* Read in second value */
-	 sscanf(string,"%s",temp_string);
-	 if (strstr(temp_string,",")) {
-	    stats[which_stat].hw_interrupts[i]=remove_commas(temp_string);
-	 }
-	 else {
-	    stats[which_stat].hw_interrupts[i]=atoll(temp_string);
-	 }
-	 break;
+      /* Break if reach end of header */
+      if (!strncmp(string,"###",3)) {
+         break;
       }
-      lines++;
-   }
+      if (!strncmp(string,"Kernel:",7)) {
+      }
+      if (!strncmp(string,"Hostname:",9)) {
+         sscanf(string,"%*s %s",hostname);
+      }
+      if (!strncmp(string,"Family:",7)) {
+      }
+      if (!strncmp(string,"Model:",7)) {
+      }
+      if (!strncmp(string,"Stepping:",7)) {
+      }
+      if (!strncmp(string,"Generic:",7)) {
+         /* should check that this matches */
+      }
+      if (!strncmp(string,"Interface:",10)) {
+	 if (strstr(string,"perf_event")) {
+            interface=INTERFACE_PERF_EVENT;
+         } else	if (strstr(string,"perfmon")) {
+            interface=INTERFACE_PERFMON;
+         } else {
+            fprintf(stderr,"Unknown interface!\n");
+            interface=INTERFACE_UNKNOWN;
+         }
 
-   /******************************/
-   /* try perfmon2 if that fails */
-   if (stats[which_stat].value1[i]==0) {
-      rewind(fff);
-      for(k=0;k<lines-2;k++) {
-         ignore=fgets(string,BUFSIZ,fff);
       }
-      ignore=fgets(string,BUFSIZ,fff);
-      if (sscanf(string,"%lld",&stats[which_stat].value1[i])==0) {
-	 /* handle if only one stat in file */
-	 ignore=fgets(string,BUFSIZ,fff);
-	 sscanf(string,"%lld",&stats[which_stat].value1[i]);
-         stats[which_stat].hw_interrupts[i]=-1;
+      if (!strncmp(string,"Counters:",7)) {
       }
-      else {
-         ignore=fgets(string,BUFSIZ,fff);
-         if (sscanf(string,"%lld",&stats[which_stat].hw_interrupts[i])!=1) {
-	    stats[which_stat].hw_interrupts[i]=-1;
+      if (!strncmp(string,"Runs:",7)) {
+         sscanf(string,"%*s %d",&runs);
+	 if (runs!=10) {
+            fprintf(stderr,"FIXME: non-10 amount of runs\n");
          }
       }
    }
-#if 0
-   /**************************************************/
-   /* check to see if getting interrupt count failed */
-   if (stats[j].hw_interrupts[i]<1) {
-      sprintf(path,"./%s/5/run.%i.%s.%s",
-              argv[1],i,stats[j].filename,argv[2]);
-      stats[j].hw_interrupts[i]=calc_interrupts_file(path);
-      if (!warn_intr_already) {
-	 printf("Warning!: Using /proc/interrupts for int count %lld!\n",
-                stats[j].hw_interrupts[i]);
-         warn_intr_already=1;
-      }
-	 //exit(-5);
+
+   /* Print header if first time through */
+   if (first_header) {
+      first_header=0;
+
+      printf("Hostname: %s\n",hostname);
    }
-#endif
+
+   printf("Reading %d values from %s\n",runs,path);
+
+   for(i=0;i<runs;i++) {
+
+      /**********************************/
+      /* Read before-interrupt values   */
+      /* Not necesary for all machines, */
+      /*        but values always there */
+      read_interrupts(fff,&cpuinfo.num_cpus,
+                      stats[which_stat].before_interrupts,i);
+
+      /********************/
+      /* perf_events read */
+
+      if (interface==INTERFACE_PERF_EVENT) {
+
+         lines=0;
+         stats[which_stat].value1[i]=0;
+         stats[which_stat].hw_interrupts[i]=-1;
+
+         while(1) {
+            if (fgets(string,BUFSIZ,fff)==NULL) break;
+
+            if (!strncmp(string," Performance counter",20)) {
+               if (fgets(string,BUFSIZ,fff)==NULL) break;
+	       if (fgets(string,BUFSIZ,fff)==NULL) break;
+
+	       /* Read in the first value */
+	       sscanf(string,"%s",temp_string);
+
+	       /* If comma delimited, then we have to remove the commas */
+	       if (strstr(temp_string,",")) {
+	          stats[which_stat].value1[i]=remove_commas(temp_string);
+	       }
+	       else {
+	          stats[which_stat].value1[i]=atoll(temp_string);
+	       }
+
+	       if (fgets(string,BUFSIZ,fff)==NULL) break;
+
+	       /* Read in second value */
+	       sscanf(string,"%s",temp_string);
+	       if (strstr(temp_string,",")) {
+	          stats[which_stat].hw_interrupts[i]=remove_commas(temp_string);
+	       }
+	       else {
+	          stats[which_stat].hw_interrupts[i]=atoll(temp_string);
+	       }
+	       break;
+            }
+            lines++;
+         }
+      }
+
+      /******************************/
+      /* perfmon2 read              */
+      if (interface==INTERFACE_PERFMON) {
+
+         if (stats[which_stat].value1[i]==0) {
+            for(k=0;k<lines-2;k++) {
+               ignore=fgets(string,BUFSIZ,fff);
+            }
+            ignore=fgets(string,BUFSIZ,fff);
+            if (sscanf(string,"%lld",&stats[which_stat].value1[i])==0) {
+	       /* handle if only one stat in file */
+	       ignore=fgets(string,BUFSIZ,fff);
+	       sscanf(string,"%lld",&stats[which_stat].value1[i]);
+               stats[which_stat].hw_interrupts[i]=-1;
+            }
+            else {
+               ignore=fgets(string,BUFSIZ,fff);
+               if (sscanf(string,"%lld",
+                  &stats[which_stat].hw_interrupts[i])!=1) {
+	          stats[which_stat].hw_interrupts[i]=-1;
+               }
+            }
+         }
+      }
+
+      /**********************************/
+      /* Read after-interrupt values    */
+      read_interrupts(fff,&cpuinfo.num_cpus,
+                          stats[which_stat].after_interrupts,which_stat);
+
+   }
+
    (void) ignore;
    return 0;
 }
@@ -897,85 +1068,7 @@ int main(int argc, char **argv) {
    return 0;
 }
 
-struct interrupts {
-   long long hw;
-   long long nmi;
-   long long loc;
-   long long res;
-   long long cal;
-   long long tlb;
-   long long trm;
-   long long thr;
-   long long spu;
-   long long total;
-};
-
-
-static void read_interrupts(char *string, int *cpus, struct interrupts **intr) {
-
-   FILE *fff;
-   char input[BUFSIZ];
-   int i;
-   char *ptr,*endptr,*type,*ignore;
-   long long temp_interrupts=0;
-
-//   struct interrupts *intr;
-
-   fff=fopen(string,"r");
-   if (fff==NULL) {
-      fprintf(stderr,"Could not open %s\n",string);
-      exit(-1);
-   }
-   *cpus=0;
-   ignore=fgets(input,BUFSIZ,fff);
-   strtok(input," \t");
-   while (strtok(NULL," \t")) (*cpus)++;
-   //   printf("%d cpus\n",*cpus);
-
-   *intr=calloc(*cpus,sizeof(struct interrupts));
-
-   while(1) {
-      ignore=fgets(input,BUFSIZ,fff);
-
-       type=strtok(input," \t");
-       //printf("%s",ptr);
-
-       temp_interrupts=0;
-
-       for(i=0;i<*cpus;i++) {
-          ptr=strtok(NULL," \t");
-          if (ptr!=NULL) temp_interrupts=strtol(ptr,&endptr,10);
-
-          if (!strncmp(type,"LOC",3)) {
-	     (*intr)[i].loc+=temp_interrupts;
-          }
-          else if (!strncmp(type,"NMI",3)) {
-	     (*intr)[i].nmi+=temp_interrupts;
-          }
-          else if (!strncmp(type,"RES",3)) {
-	     (*intr)[i].res+=temp_interrupts;
-          }
-          else if (!strncmp(type,"CAL",3)) {
-	     (*intr)[i].cal+=temp_interrupts;
-          }
-          else if (!strncmp(type,"TLB",3)) {
-	     (*intr)[i].tlb+=temp_interrupts;
-          }
-          else {
-	     (*intr)[i].hw+=temp_interrupts;
-          }
-	  (*intr)[i].total+=temp_interrupts;
-       }
-
-//       printf("%s %lld\n",type,(*intr)[0].total);
-
-      if (feof(fff)) break;
-   }
-
-   fclose(fff);
-   (void) ignore;
-}
-
+# if 0
 long long calc_interrupts_file(char *name) {
 
    int cpus;
@@ -987,7 +1080,7 @@ long long calc_interrupts_file(char *name) {
 
    sprintf(path,"%s.after",name);
    read_interrupts(path,&cpus,&after_interrupts);
-#if 0
+
    for(i=0;i<cpus;i++) {
       printf("HW%d\t%lld %lld %lld\n",i,
 	                        before_interrupts[i].hw,after_interrupts[i].hw,
@@ -1014,6 +1107,7 @@ long long calc_interrupts_file(char *name) {
 	                        after_interrupts[i].total-before_interrupts[i].total);      
       printf("\n");
    }
-#endif
+
    return after_interrupts[0].total-before_interrupts[0].total;
 }
+#endif
