@@ -78,6 +78,33 @@ struct event_table_t atom_event_table = {
    .sse_event =			"r501fc7:u",
 };
 
+struct event_table_t core2_event_table = {
+   .hw_int_name =		"HW_INT_RCV",
+   .hw_int_event =		"r5100c8:u",
+   .ret_instr_name =		"INSTRUCTION_RETIRED",
+   .ret_instr_event =		"instructions:u",
+   .branches_name =		"BRANCH_INSTRUCTIONS_RETIRED",
+   .branches_event =		"branches:u",
+   .cond_branches_name =	"BR_CND_EXEC",
+   .cond_branches_event =	"r53008b:u",
+   .loads_name =		"INST_RETIRED:LOADS",
+   .loads_event =		"r5001c0:u",
+   .stores_name =		"INST_RETIRED:STORES",
+   .stores_event =		"r5002c0:u",
+   .uops_name =			"UOPS_RETIRED",
+   .uops_event =		"r500fc2:u",
+   .muls_name =			"MUL",
+   .muls_event = 		"r510012:u",
+   .divs_name = 		"DIV",
+   .divs_event =		"r510013:u",
+   .fp1_name =			"FP_COMP_OPS_EXE",
+   .fp1_event =			"r500010:u",
+   .fp2_name =			"X87_OPS_RETIRED:ANY",
+   .fp2_event =			"r50fec1:u",
+   .sse_name =			"SIMD_INSTR_RETIRED",
+   .sse_event =			"r5000ce:u",
+};
+
 struct event_table_t wsm_event_table = {
    .hw_int_name = 		"HW_INTERRUPTS (Dropped from Documentation",
    .hw_int_event =		"r50011d:u",
@@ -177,20 +204,62 @@ static int set_generic_modelname(int vendor, int family, int model) {
    if (vendor==VENDOR_INTEL) {
       if (family==6) {
          switch(model) {
-            case 28: strcpy(cpuinfo.generic_modelname,"atom");
+
+            case 14: /* yonah */
+                     strcpy(cpuinfo.generic_modelname,"UNKNOWN");
+                     break;
+
+            case 15: /* Memrom/Conroe */
+            case 22: /* Memrom-L/Conroe-L */
+            case 23: /* Penryn/Wolfdale */
+            case 29: /* Dunnington */
+                     strcpy(cpuinfo.generic_modelname,"core2");
+                     event_table=&core2_event_table;
+                     break;
+
+            case 26: /* Bloomfield */
+            case 30: /* Lynnfield */
+            case 46: /* Beckton */
+                     /* Nehalem */
+                     strcpy(cpuinfo.generic_modelname,"UNKNOWN");
+                     break;
+
+            case 28: /* Atom */
+            case 38: /* Lincroft */
+            case 39: /* Penwell */
+            case 53: /* Cloverview */
+                     strcpy(cpuinfo.generic_modelname,"atom");
                      event_table=&atom_event_table;
                      break;
 
-            case 37: 
-            case 44: strcpy(cpuinfo.generic_modelname,"westmere");
+            case 54: /* Cedarview */
+                     strcpy(cpuinfo.generic_modelname,"atom-cedarview");
+                     event_table=&atom_event_table;
+                     break;
+
+            case 37: /* Clarkdale */
+            case 44: /* Gulftown */
+                     strcpy(cpuinfo.generic_modelname,"westmere");
                      event_table=&wsm_event_table;
                      break;
 
-            case 47: strcpy(cpuinfo.generic_modelname,"westmere-ex");
+            case 47: /* Xeon E7 */
+                     strcpy(cpuinfo.generic_modelname,"westmere-ex");
                      event_table=&wsm_event_table;
                      break;
 
-            case 58: strcpy(cpuinfo.generic_modelname,"ivybridge");
+            case 42: /* Sandybridge */
+            case 45: /* Sandybridge EP (Romley) */
+                     strcpy(cpuinfo.generic_modelname,"UNKNOWN");
+                     break;
+
+            case 58: /* Ivy Bridge */
+                     strcpy(cpuinfo.generic_modelname,"ivybridge");
+                     event_table=&ivb_event_table;
+                     break;
+
+            case 62: /* Ivy Bridge EP */
+                     strcpy(cpuinfo.generic_modelname,"ivybridge-ep");
                      event_table=&ivb_event_table;
                      break;
 
