@@ -4,6 +4,10 @@ BINDIR = binaries
 OBJDIR = obj
 SRCDIR = src
 
+CC = gcc
+CFLAGS = -Wall -O2
+LFLAGS =
+
 ifeq ($(ARCH),)
    ARCH = $(shell uname -m)
 endif
@@ -18,7 +22,7 @@ ifneq (,$(findstring arm,$(ARCH)))
    ARCH := arm
 endif
 
-all: $(BINDIR)/retired_instr.$(ARCH) \
+all: $(BINDIR)/retired_instr.all.$(ARCH) \
      $(BINDIR)/retired_instr.arith.$(ARCH) \
      $(BINDIR)/retired_instr.logic.$(ARCH) \
      $(BINDIR)/retired_instr.moves.$(ARCH) \
@@ -39,7 +43,14 @@ all: $(BINDIR)/retired_instr.$(ARCH) \
      $(BINDIR)/retired_instr.int.$(ARCH) \
      $(BINDIR)/retired_instr.sse.$(ARCH) \
      $(BINDIR)/retired_instr.empty.$(ARCH) \
-     $(BINDIR)/retired_instr.valgrind.$(ARCH)
+     $(BINDIR)/retired_instr.valgrind.$(ARCH) \
+	generate_results
+
+generate_results:	generate_results.o
+	$(CC) $(LFLAGS) -o generate_results generate_results.o
+
+generate_results.o:	generate_results.c
+	$(CC) $(CFLAGS) -c generate_results.c
 
 $(BINDIR)/retired_instr.arith.$(ARCH): $(OBJDIR)/retired_instr.arith.$(ARCH).o
 	$(LD) -o $(BINDIR)/retired_instr.arith.$(ARCH) $(OBJDIR)/retired_instr.arith.$(ARCH).o
@@ -188,10 +199,10 @@ $(OBJDIR)/retired_instr.sse.$(ARCH).o: $(SRCDIR)/retired_instr.$(ARCH).s
 	-o $(OBJDIR)/retired_instr.sse.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
 
 
-$(BINDIR)/retired_instr.$(ARCH):	$(OBJDIR)/retired_instr.$(ARCH).o
-		$(LD) -o $(BINDIR)/retired_instr.$(ARCH) $(OBJDIR)/retired_instr.$(ARCH).o
+$(BINDIR)/retired_instr.all.$(ARCH):	$(OBJDIR)/retired_instr.all.$(ARCH).o
+		$(LD) -o $(BINDIR)/retired_instr.all.$(ARCH) $(OBJDIR)/retired_instr.all.$(ARCH).o
 
-$(OBJDIR)/retired_instr.$(ARCH).o:	$(SRCDIR)/retired_instr.$(ARCH).s
+$(OBJDIR)/retired_instr.all.$(ARCH).o:	$(SRCDIR)/retired_instr.$(ARCH).s
 		$(AS) \
 		--defsym ARITH=1 --defsym LOGIC=1 --defsym MOVES=1 \
 		--defsym NOPS=1 --defsym FLAGS=1 --defsym BRANCHES=1 \
@@ -200,7 +211,7 @@ $(OBJDIR)/retired_instr.$(ARCH).o:	$(SRCDIR)/retired_instr.$(ARCH).s
 		--defsym FP=1 --defsym MMX=1 \
 		--defsym SSE1=1 --defsym SSE2=1 --defsym SSE3=1 \
 		--defsym OS=1 \
-		-o $(OBJDIR)/retired_instr.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
+		-o $(OBJDIR)/retired_instr.all.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
 
 $(BINDIR)/retired_instr.valgrind.$(ARCH):	$(OBJDIR)/retired_instr.valgrind.$(ARCH).o
 		$(LD) -o $(BINDIR)/retired_instr.valgrind.$(ARCH) $(OBJDIR)/retired_instr.valgrind.$(ARCH).o
@@ -232,6 +243,7 @@ $(OBJDIR)/retired_instr.valgrind.$(ARCH).o:	$(SRCDIR)/retired_instr.x86_64.s
 		-o $(OBJDIR)/retired_instr.valgrind.$(ARCH).o $(SRCDIR)/retired_instr.x86_64.s
 
 clean:		
-		rm -f *~ $(SRCDIR)/~ $(OBJDIR)/*.o
-		cd results && make clean
+	rm generate_results
+	rm -f *~ $(SRCDIR)/~ $(OBJDIR)/*.o
+	cd results && make clean
 
