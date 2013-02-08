@@ -461,7 +461,7 @@ static int read_stats(char *machine_type,
 
 int main(int argc, char **argv) {
 
-   int j,bench_type=BENCH_ALL;
+   int i,j,bench_type=BENCH_ALL;
 
    char *ignore;
    int machine_type=UNKNOWN;
@@ -510,13 +510,14 @@ int main(int argc, char **argv) {
       read_stats(argv[1],which,stats[j].filename,argv[2],j);
    }
 
-#if 0
-
+   /***************************/
    /* Adjust and print values */
 
+   for(j=0;j<NUM_STATS;j++) {
       printf("\n%s     expected value = %lld\n",
-	     stats[j].name, stats[j].expected[0]);
+	  stats[j].name, stats[j].expected[0]);
 
+      /* Calculate average? */
       if (stats[j].type==VALUE_INTS) {
          total=0;
          max=stats[j].value1[0];
@@ -529,9 +530,12 @@ int main(int argc, char **argv) {
          }
          stats[j].raw_average=total/RUNS;
 
-         if ((max-stats[j].raw_average) > (stats[j].raw_average-min)) range=max-stats[j].raw_average;
-         else range=min-stats[j].raw_average;
-
+         if ((max-stats[j].raw_average) > (stats[j].raw_average-min)) {
+            range=max-stats[j].raw_average;
+         }
+         else {
+            range=min-stats[j].raw_average;
+         }
          printf("\tRaw Average: %lld +/- %lld (",stats[j].raw_average,range);
          for(i=0;i<3;i++) printf("%lld, ",stats[j].value1[i]);
          printf(")\n");
@@ -1062,8 +1066,8 @@ int main(int argc, char **argv) {
          printf(")\n");
          printf("\tRaw diff: %lld +/- %lld\n",stats[j].raw_average-stats[j].expected[bench_type],range);
       }
+
    }
-#endif
 
    return 0;
 }
