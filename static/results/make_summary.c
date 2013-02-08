@@ -22,7 +22,7 @@ int warn_intr_already=0;
 struct stat_type{
    char name[256];
    char filename[256];
-   int type;   
+   int type;
    long long expected[NUM_BENCH];
    long long value1[RUNS];
    long long hw_interrupts[RUNS];
@@ -91,15 +91,15 @@ char machine_names[MAX_NAME][BUFSIZ]={
 long long remove_commas(char *temp_string) {
 
    int y=0,z=0;
-		 
+
    while(y<strlen(temp_string)) {
-		  
+
       if (temp_string[y]==',') {
       }
       else {
          temp_string[z]=temp_string[y];
          z++;
-      }			
+      }
       y++;
    }
    temp_string[z]=0;
@@ -144,14 +144,14 @@ void adjust_for_hw_interrupts(int j) {
    total=0;
    max=stats[j].value1[0]-stats[j].hw_interrupts[0];
    min=stats[j].value1[0]-stats[j].hw_interrupts[0];
-         
+
    for(i=0;i<RUNS;i++) {
       total+=stats[j].value1[i]-stats[j].hw_interrupts[i];
       if (stats[j].value1[i]-stats[j].hw_interrupts[i]>max) {
          max=stats[j].value1[i]-stats[j].hw_interrupts[i];
       }
       if (stats[j].value1[i]-stats[j].hw_interrupts[i]<min) {
-         min=stats[j].value1[i]-stats[j].hw_interrupts[i];	 
+         min=stats[j].value1[i]-stats[j].hw_interrupts[i];
       }
       stats[j].adj_average=total/RUNS;
    }
@@ -168,8 +168,7 @@ void adjust_for_hw_interrupts(int j) {
       hwint_adjust+=stats[j].hw_interrupts[i];
    }
    hwint_adjust/=RUNS;
-   printf("\tAdjusting %lld for hwints\n",hwint_adjust);            
-	 
+   printf("\tAdjusting %lld for hwints\n",hwint_adjust);
 }
 
 
@@ -217,9 +216,9 @@ int main(int argc, char **argv) {
    /***************************/
 
    for(j=0;j<NUM_STATS;j++) {
-      
+
       for(i=0;i<RUNS;i++) {
-	
+
          sprintf(path,"./%s/5/run.%i.%s.%s.counts",argv[1],i,stats[j].filename,argv[2]);
          fff=fopen(path,"r");
          if (fff==NULL) {
@@ -234,7 +233,7 @@ int main(int argc, char **argv) {
 
          while(1) {
  	   if (fgets(string,BUFSIZ,fff)==NULL) break;
-	 
+
 	   if (!strncmp(string," Performance counter",20)) {
 	      if (fgets(string,BUFSIZ,fff)==NULL) break;
 	      if (fgets(string,BUFSIZ,fff)==NULL) break;
@@ -244,14 +243,14 @@ int main(int argc, char **argv) {
 
 	      /* If comma delimited, then we have to remove the commas */
 	      if (strstr(temp_string,",")) {
-	         stats[j].value1[i]=remove_commas(temp_string);		 
+	         stats[j].value1[i]=remove_commas(temp_string);
 	      }
 	      else {
 	         stats[j].value1[i]=atoll(temp_string);
 	      }
-	      
+
 	      if (fgets(string,BUFSIZ,fff)==NULL) break;
-						
+
 	      /* Read in second value */
 	      sscanf(string,"%s",temp_string);
 	      if (strstr(temp_string,",")) {
@@ -264,7 +263,7 @@ int main(int argc, char **argv) {
 	   }
 	   lines++;
 	 }
-	 
+
 	 /* try perfmon2 if that fails */
 	 if (stats[j].value1[i]==0) {
 	    rewind(fff);
@@ -294,7 +293,7 @@ int main(int argc, char **argv) {
                warn_intr_already=1;
 	    }
 	    //exit(-5);
-	 }	 	 
+	 }
       }
 
 
@@ -307,18 +306,17 @@ int main(int argc, char **argv) {
          total=0;
          max=stats[j].value1[0];
          min=stats[j].value1[0];
-      
-      
+
          for(i=0;i<RUNS;i++) {
 	    total+=stats[j].value1[i];
 	    if (stats[j].value1[i]>max) max=stats[j].value1[i];
 	    if (stats[j].value1[i]<min) min=stats[j].value1[i];
          }
          stats[j].raw_average=total/RUNS;
-     
+
          if ((max-stats[j].raw_average) > (stats[j].raw_average-min)) range=max-stats[j].raw_average;
          else range=min-stats[j].raw_average;
-      
+
          printf("\tRaw Average: %lld +/- %lld (",stats[j].raw_average,range);
          for(i=0;i<3;i++) printf("%lld, ",stats[j].value1[i]);
          printf(")\n");
@@ -369,7 +367,7 @@ int main(int argc, char **argv) {
 		 adjust_for_hw_interrupts(j);
 
                  printf("\tAdjusting 50,040 for first-time memory accesses\n");
-                 mem_adjust+=50040;	    
+                 mem_adjust+=50040;
 
                  printf("\tSTACK: Adjusting 200,000 for pop fs/gs\n");
                  double_ins_adjust+=200000;
@@ -478,7 +476,7 @@ int main(int argc, char **argv) {
                  printf("\tAdjusting 100,000 for fnsave with PE set\n");
                  double_ins_adjust+=100000;
 	      }
-	 
+
 	      if (j==RETIRED_BRANCHES) {
                  adjust_for_hw_interrupts(j);
 		 adjust_for_pagefaults();
@@ -494,7 +492,7 @@ int main(int argc, char **argv) {
 		 adjust_for_lazy_fp();
 		 adjust_for_fp_exception();
 		 adjust_for_pagefaults();
-	      }	 
+	      }
 	      if (j==RETIRED_BRANCHES) {
                  adjust_for_hw_interrupts(j);
 		 adjust_for_pagefaults();
@@ -571,7 +569,7 @@ int main(int argc, char **argv) {
 	      if (j==COND_BRANCHES) {
                  dont_adjust_for_hw_interrupts(j);
                  printf("\tAdjusting 8,300,000 for FP ops miscounted as cond branches\n");
-                 double_ins_adjust+=8300000;	    
+                 double_ins_adjust+=8300000;
 	      }
 	      if (j==RETIRED_UOPS) adjust_for_hw_interrupts(j);
 	      if (j==RETIRED_LOADS) {
@@ -772,18 +770,17 @@ int main(int argc, char **argv) {
          total=0;
          max=stats[j].hw_interrupts[0];
          min=stats[j].hw_interrupts[0];
-      
-      
+
          for(i=0;i<RUNS;i++) {
 	    total+=stats[j].hw_interrupts[i];
 	    if (stats[j].hw_interrupts[i]>max) max=stats[j].hw_interrupts[i];
 	    if (stats[j].hw_interrupts[i]<min) min=stats[j].hw_interrupts[i];
          }
          stats[j].raw_average=total/RUNS;
-     
+
          if ((max-stats[j].raw_average) > (stats[j].raw_average-min)) range=max-stats[j].raw_average;
          else range=min-stats[j].raw_average;
-      
+
          printf("\tRaw Average: %lld +/- %lld (",stats[j].raw_average,range);
          for(i=0;i<3;i++) printf("%lld, ",stats[j].hw_interrupts[i]);
          printf(")\n");
@@ -792,7 +789,7 @@ int main(int argc, char **argv) {
 	 total=0;
          max=stats[j].hw_interrupts[0]-stats[j].value1[0];
          min=stats[j].hw_interrupts[0]-stats[j].value1[0];
-         
+
          for(i=0;i<RUNS;i++) {
 	    total+=stats[j].hw_interrupts[i]-stats[j].value1[i];
 	    if (stats[j].hw_interrupts[i]-stats[j].value1[i]>max) max=stats[j].hw_interrupts[i]-stats[j].value1[i];
@@ -803,56 +800,53 @@ int main(int argc, char **argv) {
 
          if ((max-stats[j].adj_average) > (stats[j].adj_average-min)) range=max-stats[j].adj_average;
          else range=min-stats[j].adj_average;
-      
+
          printf("\tAdjusted Average: %lld +/- %lld (",stats[j].adj_average,range);
          for(i=0;i<3;i++) printf("%lld, ",stats[j].hw_interrupts[i]-stats[j].value1[i]);
-         printf(")\n");      
+         printf(")\n");
          printf("\tAdjusted diff: %lld +/- %lld\n",stats[j].adj_average-stats[j].expected[bench_type],range);
-      
       }
 
       if (stats[j].type==VALUE_VALUE) {
-	 
+
          total=0;
          max=stats[j].value1[0];
          min=stats[j].value1[0];
-            
+
          for(i=0;i<RUNS;i++) {
 	    total+=stats[j].value1[i];
 	    if (stats[j].value1[i]>max) max=stats[j].value1[i];
 	    if (stats[j].value1[i]<min) min=stats[j].value1[i];
          }
          stats[j].raw_average=total/RUNS;
-     
+
          if ((max-stats[j].raw_average) > (stats[j].raw_average-min)) range=max-stats[j].raw_average;
          else range=min-stats[j].raw_average;
-      
+
          printf("\tRaw Average: %lld +/- %lld (",stats[j].raw_average,range);
          for(i=0;i<3;i++) printf("%lld, ",stats[j].value1[i]);
          printf(")\n");
          printf("\tRaw diff: %lld +/- %lld\n",stats[j].raw_average-stats[j].expected[bench_type],range);
 
-	 
          total=0;
          max=stats[j].hw_interrupts[0];
          min=stats[j].hw_interrupts[0];
-            
+
          for(i=0;i<RUNS;i++) {
 	    total+=stats[j].hw_interrupts[i];
 	    if (stats[j].hw_interrupts[i]>max) max=stats[j].hw_interrupts[i];
 	    if (stats[j].hw_interrupts[i]<min) min=stats[j].hw_interrupts[i];
          }
          stats[j].raw_average=total/RUNS;
-     
+
          if ((max-stats[j].raw_average) > (stats[j].raw_average-min)) range=max-stats[j].raw_average;
          else range=min-stats[j].raw_average;
-      
+
          printf("\tRaw Average: %lld +/- %lld (",stats[j].raw_average,range);
          for(i=0;i<3;i++) printf("%lld, ",stats[j].hw_interrupts[i]);
          printf(")\n");
          printf("\tRaw diff: %lld +/- %lld\n",stats[j].raw_average-stats[j].expected[bench_type],range);
-         
-      }      
+      }
    }
 
    return 0;
@@ -868,72 +862,71 @@ struct interrupts {
    long long trm;
    long long thr;
    long long spu;
-   long long total;   
+   long long total;
 };
 
 
 static void read_interrupts(char *string, int *cpus, struct interrupts **intr) {
- 
+
    FILE *fff;
    char input[BUFSIZ];
    int i;
    char *ptr,*endptr,*type,*ignore;
    long long temp_interrupts=0;
-   
+
 //   struct interrupts *intr;
-   
+
    fff=fopen(string,"r");
    if (fff==NULL) {
       fprintf(stderr,"Could not open %s\n",string);
-      exit(-1);  
+      exit(-1);
    }
-   *cpus=0;   
+   *cpus=0;
    ignore=fgets(input,BUFSIZ,fff);
    strtok(input," \t");
    while (strtok(NULL," \t")) (*cpus)++;
-   //   printf("%d cpus\n",*cpus);   
+   //   printf("%d cpus\n",*cpus);
 
    *intr=calloc(*cpus,sizeof(struct interrupts));
-   
+
    while(1) {
       ignore=fgets(input,BUFSIZ,fff);
-      
+
        type=strtok(input," \t");
        //printf("%s",ptr);
 
        temp_interrupts=0;
-      
+
        for(i=0;i<*cpus;i++) {
           ptr=strtok(NULL," \t");
           if (ptr!=NULL) temp_interrupts=strtol(ptr,&endptr,10);
-   
-      
+
           if (!strncmp(type,"LOC",3)) {
 	     (*intr)[i].loc+=temp_interrupts;
           }
           else if (!strncmp(type,"NMI",3)) {
 	     (*intr)[i].nmi+=temp_interrupts;
-          }	  
+          }
           else if (!strncmp(type,"RES",3)) {
 	     (*intr)[i].res+=temp_interrupts;
-          }	  	  
+          }
           else if (!strncmp(type,"CAL",3)) {
 	     (*intr)[i].cal+=temp_interrupts;
-          }	  	  
+          }
           else if (!strncmp(type,"TLB",3)) {
 	     (*intr)[i].tlb+=temp_interrupts;
-          }	  	  	  
+          }
           else {
 	     (*intr)[i].hw+=temp_interrupts;
           }
 	  (*intr)[i].total+=temp_interrupts;
        }
-           
+
 //       printf("%s %lld\n",type,(*intr)[0].total);
-      
+
       if (feof(fff)) break;
    }
-   
+
    fclose(fff);
    (void) ignore;
 }
@@ -943,13 +936,13 @@ long long calc_interrupts_file(char *name) {
    int cpus;
    struct interrupts *before_interrupts,*after_interrupts;
    char path[BUFSIZ];
-   
+
    sprintf(path,"%s.before",name);
    read_interrupts(path,&cpus,&before_interrupts);
-   
-   sprintf(path,"%s.after",name);   
+
+   sprintf(path,"%s.after",name);
    read_interrupts(path,&cpus,&after_interrupts);
-#if 0   
+#if 0
    for(i=0;i<cpus;i++) {
       printf("HW%d\t%lld %lld %lld\n",i,
 	                        before_interrupts[i].hw,after_interrupts[i].hw,
@@ -969,8 +962,7 @@ long long calc_interrupts_file(char *name) {
       printf("TLB%d\t%lld %lld %lld\n",i,
 	                        before_interrupts[i].tlb,after_interrupts[i].tlb,
 	                        after_interrupts[i].tlb-before_interrupts[i].tlb);      
-      
-      
+
       printf("---\n");
       printf("TOT%d:\t%lld %lld %lld\n",i,
 	                        before_interrupts[i].total,after_interrupts[i].total,
