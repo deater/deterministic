@@ -52,157 +52,97 @@ generate_results:	generate_results.o
 generate_results.o:	generate_results.c
 	$(CC) $(CFLAGS) -c generate_results.c
 
-$(BINDIR)/retired_instr.arith.$(ARCH): $(OBJDIR)/retired_instr.arith.$(ARCH).o
+$(BINDIR)/retired_instr.arith.$(ARCH): $(SRCDIR)/retired_instr.$(ARCH).s
+	$(AS) --defsym ARITH=1 -o $(OBJDIR)/retired_instr.arith.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
 	$(LD) -o $(BINDIR)/retired_instr.arith.$(ARCH) $(OBJDIR)/retired_instr.arith.$(ARCH).o
 
-$(OBJDIR)/retired_instr.arith.$(ARCH).o: $(SRCDIR)/retired_instr.$(ARCH).s
-	$(AS) --defsym ARITH=1 -o $(OBJDIR)/retired_instr.arith.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
-
-
-$(BINDIR)/retired_instr.logic.$(ARCH): $(OBJDIR)/retired_instr.logic.$(ARCH).o
+$(BINDIR)/retired_instr.logic.$(ARCH): $(SRCDIR)/retired_instr.$(ARCH).s
+	$(AS) --defsym LOGIC=1 -o $(OBJDIR)/retired_instr.logic.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
 	$(LD) -o $(BINDIR)/retired_instr.logic.$(ARCH) $(OBJDIR)/retired_instr.logic.$(ARCH).o
 
-$(OBJDIR)/retired_instr.logic.$(ARCH).o: $(SRCDIR)/retired_instr.$(ARCH).s
-	$(AS) --defsym LOGIC=1 -o $(OBJDIR)/retired_instr.logic.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
-
-
-$(BINDIR)/retired_instr.moves.$(ARCH): $(OBJDIR)/retired_instr.moves.$(ARCH).o
+$(BINDIR)/retired_instr.moves.$(ARCH): $(SRCDIR)/retired_instr.$(ARCH).s
+	$(AS) --defsym MOVES=1 -o $(OBJDIR)/retired_instr.moves.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
 	$(LD) -o $(BINDIR)/retired_instr.moves.$(ARCH) $(OBJDIR)/retired_instr.moves.$(ARCH).o
 
-$(OBJDIR)/retired_instr.moves.$(ARCH).o: $(SRCDIR)/retired_instr.$(ARCH).s
-	$(AS) --defsym MOVES=1 -o $(OBJDIR)/retired_instr.moves.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
-
-
-$(BINDIR)/retired_instr.nops.$(ARCH): $(OBJDIR)/retired_instr.nops.$(ARCH).o
+$(BINDIR)/retired_instr.nops.$(ARCH): $(SRCDIR)/retired_instr.$(ARCH).s
+	$(AS) --defsym NOPS=1 -o $(OBJDIR)/retired_instr.nops.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
 	$(LD) -o $(BINDIR)/retired_instr.nops.$(ARCH) $(OBJDIR)/retired_instr.nops.$(ARCH).o
 
-$(OBJDIR)/retired_instr.nops.$(ARCH).o: $(SRCDIR)/retired_instr.$(ARCH).s
-	$(AS) --defsym NOPS=1 -o $(OBJDIR)/retired_instr.nops.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
-
-
-$(BINDIR)/retired_instr.flags.$(ARCH): $(OBJDIR)/retired_instr.flags.$(ARCH).o
+$(BINDIR)/retired_instr.flags.$(ARCH): $(SRCDIR)/retired_instr.$(ARCH).s
+	$(AS) --defsym FLAGS=1 -o $(OBJDIR)/retired_instr.flags.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
 	$(LD) -o $(BINDIR)/retired_instr.flags.$(ARCH) $(OBJDIR)/retired_instr.flags.$(ARCH).o
 
-$(OBJDIR)/retired_instr.flags.$(ARCH).o: $(SRCDIR)/retired_instr.$(ARCH).s
-	$(AS) --defsym FLAGS=1 -o $(OBJDIR)/retired_instr.flags.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
-
-
-$(BINDIR)/retired_instr.branches.$(ARCH): $(OBJDIR)/retired_instr.branches.$(ARCH).o
+$(BINDIR)/retired_instr.branches.$(ARCH): $(SRCDIR)/retired_instr.$(ARCH).s
+	$(AS) --defsym BRANCHES=1 -o $(OBJDIR)/retired_instr.branches.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
 	$(LD) -o $(BINDIR)/retired_instr.branches.$(ARCH) $(OBJDIR)/retired_instr.branches.$(ARCH).o
 
-$(OBJDIR)/retired_instr.branches.$(ARCH).o: $(SRCDIR)/retired_instr.$(ARCH).s
-	$(AS) --defsym BRANCHES=1 -o $(OBJDIR)/retired_instr.branches.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
-
-
-$(BINDIR)/retired_instr.stack.$(ARCH): $(OBJDIR)/retired_instr.stack.$(ARCH).o
+$(BINDIR)/retired_instr.stack.$(ARCH): $(SRCDIR)/retired_instr.$(ARCH).s
+	$(AS) --defsym STACK=1 -o $(OBJDIR)/retired_instr.stack.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
 	$(LD) -o $(BINDIR)/retired_instr.stack.$(ARCH) $(OBJDIR)/retired_instr.stack.$(ARCH).o
 
-$(OBJDIR)/retired_instr.stack.$(ARCH).o: $(SRCDIR)/retired_instr.$(ARCH).s
-	$(AS) --defsym STACK=1 -o $(OBJDIR)/retired_instr.stack.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
-
-
-$(BINDIR)/retired_instr.cmov.$(ARCH): $(OBJDIR)/retired_instr.cmov.$(ARCH).o
+$(BINDIR)/retired_instr.cmov.$(ARCH): $(SRCDIR)/retired_instr.$(ARCH).s
+	$(AS) --defsym CMOV=1 -o $(OBJDIR)/retired_instr.cmov.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
 	$(LD) -o $(BINDIR)/retired_instr.cmov.$(ARCH) $(OBJDIR)/retired_instr.cmov.$(ARCH).o
 
-$(OBJDIR)/retired_instr.cmov.$(ARCH).o: $(SRCDIR)/retired_instr.$(ARCH).s
-	$(AS) --defsym CMOV=1 -o $(OBJDIR)/retired_instr.cmov.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
 
-
-$(BINDIR)/retired_instr.string.$(ARCH): $(OBJDIR)/retired_instr.string.$(ARCH).o
+$(BINDIR)/retired_instr.string.$(ARCH): $(SRCDIR)/retired_instr.$(ARCH).s
+	$(AS) --defsym STRING=1 -o $(OBJDIR)/retired_instr.string.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
 	$(LD) -o $(BINDIR)/retired_instr.string.$(ARCH) $(OBJDIR)/retired_instr.string.$(ARCH).o
 
-$(OBJDIR)/retired_instr.string.$(ARCH).o: $(SRCDIR)/retired_instr.$(ARCH).s
-	$(AS) --defsym STRING=1 -o $(OBJDIR)/retired_instr.string.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
-
-
-$(BINDIR)/retired_instr.cpuid.$(ARCH): $(OBJDIR)/retired_instr.cpuid.$(ARCH).o
+$(BINDIR)/retired_instr.cpuid.$(ARCH): $(SRCDIR)/retired_instr.$(ARCH).s
+	$(AS) --defsym CPUID=1 -o $(OBJDIR)/retired_instr.cpuid.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
 	$(LD) -o $(BINDIR)/retired_instr.cpuid.$(ARCH) $(OBJDIR)/retired_instr.cpuid.$(ARCH).o
 
-$(OBJDIR)/retired_instr.cpuid.$(ARCH).o: $(SRCDIR)/retired_instr.$(ARCH).s
-	$(AS) --defsym CPUID=1 -o $(OBJDIR)/retired_instr.cpuid.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
-
-
-$(BINDIR)/retired_instr.x87.$(ARCH): $(OBJDIR)/retired_instr.x87.$(ARCH).o
+$(BINDIR)/retired_instr.x87.$(ARCH): $(SRCDIR)/retired_instr.$(ARCH).s
+	$(AS) --defsym FP=1 -o $(OBJDIR)/retired_instr.x87.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
 	$(LD) -o $(BINDIR)/retired_instr.x87.$(ARCH) $(OBJDIR)/retired_instr.x87.$(ARCH).o
 
-$(OBJDIR)/retired_instr.x87.$(ARCH).o: $(SRCDIR)/retired_instr.$(ARCH).s
-	$(AS) --defsym FP=1 -o $(OBJDIR)/retired_instr.x87.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
-
-
-$(BINDIR)/retired_instr.mmx.$(ARCH): $(OBJDIR)/retired_instr.mmx.$(ARCH).o
+$(BINDIR)/retired_instr.mmx.$(ARCH): $(SRCDIR)/retired_instr.$(ARCH).s
+	$(AS) --defsym MMX=1 -o $(OBJDIR)/retired_instr.mmx.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
 	$(LD) -o $(BINDIR)/retired_instr.mmx.$(ARCH) $(OBJDIR)/retired_instr.mmx.$(ARCH).o
 
-$(OBJDIR)/retired_instr.mmx.$(ARCH).o: $(SRCDIR)/retired_instr.$(ARCH).s
-	$(AS) --defsym MMX=1 -o $(OBJDIR)/retired_instr.mmx.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
 
-
-$(BINDIR)/retired_instr.sse1.$(ARCH): $(OBJDIR)/retired_instr.sse1.$(ARCH).o
+$(BINDIR)/retired_instr.sse1.$(ARCH): $(SRCDIR)/retired_instr.$(ARCH).s
+	$(AS) --defsym SSE1=1 -o $(OBJDIR)/retired_instr.sse1.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
 	$(LD) -o $(BINDIR)/retired_instr.sse1.$(ARCH) $(OBJDIR)/retired_instr.sse1.$(ARCH).o
 
-$(OBJDIR)/retired_instr.sse1.$(ARCH).o: $(SRCDIR)/retired_instr.$(ARCH).s
-	$(AS) --defsym SSE1=1 -o $(OBJDIR)/retired_instr.sse1.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
-
-
-$(BINDIR)/retired_instr.sse2.$(ARCH): $(OBJDIR)/retired_instr.sse2.$(ARCH).o
+$(BINDIR)/retired_instr.sse2.$(ARCH): $(SRCDIR)/retired_instr.$(ARCH).s
+	$(AS) --defsym SSE2=1 -o $(OBJDIR)/retired_instr.sse2.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
 	$(LD) -o $(BINDIR)/retired_instr.sse2.$(ARCH) $(OBJDIR)/retired_instr.sse2.$(ARCH).o
 
-$(OBJDIR)/retired_instr.sse2.$(ARCH).o: $(SRCDIR)/retired_instr.$(ARCH).s
-	$(AS) --defsym SSE2=1 -o $(OBJDIR)/retired_instr.sse2.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
-
-
-$(BINDIR)/retired_instr.sse3.$(ARCH): $(OBJDIR)/retired_instr.sse3.$(ARCH).o
+$(BINDIR)/retired_instr.sse3.$(ARCH): $(SRCDIR)/retired_instr.$(ARCH).s
+	$(AS) --defsym SSE3=1 -o $(OBJDIR)/retired_instr.sse3.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
 	$(LD) -o $(BINDIR)/retired_instr.sse3.$(ARCH) $(OBJDIR)/retired_instr.sse3.$(ARCH).o
 
-$(OBJDIR)/retired_instr.sse3.$(ARCH).o: $(SRCDIR)/retired_instr.$(ARCH).s
-	$(AS) --defsym SSE3=1 -o $(OBJDIR)/retired_instr.sse3.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
-
-
-$(BINDIR)/retired_instr.empty.$(ARCH): $(OBJDIR)/retired_instr.empty.$(ARCH).o
+$(BINDIR)/retired_instr.empty.$(ARCH): $(SRCDIR)/retired_instr.$(ARCH).s
+	$(AS) -o $(OBJDIR)/retired_instr.empty.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
 	$(LD) -o $(BINDIR)/retired_instr.empty.$(ARCH) $(OBJDIR)/retired_instr.empty.$(ARCH).o
 
-$(OBJDIR)/retired_instr.empty.$(ARCH).o: $(SRCDIR)/retired_instr.$(ARCH).s
-	$(AS) -o $(OBJDIR)/retired_instr.empty.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
-
-
-$(BINDIR)/retired_instr.os.$(ARCH): $(OBJDIR)/retired_instr.os.$(ARCH).o
+$(BINDIR)/retired_instr.os.$(ARCH): $(SRCDIR)/retired_instr.$(ARCH).s
+	$(AS) --defsym OS=1 -o $(OBJDIR)/retired_instr.os.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
 	$(LD) -o $(BINDIR)/retired_instr.os.$(ARCH) $(OBJDIR)/retired_instr.os.$(ARCH).o
 
-$(OBJDIR)/retired_instr.os.$(ARCH).o: $(SRCDIR)/retired_instr.$(ARCH).s
-	$(AS) --defsym OS=1 -o $(OBJDIR)/retired_instr.os.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
-
-
-
-$(BINDIR)/retired_instr.int.$(ARCH): $(OBJDIR)/retired_instr.int.$(ARCH).o
-	$(LD) -o $(BINDIR)/retired_instr.int.$(ARCH) $(OBJDIR)/retired_instr.int.$(ARCH).o
-
-$(OBJDIR)/retired_instr.int.$(ARCH).o: $(SRCDIR)/retired_instr.$(ARCH).s
+$(BINDIR)/retired_instr.int.$(ARCH): $(SRCDIR)/retired_instr.$(ARCH).s
 	$(AS) --defsym ARITH=1 --defsym LOGIC=1 --defsym MOVES=1 \
            --defsym NOPS=1 --defsym FLAGS=1 --defsym BRANCHES=1 \
            --defsym STACK=1 --defsym CMOV=1 --defsym STRING=1 \
            --defsym CPUID=1 --defsym OS=1 \
 	-o $(OBJDIR)/retired_instr.int.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
+	$(LD) -o $(BINDIR)/retired_instr.int.$(ARCH) $(OBJDIR)/retired_instr.int.$(ARCH).o
 
 
-$(BINDIR)/retired_instr.fp.$(ARCH): $(OBJDIR)/retired_instr.fp.$(ARCH).o
-	$(LD) -o $(BINDIR)/retired_instr.fp.$(ARCH) $(OBJDIR)/retired_instr.fp.$(ARCH).o
-
-$(OBJDIR)/retired_instr.fp.$(ARCH).o: $(SRCDIR)/retired_instr.$(ARCH).s
+$(BINDIR)/retired_instr.fp.$(ARCH): $(SRCDIR)/retired_instr.$(ARCH).s
 	$(AS) --defsym FP=1 --defsym MMX=1 \
 	-o $(OBJDIR)/retired_instr.fp.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
+	$(LD) -o $(BINDIR)/retired_instr.fp.$(ARCH) $(OBJDIR)/retired_instr.fp.$(ARCH).o
 
-
-$(BINDIR)/retired_instr.sse.$(ARCH): $(OBJDIR)/retired_instr.sse.$(ARCH).o
-	$(LD) -o $(BINDIR)/retired_instr.sse.$(ARCH) $(OBJDIR)/retired_instr.sse.$(ARCH).o
-
-$(OBJDIR)/retired_instr.sse.$(ARCH).o: $(SRCDIR)/retired_instr.$(ARCH).s
+$(BINDIR)/retired_instr.sse.$(ARCH): $(SRCDIR)/retired_instr.$(ARCH).s
 	$(AS) --defsym SSE1=1 --defsym SSE2=1 --defsym SSE3=1 \
 	-o $(OBJDIR)/retired_instr.sse.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
+	$(LD) -o $(BINDIR)/retired_instr.sse.$(ARCH) $(OBJDIR)/retired_instr.sse.$(ARCH).o
 
 
-$(BINDIR)/retired_instr.all.$(ARCH):	$(OBJDIR)/retired_instr.all.$(ARCH).o
-		$(LD) -o $(BINDIR)/retired_instr.all.$(ARCH) $(OBJDIR)/retired_instr.all.$(ARCH).o
-
-$(OBJDIR)/retired_instr.all.$(ARCH).o:	$(SRCDIR)/retired_instr.$(ARCH).s
+$(BINDIR)/retired_instr.all.$(ARCH):	$(SRCDIR)/retired_instr.$(ARCH).s
 		$(AS) \
 		--defsym ARITH=1 --defsym LOGIC=1 --defsym MOVES=1 \
 		--defsym NOPS=1 --defsym FLAGS=1 --defsym BRANCHES=1 \
@@ -212,11 +152,10 @@ $(OBJDIR)/retired_instr.all.$(ARCH).o:	$(SRCDIR)/retired_instr.$(ARCH).s
 		--defsym SSE1=1 --defsym SSE2=1 --defsym SSE3=1 \
 		--defsym OS=1 \
 		-o $(OBJDIR)/retired_instr.all.$(ARCH).o $(SRCDIR)/retired_instr.$(ARCH).s
+		$(LD) -o $(BINDIR)/retired_instr.all.$(ARCH) $(OBJDIR)/retired_instr.all.$(ARCH).o
 
-$(BINDIR)/retired_instr.valgrind.$(ARCH):	$(OBJDIR)/retired_instr.valgrind.$(ARCH).o
-		$(LD) -o $(BINDIR)/retired_instr.valgrind.$(ARCH) $(OBJDIR)/retired_instr.valgrind.$(ARCH).o
 
-$(OBJDIR)/retired_instr.valgrind.$(ARCH).o:	$(SRCDIR)/retired_instr.x86_64.s
+$(BINDIR)/retired_instr.valgrind.$(ARCH):	$(SRCDIR)/retired_instr.$(ARCH).s
 		$(AS) \
 		--defsym ARITH=1 --defsym LOGIC=1 --defsym MOVES=1 \
 		--defsym NOPS=1 --defsym FLAGS=1 --defsym BRANCHES=1 \
@@ -241,6 +180,9 @@ $(OBJDIR)/retired_instr.valgrind.$(ARCH).o:	$(SRCDIR)/retired_instr.x86_64.s
 		--defsym VALGRIND_FXRSTOR=1 \
 		--defsym VALGRIND_XADD=1 \
 		-o $(OBJDIR)/retired_instr.valgrind.$(ARCH).o $(SRCDIR)/retired_instr.x86_64.s
+		$(LD) -o $(BINDIR)/retired_instr.valgrind.$(ARCH) $(OBJDIR)/retired_instr.valgrind.$(ARCH).o
+
+
 
 clean:		
 	rm -f *~ *.o generate_results
