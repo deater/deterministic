@@ -1,0 +1,711 @@
+### System info
+Kernel:    Linux 2.6.36.2
+Interface: perf_event
+Hostname:  brutus.icl.utk.edu
+Family:    6
+Model:     15
+Stepping:  7
+Modelname: Intel(R) Xeon(R) CPU           X5355  @ 2.66GHz
+Generic:   core2
+Counters used: SIMD_INSTR_RETIRED/HW_INT_RCV
+Runs:      10
+### Interrupts 0 before
+            CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7       
+   0:        138          0          0          0          0          0          0          0   IO-APIC-edge      timer
+   1:          0          0          1          1          0          0          0          0   IO-APIC-edge      i8042
+   3:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   4:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   8:          1          0          0          0          0          0          0          0   IO-APIC-edge      rtc0
+   9:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   acpi
+  12:          1          0          0          0          0          1          1          1   IO-APIC-edge      i8042
+  14:          8   20722872          8          9          6   20924676          9          7   IO-APIC-edge      ide0
+  15:          0          0          0          0          0          0          0          0   IO-APIC-edge      ide1
+  16:        894        883     925169        886        873        890     925172        881   IO-APIC-fasteoi   ioc0
+  20:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ata_piix
+  22:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   uhci_hcd:usb3, uhci_hcd:usb5
+  23:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ehci_hcd:usb1, uhci_hcd:usb2, uhci_hcd:usb4
+  64:        230        244        244        239   99543793        237        239        245   PCI-MSI-edge      eth0
+ NMI:      74397     101013     144683     101483     499499     776770     773593     867825   Non-maskable interrupts
+ LOC:  375317595  277689151  258224417  247349952  375317364  277688774  258224038  247349516   Local timer interrupts
+ SPU:          0          0          0          0          0          0          0          0   Spurious interrupts
+ PMI:      74397     101013     144683     101483     499499     776770     773593     867825   Performance monitoring interrupts
+ PND:      73764     100171     143376     100073     495137     771403     769003     862386   Performance pending work
+ RES:     697067     489954     438683     427319     611229     321278     313847     297691   Rescheduling interrupts
+ CAL:    1315831  233606357  233484829  233670595  233395724  233008534  233426901  233425937   Function call interrupts
+ TLB:  610847366   80662719   25453579   24874648    8706503    8790378    9041390    8649216   TLB shootdowns
+ TRM:          0          0          0          0          0          0          0          0   Thermal event interrupts
+ THR:          0          0          0          0          0          0          0          0   Threshold APIC interrupts
+ MCE:          0          0          0          0          0          0          0          0   Machine check exceptions
+ MCP:      15568      15568      15568      15568      15568      15568      15568      15568   Machine check polls
+ ERR:          7
+ MIS:          0
+### Perf Results 0
+
+ Performance counter stats for './binaries/retired_instr.int.x86_64':
+
+              0  raw 0x5000ce            
+           3356  raw 0x5100c8            
+              0  context-switches        
+
+    3.392434228  seconds time elapsed
+
+### Interrupts 0 after
+            CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7       
+   0:        138          0          0          0          0          0          0          0   IO-APIC-edge      timer
+   1:          0          0          1          1          0          0          0          0   IO-APIC-edge      i8042
+   3:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   4:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   8:          1          0          0          0          0          0          0          0   IO-APIC-edge      rtc0
+   9:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   acpi
+  12:          1          0          0          0          0          1          1          1   IO-APIC-edge      i8042
+  14:          8   20722881          8          9          6   20924685          9          7   IO-APIC-edge      ide0
+  15:          0          0          0          0          0          0          0          0   IO-APIC-edge      ide1
+  16:        894        883     925169        886        873        890     925172        881   IO-APIC-fasteoi   ioc0
+  20:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ata_piix
+  22:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   uhci_hcd:usb3, uhci_hcd:usb5
+  23:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ehci_hcd:usb1, uhci_hcd:usb2, uhci_hcd:usb4
+  64:        230        244        244        239   99543842        237        239        245   PCI-MSI-edge      eth0
+ NMI:      74397     101013     144683     101483     499499     776770     773593     867825   Non-maskable interrupts
+ LOC:  375321006  277692427  258227741  247353268  375320775  277692050  258227362  247352833   Local timer interrupts
+ SPU:          0          0          0          0          0          0          0          0   Spurious interrupts
+ PMI:      74397     101013     144683     101483     499499     776770     773593     867825   Performance monitoring interrupts
+ PND:      73764     100171     143376     100073     495137     771403     769003     862386   Performance pending work
+ RES:     697067     489954     438683     427319     611229     321278     313847     297691   Rescheduling interrupts
+ CAL:    1315831  233606527  233484999  233670765  233395894  233008704  233427071  233426107   Function call interrupts
+ TLB:  610847367   80662719   25453579   24874648    8706505    8790383    9041393    8649219   TLB shootdowns
+ TRM:          0          0          0          0          0          0          0          0   Thermal event interrupts
+ THR:          0          0          0          0          0          0          0          0   Threshold APIC interrupts
+ MCE:          0          0          0          0          0          0          0          0   Machine check exceptions
+ MCP:      15568      15568      15568      15568      15568      15568      15568      15568   Machine check polls
+ ERR:          7
+ MIS:          0
+### Interrupts 1 before
+            CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7       
+   0:        138          0          0          0          0          0          0          0   IO-APIC-edge      timer
+   1:          0          0          1          1          0          0          0          0   IO-APIC-edge      i8042
+   3:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   4:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   8:          1          0          0          0          0          0          0          0   IO-APIC-edge      rtc0
+   9:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   acpi
+  12:          1          0          0          0          0          1          1          1   IO-APIC-edge      i8042
+  14:          8   20722881          8          9          6   20924685          9          7   IO-APIC-edge      ide0
+  15:          0          0          0          0          0          0          0          0   IO-APIC-edge      ide1
+  16:        894        883     925169        886        873        890     925172        881   IO-APIC-fasteoi   ioc0
+  20:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ata_piix
+  22:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   uhci_hcd:usb3, uhci_hcd:usb5
+  23:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ehci_hcd:usb1, uhci_hcd:usb2, uhci_hcd:usb4
+  64:        230        244        244        239   99543861        237        239        245   PCI-MSI-edge      eth0
+ NMI:      74397     101013     144683     101483     499499     776770     773593     867825   Non-maskable interrupts
+ LOC:  375321015  277692436  258227749  247353277  375320783  277692058  258227371  247352841   Local timer interrupts
+ SPU:          0          0          0          0          0          0          0          0   Spurious interrupts
+ PMI:      74397     101013     144683     101483     499499     776770     773593     867825   Performance monitoring interrupts
+ PND:      73764     100171     143376     100073     495137     771403     769003     862386   Performance pending work
+ RES:     697067     489954     438683     427319     611229     321278     313847     297691   Rescheduling interrupts
+ CAL:    1315831  233606528  233485000  233670766  233395895  233008705  233427072  233426108   Function call interrupts
+ TLB:  610847368   80662719   25453579   24874648    8706506    8790385    9041395    8649221   TLB shootdowns
+ TRM:          0          0          0          0          0          0          0          0   Thermal event interrupts
+ THR:          0          0          0          0          0          0          0          0   Threshold APIC interrupts
+ MCE:          0          0          0          0          0          0          0          0   Machine check exceptions
+ MCP:      15568      15568      15568      15568      15568      15568      15568      15568   Machine check polls
+ ERR:          7
+ MIS:          0
+### Perf Results 1
+
+ Performance counter stats for './binaries/retired_instr.int.x86_64':
+
+              0  raw 0x5000ce            
+           3358  raw 0x5100c8            
+              0  context-switches        
+
+    3.393880412  seconds time elapsed
+
+### Interrupts 1 after
+            CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7       
+   0:        138          0          0          0          0          0          0          0   IO-APIC-edge      timer
+   1:          0          0          1          1          0          0          0          0   IO-APIC-edge      i8042
+   3:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   4:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   8:          1          0          0          0          0          0          0          0   IO-APIC-edge      rtc0
+   9:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   acpi
+  12:          1          0          0          0          0          1          1          1   IO-APIC-edge      i8042
+  14:          8   20722899          8          9          6   20924703          9          7   IO-APIC-edge      ide0
+  15:          0          0          0          0          0          0          0          0   IO-APIC-edge      ide1
+  16:        894        883     925169        886        873        890     925172        881   IO-APIC-fasteoi   ioc0
+  20:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ata_piix
+  22:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   uhci_hcd:usb3, uhci_hcd:usb5
+  23:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ehci_hcd:usb1, uhci_hcd:usb2, uhci_hcd:usb4
+  64:        230        244        244        239   99543996        237        239        245   PCI-MSI-edge      eth0
+ NMI:      74397     101013     144683     101483     499499     776770     773593     867825   Non-maskable interrupts
+ LOC:  375324428  277695723  258231057  247356634  375324197  277695346  258230678  247356198   Local timer interrupts
+ SPU:          0          0          0          0          0          0          0          0   Spurious interrupts
+ PMI:      74397     101013     144683     101483     499499     776770     773593     867825   Performance monitoring interrupts
+ PND:      73764     100171     143376     100073     495137     771403     769003     862386   Performance pending work
+ RES:     697067     489955     438683     427322     611234     321279     313847     297691   Rescheduling interrupts
+ CAL:    1315831  233606698  233485170  233670936  233396065  233008875  233427242  233426278   Function call interrupts
+ TLB:  610847369   80662721   25453581   24874649    8706514    8790393    9041399    8649224   TLB shootdowns
+ TRM:          0          0          0          0          0          0          0          0   Thermal event interrupts
+ THR:          0          0          0          0          0          0          0          0   Threshold APIC interrupts
+ MCE:          0          0          0          0          0          0          0          0   Machine check exceptions
+ MCP:      15568      15568      15568      15568      15568      15568      15568      15568   Machine check polls
+ ERR:          7
+ MIS:          0
+### Interrupts 2 before
+            CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7       
+   0:        138          0          0          0          0          0          0          0   IO-APIC-edge      timer
+   1:          0          0          1          1          0          0          0          0   IO-APIC-edge      i8042
+   3:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   4:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   8:          1          0          0          0          0          0          0          0   IO-APIC-edge      rtc0
+   9:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   acpi
+  12:          1          0          0          0          0          1          1          1   IO-APIC-edge      i8042
+  14:          8   20722899          8          9          6   20924703          9          7   IO-APIC-edge      ide0
+  15:          0          0          0          0          0          0          0          0   IO-APIC-edge      ide1
+  16:        894        883     925169        886        873        890     925172        881   IO-APIC-fasteoi   ioc0
+  20:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ata_piix
+  22:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   uhci_hcd:usb3, uhci_hcd:usb5
+  23:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ehci_hcd:usb1, uhci_hcd:usb2, uhci_hcd:usb4
+  64:        230        244        244        239   99544015        237        239        245   PCI-MSI-edge      eth0
+ NMI:      74397     101013     144683     101483     499499     776770     773593     867825   Non-maskable interrupts
+ LOC:  375324437  277695732  258231066  247356643  375324206  277695355  258230687  247356208   Local timer interrupts
+ SPU:          0          0          0          0          0          0          0          0   Spurious interrupts
+ PMI:      74397     101013     144683     101483     499499     776770     773593     867825   Performance monitoring interrupts
+ PND:      73764     100171     143376     100073     495137     771403     769003     862386   Performance pending work
+ RES:     697067     489955     438683     427322     611234     321279     313847     297691   Rescheduling interrupts
+ CAL:    1315831  233606699  233485171  233670936  233396066  233008876  233427243  233426279   Function call interrupts
+ TLB:  610847370   80662721   25453581   24874649    8706515    8790395    9041401    8649224   TLB shootdowns
+ TRM:          0          0          0          0          0          0          0          0   Thermal event interrupts
+ THR:          0          0          0          0          0          0          0          0   Threshold APIC interrupts
+ MCE:          0          0          0          0          0          0          0          0   Machine check exceptions
+ MCP:      15568      15568      15568      15568      15568      15568      15568      15568   Machine check polls
+ ERR:          7
+ MIS:          0
+### Perf Results 2
+
+ Performance counter stats for './binaries/retired_instr.int.x86_64':
+
+              0  raw 0x5000ce            
+           3363  raw 0x5100c8            
+              0  context-switches        
+
+    3.389707284  seconds time elapsed
+
+### Interrupts 2 after
+            CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7       
+   0:        138          0          0          0          0          0          0          0   IO-APIC-edge      timer
+   1:          0          0          1          1          0          0          0          0   IO-APIC-edge      i8042
+   3:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   4:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   8:          1          0          0          0          0          0          0          0   IO-APIC-edge      rtc0
+   9:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   acpi
+  12:          1          0          0          0          0          1          1          1   IO-APIC-edge      i8042
+  14:          8   20722917          8          9          6   20924721          9          7   IO-APIC-edge      ide0
+  15:          0          0          0          0          0          0          0          0   IO-APIC-edge      ide1
+  16:        894        883     925174        886        873        890     925176        881   IO-APIC-fasteoi   ioc0
+  20:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ata_piix
+  22:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   uhci_hcd:usb3, uhci_hcd:usb5
+  23:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ehci_hcd:usb1, uhci_hcd:usb2, uhci_hcd:usb4
+  64:        230        244        244        239   99544067        237        239        245   PCI-MSI-edge      eth0
+ NMI:      74397     101013     144683     101483     499499     776770     773593     867825   Non-maskable interrupts
+ LOC:  375328210  277699361  258234726  247360354  375327979  277698984  258234347  247359919   Local timer interrupts
+ SPU:          0          0          0          0          0          0          0          0   Spurious interrupts
+ PMI:      74397     101013     144683     101483     499499     776770     773593     867825   Performance monitoring interrupts
+ PND:      73764     100171     143376     100073     495137     771403     769003     862386   Performance pending work
+ RES:     697067     489956     438684     427323     611234     321279     313848     297691   Rescheduling interrupts
+ CAL:    1315840  233606887  233485359  233671124  233396254  233009064  233427431  233426467   Function call interrupts
+ TLB:  610847371   80662721   25453581   24874649    8706517    8790400    9041404    8649225   TLB shootdowns
+ TRM:          0          0          0          0          0          0          0          0   Thermal event interrupts
+ THR:          0          0          0          0          0          0          0          0   Threshold APIC interrupts
+ MCE:          0          0          0          0          0          0          0          0   Machine check exceptions
+ MCP:      15568      15568      15568      15568      15568      15568      15568      15568   Machine check polls
+ ERR:          7
+ MIS:          0
+### Interrupts 3 before
+            CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7       
+   0:        138          0          0          0          0          0          0          0   IO-APIC-edge      timer
+   1:          0          0          1          1          0          0          0          0   IO-APIC-edge      i8042
+   3:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   4:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   8:          1          0          0          0          0          0          0          0   IO-APIC-edge      rtc0
+   9:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   acpi
+  12:          1          0          0          0          0          1          1          1   IO-APIC-edge      i8042
+  14:          8   20722917          8          9          6   20924721          9          7   IO-APIC-edge      ide0
+  15:          0          0          0          0          0          0          0          0   IO-APIC-edge      ide1
+  16:        894        883     925174        886        873        890     925176        881   IO-APIC-fasteoi   ioc0
+  20:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ata_piix
+  22:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   uhci_hcd:usb3, uhci_hcd:usb5
+  23:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ehci_hcd:usb1, uhci_hcd:usb2, uhci_hcd:usb4
+  64:        230        244        244        239   99544083        237        239        245   PCI-MSI-edge      eth0
+ NMI:      74397     101013     144683     101483     499499     776770     773593     867825   Non-maskable interrupts
+ LOC:  375328219  277699370  258234735  247360363  375327988  277698993  258234356  247359927   Local timer interrupts
+ SPU:          0          0          0          0          0          0          0          0   Spurious interrupts
+ PMI:      74397     101013     144683     101483     499499     776770     773593     867825   Performance monitoring interrupts
+ PND:      73764     100171     143376     100073     495137     771403     769003     862386   Performance pending work
+ RES:     697067     489956     438684     427323     611234     321279     313848     297691   Rescheduling interrupts
+ CAL:    1315840  233606888  233485360  233671125  233396255  233009065  233427432  233426468   Function call interrupts
+ TLB:  610847372   80662721   25453581   24874649    8706518    8790402    9041406    8649227   TLB shootdowns
+ TRM:          0          0          0          0          0          0          0          0   Thermal event interrupts
+ THR:          0          0          0          0          0          0          0          0   Threshold APIC interrupts
+ MCE:          0          0          0          0          0          0          0          0   Machine check exceptions
+ MCP:      15568      15568      15568      15568      15568      15568      15568      15568   Machine check polls
+ ERR:          7
+ MIS:          0
+### Perf Results 3
+
+ Performance counter stats for './binaries/retired_instr.int.x86_64':
+
+              0  raw 0x5000ce            
+           3379  raw 0x5100c8            
+              0  context-switches        
+
+    3.392121377  seconds time elapsed
+
+### Interrupts 3 after
+            CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7       
+   0:        138          0          0          0          0          0          0          0   IO-APIC-edge      timer
+   1:          0          0          1          1          0          0          0          0   IO-APIC-edge      i8042
+   3:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   4:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   8:          1          0          0          0          0          0          0          0   IO-APIC-edge      rtc0
+   9:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   acpi
+  12:          1          0          0          0          0          1          1          1   IO-APIC-edge      i8042
+  14:          8   20722935          8          9          6   20924739          9          7   IO-APIC-edge      ide0
+  15:          0          0          0          0          0          0          0          0   IO-APIC-edge      ide1
+  16:        894        883     925184        886        873        890     925187        881   IO-APIC-fasteoi   ioc0
+  20:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ata_piix
+  22:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   uhci_hcd:usb3, uhci_hcd:usb5
+  23:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ehci_hcd:usb1, uhci_hcd:usb2, uhci_hcd:usb4
+  64:        230        244        244        239   99544145        237        239        245   PCI-MSI-edge      eth0
+ NMI:      74397     101013     144683     101483     499499     776770     773593     867825   Non-maskable interrupts
+ LOC:  375331632  277702648  258238057  247363676  375331401  277702270  258237679  247363240   Local timer interrupts
+ SPU:          0          0          0          0          0          0          0          0   Spurious interrupts
+ PMI:      74397     101013     144683     101483     499499     776770     773593     867825   Performance monitoring interrupts
+ PND:      73764     100171     143376     100073     495137     771403     769003     862386   Performance pending work
+ RES:     697067     489956     438684     427323     611234     321279     313848     297691   Rescheduling interrupts
+ CAL:    1315861  233607059  233485531  233671296  233396426  233009236  233427603  233426639   Function call interrupts
+ TLB:  610847373   80662721   25453581   24874649    8706520    8790407    9041409    8649230   TLB shootdowns
+ TRM:          0          0          0          0          0          0          0          0   Thermal event interrupts
+ THR:          0          0          0          0          0          0          0          0   Threshold APIC interrupts
+ MCE:          0          0          0          0          0          0          0          0   Machine check exceptions
+ MCP:      15568      15568      15568      15568      15568      15568      15568      15568   Machine check polls
+ ERR:          7
+ MIS:          0
+### Interrupts 4 before
+            CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7       
+   0:        138          0          0          0          0          0          0          0   IO-APIC-edge      timer
+   1:          0          0          1          1          0          0          0          0   IO-APIC-edge      i8042
+   3:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   4:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   8:          1          0          0          0          0          0          0          0   IO-APIC-edge      rtc0
+   9:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   acpi
+  12:          1          0          0          0          0          1          1          1   IO-APIC-edge      i8042
+  14:          8   20722935          8          9          6   20924739          9          7   IO-APIC-edge      ide0
+  15:          0          0          0          0          0          0          0          0   IO-APIC-edge      ide1
+  16:        894        883     925184        886        873        890     925187        881   IO-APIC-fasteoi   ioc0
+  20:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ata_piix
+  22:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   uhci_hcd:usb3, uhci_hcd:usb5
+  23:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ehci_hcd:usb1, uhci_hcd:usb2, uhci_hcd:usb4
+  64:        230        244        244        239   99544165        237        239        245   PCI-MSI-edge      eth0
+ NMI:      74397     101013     144683     101483     499499     776770     773593     867825   Non-maskable interrupts
+ LOC:  375331641  277702657  258238067  247363685  375331410  277702280  258237688  247363250   Local timer interrupts
+ SPU:          0          0          0          0          0          0          0          0   Spurious interrupts
+ PMI:      74397     101013     144683     101483     499499     776770     773593     867825   Performance monitoring interrupts
+ PND:      73764     100171     143376     100073     495137     771403     769003     862386   Performance pending work
+ RES:     697067     489956     438684     427323     611234     321279     313848     297691   Rescheduling interrupts
+ CAL:    1315861  233607059  233485531  233671296  233396426  233009236  233427603  233426639   Function call interrupts
+ TLB:  610847374   80662721   25453581   24874649    8706521    8790409    9041411    8649232   TLB shootdowns
+ TRM:          0          0          0          0          0          0          0          0   Thermal event interrupts
+ THR:          0          0          0          0          0          0          0          0   Threshold APIC interrupts
+ MCE:          0          0          0          0          0          0          0          0   Machine check exceptions
+ MCP:      15568      15568      15568      15568      15568      15568      15568      15568   Machine check polls
+ ERR:          7
+ MIS:          0
+### Perf Results 4
+
+ Performance counter stats for './binaries/retired_instr.int.x86_64':
+
+              0  raw 0x5000ce            
+           3355  raw 0x5100c8            
+              0  context-switches        
+
+    3.391359948  seconds time elapsed
+
+### Interrupts 4 after
+            CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7       
+   0:        138          0          0          0          0          0          0          0   IO-APIC-edge      timer
+   1:          0          0          1          1          0          0          0          0   IO-APIC-edge      i8042
+   3:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   4:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   8:          1          0          0          0          0          0          0          0   IO-APIC-edge      rtc0
+   9:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   acpi
+  12:          1          0          0          0          0          1          1          1   IO-APIC-edge      i8042
+  14:          8   20722944          8          9          6   20924748          9          7   IO-APIC-edge      ide0
+  15:          0          0          0          0          0          0          0          0   IO-APIC-edge      ide1
+  16:        894        883     925184        886        873        890     925187        881   IO-APIC-fasteoi   ioc0
+  20:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ata_piix
+  22:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   uhci_hcd:usb3, uhci_hcd:usb5
+  23:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ehci_hcd:usb1, uhci_hcd:usb2, uhci_hcd:usb4
+  64:        230        244        244        239   99544218        237        239        245   PCI-MSI-edge      eth0
+ NMI:      74397     101013     144683     101483     499499     776770     773593     867825   Non-maskable interrupts
+ LOC:  375335053  277705934  258241387  247366995  375334822  277705557  258241009  247366560   Local timer interrupts
+ SPU:          0          0          0          0          0          0          0          0   Spurious interrupts
+ PMI:      74397     101013     144683     101483     499499     776770     773593     867825   Performance monitoring interrupts
+ PND:      73764     100171     143376     100073     495137     771403     769003     862386   Performance pending work
+ RES:     697067     489956     438684     427323     611234     321279     313848     297691   Rescheduling interrupts
+ CAL:    1315861  233607230  233485702  233671467  233396597  233009407  233427774  233426810   Function call interrupts
+ TLB:  610847375   80662721   25453581   24874649    8706524    8790414    9041415    8649235   TLB shootdowns
+ TRM:          0          0          0          0          0          0          0          0   Thermal event interrupts
+ THR:          0          0          0          0          0          0          0          0   Threshold APIC interrupts
+ MCE:          0          0          0          0          0          0          0          0   Machine check exceptions
+ MCP:      15568      15568      15568      15568      15568      15568      15568      15568   Machine check polls
+ ERR:          7
+ MIS:          0
+### Interrupts 5 before
+            CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7       
+   0:        138          0          0          0          0          0          0          0   IO-APIC-edge      timer
+   1:          0          0          1          1          0          0          0          0   IO-APIC-edge      i8042
+   3:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   4:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   8:          1          0          0          0          0          0          0          0   IO-APIC-edge      rtc0
+   9:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   acpi
+  12:          1          0          0          0          0          1          1          1   IO-APIC-edge      i8042
+  14:          8   20722944          8          9          6   20924748          9          7   IO-APIC-edge      ide0
+  15:          0          0          0          0          0          0          0          0   IO-APIC-edge      ide1
+  16:        894        883     925184        886        873        890     925187        881   IO-APIC-fasteoi   ioc0
+  20:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ata_piix
+  22:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   uhci_hcd:usb3, uhci_hcd:usb5
+  23:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ehci_hcd:usb1, uhci_hcd:usb2, uhci_hcd:usb4
+  64:        230        244        244        239   99544237        237        239        245   PCI-MSI-edge      eth0
+ NMI:      74397     101013     144683     101483     499499     776770     773593     867825   Non-maskable interrupts
+ LOC:  375335062  277705943  258241396  247367004  375334831  277705566  258241018  247366569   Local timer interrupts
+ SPU:          0          0          0          0          0          0          0          0   Spurious interrupts
+ PMI:      74397     101013     144683     101483     499499     776770     773593     867825   Performance monitoring interrupts
+ PND:      73764     100171     143376     100073     495137     771403     769003     862386   Performance pending work
+ RES:     697067     489956     438684     427323     611234     321279     313848     297691   Rescheduling interrupts
+ CAL:    1315861  233607230  233485702  233671467  233396597  233009407  233427774  233426810   Function call interrupts
+ TLB:  610847376   80662721   25453581   24874649    8706525    8790416    9041417    8649237   TLB shootdowns
+ TRM:          0          0          0          0          0          0          0          0   Thermal event interrupts
+ THR:          0          0          0          0          0          0          0          0   Threshold APIC interrupts
+ MCE:          0          0          0          0          0          0          0          0   Machine check exceptions
+ MCP:      15568      15568      15568      15568      15568      15568      15568      15568   Machine check polls
+ ERR:          7
+ MIS:          0
+### Perf Results 5
+
+ Performance counter stats for './binaries/retired_instr.int.x86_64':
+
+              0  raw 0x5000ce            
+           3355  raw 0x5100c8            
+              0  context-switches        
+
+    3.391137851  seconds time elapsed
+
+### Interrupts 5 after
+            CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7       
+   0:        138          0          0          0          0          0          0          0   IO-APIC-edge      timer
+   1:          0          0          1          1          0          0          0          0   IO-APIC-edge      i8042
+   3:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   4:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   8:          1          0          0          0          0          0          0          0   IO-APIC-edge      rtc0
+   9:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   acpi
+  12:          1          0          0          0          0          1          1          1   IO-APIC-edge      i8042
+  14:          8   20722962          8          9          6   20924766          9          7   IO-APIC-edge      ide0
+  15:          0          0          0          0          0          0          0          0   IO-APIC-edge      ide1
+  16:        894        883     925184        886        873        890     925187        881   IO-APIC-fasteoi   ioc0
+  20:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ata_piix
+  22:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   uhci_hcd:usb3, uhci_hcd:usb5
+  23:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ehci_hcd:usb1, uhci_hcd:usb2, uhci_hcd:usb4
+  64:        230        244        244        239   99544288        237        239        245   PCI-MSI-edge      eth0
+ NMI:      74397     101013     144683     101483     499499     776770     773593     867825   Non-maskable interrupts
+ LOC:  375338471  277709218  258244714  247370313  375338240  277708840  258244336  247369878   Local timer interrupts
+ SPU:          0          0          0          0          0          0          0          0   Spurious interrupts
+ PMI:      74397     101013     144683     101483     499499     776770     773593     867825   Performance monitoring interrupts
+ PND:      73764     100171     143376     100073     495137     771403     769003     862386   Performance pending work
+ RES:     697067     489956     438684     427323     611234     321279     313848     297691   Rescheduling interrupts
+ CAL:    1315861  233607400  233485872  233671637  233396767  233009577  233427944  233426980   Function call interrupts
+ TLB:  610847377   80662721   25453581   24874649    8706528    8790421    9041421    8649240   TLB shootdowns
+ TRM:          0          0          0          0          0          0          0          0   Thermal event interrupts
+ THR:          0          0          0          0          0          0          0          0   Threshold APIC interrupts
+ MCE:          0          0          0          0          0          0          0          0   Machine check exceptions
+ MCP:      15568      15568      15568      15568      15568      15568      15568      15568   Machine check polls
+ ERR:          7
+ MIS:          0
+### Interrupts 6 before
+            CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7       
+   0:        138          0          0          0          0          0          0          0   IO-APIC-edge      timer
+   1:          0          0          1          1          0          0          0          0   IO-APIC-edge      i8042
+   3:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   4:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   8:          1          0          0          0          0          0          0          0   IO-APIC-edge      rtc0
+   9:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   acpi
+  12:          1          0          0          0          0          1          1          1   IO-APIC-edge      i8042
+  14:          8   20722962          8          9          6   20924766          9          7   IO-APIC-edge      ide0
+  15:          0          0          0          0          0          0          0          0   IO-APIC-edge      ide1
+  16:        894        883     925184        886        873        890     925187        881   IO-APIC-fasteoi   ioc0
+  20:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ata_piix
+  22:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   uhci_hcd:usb3, uhci_hcd:usb5
+  23:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ehci_hcd:usb1, uhci_hcd:usb2, uhci_hcd:usb4
+  64:        230        244        244        239   99544304        237        239        245   PCI-MSI-edge      eth0
+ NMI:      74397     101013     144683     101483     499499     776770     773593     867825   Non-maskable interrupts
+ LOC:  375338480  277709226  258244723  247370322  375338249  277708849  258244344  247369886   Local timer interrupts
+ SPU:          0          0          0          0          0          0          0          0   Spurious interrupts
+ PMI:      74397     101013     144683     101483     499499     776770     773593     867825   Performance monitoring interrupts
+ PND:      73764     100171     143376     100073     495137     771403     769003     862386   Performance pending work
+ RES:     697067     489956     438684     427323     611234     321279     313848     297691   Rescheduling interrupts
+ CAL:    1315861  233607401  233485873  233671638  233396768  233009578  233427945  233426981   Function call interrupts
+ TLB:  610847378   80662721   25453581   24874649    8706529    8790423    9041423    8649242   TLB shootdowns
+ TRM:          0          0          0          0          0          0          0          0   Thermal event interrupts
+ THR:          0          0          0          0          0          0          0          0   Threshold APIC interrupts
+ MCE:          0          0          0          0          0          0          0          0   Machine check exceptions
+ MCP:      15568      15568      15568      15568      15568      15568      15568      15568   Machine check polls
+ ERR:          7
+ MIS:          0
+### Perf Results 6
+
+ Performance counter stats for './binaries/retired_instr.int.x86_64':
+
+              0  raw 0x5000ce            
+           3356  raw 0x5100c8            
+              0  context-switches        
+
+    3.390950746  seconds time elapsed
+
+### Interrupts 6 after
+            CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7       
+   0:        138          0          0          0          0          0          0          0   IO-APIC-edge      timer
+   1:          0          0          1          1          0          0          0          0   IO-APIC-edge      i8042
+   3:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   4:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   8:          1          0          0          0          0          0          0          0   IO-APIC-edge      rtc0
+   9:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   acpi
+  12:          1          0          0          0          0          1          1          1   IO-APIC-edge      i8042
+  14:          8   20722980          8          9          6   20924784          9          7   IO-APIC-edge      ide0
+  15:          0          0          0          0          0          0          0          0   IO-APIC-edge      ide1
+  16:        894        883     925185        886        873        890     925188        881   IO-APIC-fasteoi   ioc0
+  20:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ata_piix
+  22:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   uhci_hcd:usb3, uhci_hcd:usb5
+  23:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ehci_hcd:usb1, uhci_hcd:usb2, uhci_hcd:usb4
+  64:        230        244        244        239   99544348        237        239        245   PCI-MSI-edge      eth0
+ NMI:      74397     101013     144683     101483     499499     776770     773593     867825   Non-maskable interrupts
+ LOC:  375341889  277712501  258248048  247373638  375341658  277712123  258247669  247373202   Local timer interrupts
+ SPU:          0          0          0          0          0          0          0          0   Spurious interrupts
+ PMI:      74397     101013     144683     101483     499499     776770     773593     867825   Performance monitoring interrupts
+ PND:      73764     100171     143376     100073     495137     771403     769003     862386   Performance pending work
+ RES:     697067     489956     438684     427323     611234     321279     313848     297691   Rescheduling interrupts
+ CAL:    1315863  233607571  233486043  233671808  233396938  233009748  233428115  233427151   Function call interrupts
+ TLB:  610847379   80662721   25453581   24874649    8706532    8790428    9041427    8649245   TLB shootdowns
+ TRM:          0          0          0          0          0          0          0          0   Thermal event interrupts
+ THR:          0          0          0          0          0          0          0          0   Threshold APIC interrupts
+ MCE:          0          0          0          0          0          0          0          0   Machine check exceptions
+ MCP:      15568      15568      15568      15568      15568      15568      15568      15568   Machine check polls
+ ERR:          7
+ MIS:          0
+### Interrupts 7 before
+            CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7       
+   0:        138          0          0          0          0          0          0          0   IO-APIC-edge      timer
+   1:          0          0          1          1          0          0          0          0   IO-APIC-edge      i8042
+   3:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   4:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   8:          1          0          0          0          0          0          0          0   IO-APIC-edge      rtc0
+   9:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   acpi
+  12:          1          0          0          0          0          1          1          1   IO-APIC-edge      i8042
+  14:          8   20722980          8          9          6   20924784          9          7   IO-APIC-edge      ide0
+  15:          0          0          0          0          0          0          0          0   IO-APIC-edge      ide1
+  16:        894        883     925185        886        873        890     925188        881   IO-APIC-fasteoi   ioc0
+  20:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ata_piix
+  22:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   uhci_hcd:usb3, uhci_hcd:usb5
+  23:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ehci_hcd:usb1, uhci_hcd:usb2, uhci_hcd:usb4
+  64:        230        244        244        239   99544364        237        239        245   PCI-MSI-edge      eth0
+ NMI:      74397     101013     144683     101483     499499     776770     773593     867825   Non-maskable interrupts
+ LOC:  375341898  277712509  258248056  247373646  375341667  277712131  258247677  247373210   Local timer interrupts
+ SPU:          0          0          0          0          0          0          0          0   Spurious interrupts
+ PMI:      74397     101013     144683     101483     499499     776770     773593     867825   Performance monitoring interrupts
+ PND:      73764     100171     143376     100073     495137     771403     769003     862386   Performance pending work
+ RES:     697067     489956     438684     427323     611234     321279     313848     297691   Rescheduling interrupts
+ CAL:    1315863  233607572  233486044  233671809  233396939  233009749  233428116  233427152   Function call interrupts
+ TLB:  610847380   80662721   25453581   24874649    8706533    8790430    9041429    8649247   TLB shootdowns
+ TRM:          0          0          0          0          0          0          0          0   Thermal event interrupts
+ THR:          0          0          0          0          0          0          0          0   Threshold APIC interrupts
+ MCE:          0          0          0          0          0          0          0          0   Machine check exceptions
+ MCP:      15568      15568      15568      15568      15568      15568      15568      15568   Machine check polls
+ ERR:          7
+ MIS:          0
+### Perf Results 7
+
+ Performance counter stats for './binaries/retired_instr.int.x86_64':
+
+              0  raw 0x5000ce            
+           3361  raw 0x5100c8            
+              0  context-switches        
+
+    3.392286252  seconds time elapsed
+
+### Interrupts 7 after
+            CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7       
+   0:        138          0          0          0          0          0          0          0   IO-APIC-edge      timer
+   1:          0          0          1          1          0          0          0          0   IO-APIC-edge      i8042
+   3:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   4:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   8:          1          0          0          0          0          0          0          0   IO-APIC-edge      rtc0
+   9:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   acpi
+  12:          1          0          0          0          0          1          1          1   IO-APIC-edge      i8042
+  14:          8   20722989          8          9          6   20924793          9          7   IO-APIC-edge      ide0
+  15:          0          0          0          0          0          0          0          0   IO-APIC-edge      ide1
+  16:        894        883     925185        886        873        890     925188        881   IO-APIC-fasteoi   ioc0
+  20:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ata_piix
+  22:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   uhci_hcd:usb3, uhci_hcd:usb5
+  23:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ehci_hcd:usb1, uhci_hcd:usb2, uhci_hcd:usb4
+  64:        230        244        244        239   99544416        237        239        245   PCI-MSI-edge      eth0
+ NMI:      74397     101013     144683     101483     499499     776770     773593     867825   Non-maskable interrupts
+ LOC:  375345308  277715785  258251373  247376953  375345077  277715407  258250994  247376517   Local timer interrupts
+ SPU:          0          0          0          0          0          0          0          0   Spurious interrupts
+ PMI:      74397     101013     144683     101483     499499     776770     773593     867825   Performance monitoring interrupts
+ PND:      73764     100171     143376     100073     495137     771403     769003     862386   Performance pending work
+ RES:     697067     489956     438684     427323     611234     321279     313848     297691   Rescheduling interrupts
+ CAL:    1315863  233607742  233486214  233671979  233397109  233009919  233428286  233427322   Function call interrupts
+ TLB:  610847381   80662721   25453581   24874649    8706535    8790435    9041432    8649250   TLB shootdowns
+ TRM:          0          0          0          0          0          0          0          0   Thermal event interrupts
+ THR:          0          0          0          0          0          0          0          0   Threshold APIC interrupts
+ MCE:          0          0          0          0          0          0          0          0   Machine check exceptions
+ MCP:      15568      15568      15568      15568      15568      15568      15568      15568   Machine check polls
+ ERR:          7
+ MIS:          0
+### Interrupts 8 before
+            CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7       
+   0:        138          0          0          0          0          0          0          0   IO-APIC-edge      timer
+   1:          0          0          1          1          0          0          0          0   IO-APIC-edge      i8042
+   3:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   4:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   8:          1          0          0          0          0          0          0          0   IO-APIC-edge      rtc0
+   9:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   acpi
+  12:          1          0          0          0          0          1          1          1   IO-APIC-edge      i8042
+  14:          8   20722989          8          9          6   20924793          9          7   IO-APIC-edge      ide0
+  15:          0          0          0          0          0          0          0          0   IO-APIC-edge      ide1
+  16:        894        883     925185        886        873        890     925188        881   IO-APIC-fasteoi   ioc0
+  20:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ata_piix
+  22:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   uhci_hcd:usb3, uhci_hcd:usb5
+  23:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ehci_hcd:usb1, uhci_hcd:usb2, uhci_hcd:usb4
+  64:        230        244        244        239   99544434        237        239        245   PCI-MSI-edge      eth0
+ NMI:      74397     101013     144683     101483     499499     776770     773593     867825   Non-maskable interrupts
+ LOC:  375345316  277715793  258251381  247376961  375345085  277715415  258251003  247376526   Local timer interrupts
+ SPU:          0          0          0          0          0          0          0          0   Spurious interrupts
+ PMI:      74397     101013     144683     101483     499499     776770     773593     867825   Performance monitoring interrupts
+ PND:      73764     100171     143376     100073     495137     771403     769003     862386   Performance pending work
+ RES:     697067     489956     438684     427323     611234     321279     313848     297691   Rescheduling interrupts
+ CAL:    1315863  233607743  233486215  233671980  233397110  233009920  233428287  233427323   Function call interrupts
+ TLB:  610847382   80662721   25453581   24874649    8706536    8790437    9041434    8649252   TLB shootdowns
+ TRM:          0          0          0          0          0          0          0          0   Thermal event interrupts
+ THR:          0          0          0          0          0          0          0          0   Threshold APIC interrupts
+ MCE:          0          0          0          0          0          0          0          0   Machine check exceptions
+ MCP:      15568      15568      15568      15568      15568      15568      15568      15568   Machine check polls
+ ERR:          7
+ MIS:          0
+### Perf Results 8
+
+ Performance counter stats for './binaries/retired_instr.int.x86_64':
+
+              0  raw 0x5000ce            
+           3357  raw 0x5100c8            
+              0  context-switches        
+
+    3.391929752  seconds time elapsed
+
+### Interrupts 8 after
+            CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7       
+   0:        138          0          0          0          0          0          0          0   IO-APIC-edge      timer
+   1:          0          0          1          1          0          0          0          0   IO-APIC-edge      i8042
+   3:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   4:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   8:          1          0          0          0          0          0          0          0   IO-APIC-edge      rtc0
+   9:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   acpi
+  12:          1          0          0          0          0          1          1          1   IO-APIC-edge      i8042
+  14:          8   20723007          8          9          6   20924811          9          7   IO-APIC-edge      ide0
+  15:          0          0          0          0          0          0          0          0   IO-APIC-edge      ide1
+  16:        894        883     925185        886        873        890     925188        881   IO-APIC-fasteoi   ioc0
+  20:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ata_piix
+  22:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   uhci_hcd:usb3, uhci_hcd:usb5
+  23:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ehci_hcd:usb1, uhci_hcd:usb2, uhci_hcd:usb4
+  64:        230        244        244        239   99544482        237        239        245   PCI-MSI-edge      eth0
+ NMI:      74397     101013     144683     101483     499499     776770     773593     867825   Non-maskable interrupts
+ LOC:  375348726  277719068  258254711  247380283  375348495  277718690  258254332  247379848   Local timer interrupts
+ SPU:          0          0          0          0          0          0          0          0   Spurious interrupts
+ PMI:      74397     101013     144683     101483     499499     776770     773593     867825   Performance monitoring interrupts
+ PND:      73764     100171     143376     100073     495137     771403     769003     862386   Performance pending work
+ RES:     697067     489956     438684     427323     611234     321279     313848     297691   Rescheduling interrupts
+ CAL:    1315863  233607913  233486385  233672150  233397280  233010090  233428457  233427493   Function call interrupts
+ TLB:  610847383   80662721   25453581   24874649    8706538    8790442    9041437    8649255   TLB shootdowns
+ TRM:          0          0          0          0          0          0          0          0   Thermal event interrupts
+ THR:          0          0          0          0          0          0          0          0   Threshold APIC interrupts
+ MCE:          0          0          0          0          0          0          0          0   Machine check exceptions
+ MCP:      15568      15568      15568      15568      15568      15568      15568      15568   Machine check polls
+ ERR:          7
+ MIS:          0
+### Interrupts 9 before
+            CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7       
+   0:        138          0          0          0          0          0          0          0   IO-APIC-edge      timer
+   1:          0          0          1          1          0          0          0          0   IO-APIC-edge      i8042
+   3:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   4:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   8:          1          0          0          0          0          0          0          0   IO-APIC-edge      rtc0
+   9:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   acpi
+  12:          1          0          0          0          0          1          1          1   IO-APIC-edge      i8042
+  14:          8   20723007          8          9          6   20924811          9          7   IO-APIC-edge      ide0
+  15:          0          0          0          0          0          0          0          0   IO-APIC-edge      ide1
+  16:        894        883     925185        886        873        890     925188        881   IO-APIC-fasteoi   ioc0
+  20:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ata_piix
+  22:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   uhci_hcd:usb3, uhci_hcd:usb5
+  23:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ehci_hcd:usb1, uhci_hcd:usb2, uhci_hcd:usb4
+  64:        230        244        244        239   99544498        237        239        245   PCI-MSI-edge      eth0
+ NMI:      74397     101013     144683     101483     499499     776770     773593     867825   Non-maskable interrupts
+ LOC:  375348735  277719076  258254719  247380291  375348504  277718699  258254340  247379856   Local timer interrupts
+ SPU:          0          0          0          0          0          0          0          0   Spurious interrupts
+ PMI:      74397     101013     144683     101483     499499     776770     773593     867825   Performance monitoring interrupts
+ PND:      73764     100171     143376     100073     495137     771403     769003     862386   Performance pending work
+ RES:     697067     489956     438684     427323     611234     321279     313848     297691   Rescheduling interrupts
+ CAL:    1315863  233607914  233486386  233672151  233397281  233010091  233428458  233427494   Function call interrupts
+ TLB:  610847384   80662721   25453581   24874649    8706539    8790444    9041439    8649257   TLB shootdowns
+ TRM:          0          0          0          0          0          0          0          0   Thermal event interrupts
+ THR:          0          0          0          0          0          0          0          0   Threshold APIC interrupts
+ MCE:          0          0          0          0          0          0          0          0   Machine check exceptions
+ MCP:      15568      15568      15568      15568      15568      15568      15568      15568   Machine check polls
+ ERR:          7
+ MIS:          0
+### Perf Results 9
+
+ Performance counter stats for './binaries/retired_instr.int.x86_64':
+
+              0  raw 0x5000ce            
+           3357  raw 0x5100c8            
+              0  context-switches        
+
+    3.393012352  seconds time elapsed
+
+### Interrupts 9 after
+            CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7       
+   0:        138          0          0          0          0          0          0          0   IO-APIC-edge      timer
+   1:          0          0          1          1          0          0          0          0   IO-APIC-edge      i8042
+   3:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   4:          1          1          0          0          0          0          0          0   IO-APIC-edge    
+   8:          1          0          0          0          0          0          0          0   IO-APIC-edge      rtc0
+   9:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   acpi
+  12:          1          0          0          0          0          1          1          1   IO-APIC-edge      i8042
+  14:          8   20723025          8          9          6   20924829          9          7   IO-APIC-edge      ide0
+  15:          0          0          0          0          0          0          0          0   IO-APIC-edge      ide1
+  16:        894        883     925185        886        873        890     925188        881   IO-APIC-fasteoi   ioc0
+  20:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ata_piix
+  22:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   uhci_hcd:usb3, uhci_hcd:usb5
+  23:          0          0          0          0          0          0          0          0   IO-APIC-fasteoi   ehci_hcd:usb1, uhci_hcd:usb2, uhci_hcd:usb4
+  64:        230        244        244        239   99544538        237        239        245   PCI-MSI-edge      eth0
+ NMI:      74397     101013     144683     101483     499499     776770     773593     867825   Non-maskable interrupts
+ LOC:  375352145  277722352  258258037  247383600  375351914  277721974  258257658  247383165   Local timer interrupts
+ SPU:          0          0          0          0          0          0          0          0   Spurious interrupts
+ PMI:      74397     101013     144683     101483     499499     776770     773593     867825   Performance monitoring interrupts
+ PND:      73764     100171     143376     100073     495137     771403     769003     862386   Performance pending work
+ RES:     697067     489956     438684     427323     611234     321279     313848     297691   Rescheduling interrupts
+ CAL:    1315863  233608084  233486556  233672321  233397451  233010261  233428628  233427664   Function call interrupts
+ TLB:  610847385   80662721   25453581   24874649    8706541    8790449    9041442    8649260   TLB shootdowns
+ TRM:          0          0          0          0          0          0          0          0   Thermal event interrupts
+ THR:          0          0          0          0          0          0          0          0   Threshold APIC interrupts
+ MCE:          0          0          0          0          0          0          0          0   Machine check exceptions
+ MCP:      15568      15568      15568      15568      15568      15568      15568      15568   Machine check polls
+ ERR:          7
+ MIS:          0
