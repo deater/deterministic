@@ -187,17 +187,64 @@ struct event_table_t bobcat_event_table = {
    .sse_event =			"r507f03:u",
 };
 
+struct event_table_t fam10h_event_table = {
+   .hw_int_name = 		"INTERRUPTS_TAKEN",
+   .hw_int_event =		"r5000cf:u",
+   .ret_instr_name =		"RETIRED_INSTRUCTIONS",
+   .ret_instr_event =		"instructions:u",
+   .branches_name =		"RETIRED_BRANCH_INSTRUCTIONS",
+   .branches_event =		"r5000c2:u", /* linux 2.6.34 and earlier gets this wrong with branches:u */
+   .cond_branches_name =	"NONE",
+   .cond_branches_event =	"NONE",
+   .loads_name =		"NONE",
+   .loads_event =		"NONE",
+   .stores_name =		"NONE",
+   .stores_event =		"NONE",
+   .uops_name =			"RETIRED_UOPS",
+   .uops_event =		"r5000c1:u",
+   .muls_name =			"DISPATCHED_FPU:OPS_MULTIPLY",
+   .muls_event =		"r500200:u",
+   .divs_name =			"NONE",
+   .divs_event =		"NONE",
+   .fp1_name =			"RETIRED_MMX_AND_FP_INSTRUCTIONS:X87",
+   .fp1_event =			"r5001cb:u",
+   .fp2_name =			"RETIRED_MMX_AND_FP_INSTRUCTIONS:ALL",
+   .fp2_event =			"r5007cb:u",
+   .sse_name =			"RETIRED_SSE_OPERATIONS:ALL",
+   .sse_event =			"r507f03:u",
+};
+
 
 static int set_generic_modelname(int vendor, int family, int model) {
 
    if (vendor==VENDOR_AMD) {
+      /* 0fh */
+      if (family==15) {
+         strcpy(cpuinfo.generic_modelname,"opteron");
+         event_table=NULL; /* TODO */
+      } 
+      /* 10h */
+      else if (family==16) {
+         strcpy(cpuinfo.generic_modelname,"fam10h");
+         event_table=&fam10h_event_table;
+      }
       /* 14h */
-      if (family==20) {
+      else if (family==20) {
          strcpy(cpuinfo.generic_modelname,"bobcat");
          event_table=&bobcat_event_table;
-         return 0;
       }
-      strcpy(cpuinfo.generic_modelname,"UNKNOWN");
+      /* 15h */
+      else if (family==21) {
+         strcpy(cpuinfo.generic_modelname,"bulldozer");
+         event_table=NULL; /* TODO */
+      }
+      /* 16h */
+      else if (family==22) {
+         strcpy(cpuinfo.generic_modelname,"piledriver");
+         event_table=NULL; /* TODO */
+      } else {
+         strcpy(cpuinfo.generic_modelname,"UNKNOWN");
+      }
       return 0;
    }
 
@@ -447,7 +494,7 @@ static int generate_results(char *directory, char *name,
       sprintf(temp_string,"echo \"### Perf Results %d\">> %s",
                            i,filename);
       system(temp_string);
-      sprintf(temp_string,"taskset -c 0 perf stat --log-fd 2 "
+      sprintf(temp_string,"taskset -c 0 perf stat " //"--log-fd 2 "
                           "-e %s,%s,cs:u "
                           "./binaries/retired_instr.%s.x86_64 1>/dev/null 2>>"
                           "%s",
