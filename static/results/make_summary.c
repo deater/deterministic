@@ -484,18 +484,19 @@ int main(int argc, char **argv) {
    if (!strncmp(argv[2],"all",3)) bench_type=BENCH_ALL;
 
    /* detect machine */
-   if (!strncmp(argv[1],"pentiumd",6)) machine_type=PENTIUMD;
-   else if (!strncmp(argv[1],"pentium4",7)) machine_type=PENTIUM4;
+   if (!strncmp(argv[1],"pentiumd",8)) machine_type=PENTIUMD;
+   else if (!strncmp(argv[1],"pentium4",8)) machine_type=PENTIUM4;
    else if (!strncmp(argv[1],"phenom",6)) machine_type=PHENOM;
-   else if (!strncmp(argv[1],"istanbul",2)) machine_type=ISTANBUL;
-   else if (!strncmp(argv[1],"core2",6)) machine_type=CORE2;
-   else if (!strncmp(argv[1],"nehalem",5)) machine_type=NEHALEM;
-   else if (!strncmp(argv[1],"nehalem-ex",6)) machine_type=NEHALEMEX;
-   else if (!strncmp(argv[1],"atom",6)) machine_type=ATOM;
-   else if (!strncmp(argv[1],"sandybridge",5)) machine_type=SANDYBRIDGE;
-   else if (!strncmp(argv[1],"bobcat",8)) machine_type=BOBCAT;
+   else if (!strncmp(argv[1],"istanbul",8)) machine_type=ISTANBUL;
+   else if (!strncmp(argv[1],"fam10h",6)) machine_type=ISTANBUL;
+   else if (!strncmp(argv[1],"core2",5)) machine_type=CORE2;
+   else if (!strncmp(argv[1],"nehalem",7)) machine_type=NEHALEM;
+   else if (!strncmp(argv[1],"nehalem-ex",11)) machine_type=NEHALEMEX;
+   else if (!strncmp(argv[1],"atom",4)) machine_type=ATOM;
+   else if (!strncmp(argv[1],"sandybridge",11)) machine_type=SANDYBRIDGE;
+   else if (!strncmp(argv[1],"bobcat",6)) machine_type=BOBCAT;
    else if (!strncmp(argv[1],"westmere",7)) machine_type=WESTMERE;
-   else if (!strncmp(argv[1],"ivybridge",17)) machine_type=IVYBRIDGE;
+   else if (!strncmp(argv[1],"ivybridge",9)) machine_type=IVYBRIDGE;
    else machine_type=UNKNOWN;
 
    printf("Generating results for %s machine #%d\n",
