@@ -105,6 +105,34 @@ struct event_table_t core2_event_table = {
    .sse_event =			"r5000ce:u",
 };
 
+struct event_table_t nhm_event_table = {
+   .hw_int_name = 		"HW_INTERRUPTS (dropped from documentation?)",
+   .hw_int_event =		"r50011d:u",
+   .ret_instr_name =		"INSTRUCTION_RETIRED",
+   .ret_instr_event =		"instructions:u",
+   .branches_name =		"BRANCH_INSTRUCTIONS_RETIRED",
+   .branches_event =		"branches:u",
+   .cond_branches_name =	"BR_INST_RETIRED:CONDITIONAL",
+   .cond_branches_event =	"r5301c4:u",
+   .loads_name =		"MEM_INST_RETIRED:LOADS",
+   .loads_event =		"r53010b:u",
+   .stores_name =		"MEM_INST_RETIRED:STORES",
+   .stores_event =		"r53020b:u",
+   .uops_name =			"UOPS_RETIRED:ANY",
+   .uops_event =		"r5301c2:u",
+   .muls_name =			"ARITH:MUL",
+   .muls_event =		"r530214:u",
+   .divs_name =			"ARITH:DIV",
+   .divs_event =		"r1d70114:u",
+   .fp1_name =			"FP_COMP_OPS_EXE:X87",
+   .fp1_event =			"r530110:u",
+   .fp2_name =			"INST_RETIRED:X87",
+   .fp2_event =			"r5302c0:u",
+    /* SSEX_UOPS_RETIRED? */
+   .sse_name =			"FP_COMP_OPS_EXE:SSE_FP",
+   .sse_event =			"r530410:u",
+};
+
 struct event_table_t wsm_event_table = {
    .hw_int_name = 		"HW_INTERRUPTS (Dropped from Documentation",
    .hw_int_event =		"r50011d:u",
@@ -266,9 +294,15 @@ static int set_generic_modelname(int vendor, int family, int model) {
 
             case 26: /* Bloomfield */
             case 30: /* Lynnfield */
-            case 46: /* Beckton */
                      /* Nehalem */
-                     strcpy(cpuinfo.generic_modelname,"UNKNOWN");
+                     strcpy(cpuinfo.generic_modelname,"nehalem");
+                     event_table=&nhm_event_table;
+                     break;
+
+            case 46: /* Beckton */
+                     /* Nehalem-EX */
+                     strcpy(cpuinfo.generic_modelname,"nehalem-ex");
+                     event_table=&nhm_event_table;
                      break;
 
             case 28: /* Atom */
@@ -494,7 +528,7 @@ static int generate_results(char *directory, char *name,
       sprintf(temp_string,"echo \"### Perf Results %d\">> %s",
                            i,filename);
       system(temp_string);
-      sprintf(temp_string,"taskset -c 0 perf stat " //"--log-fd 2 "
+      sprintf(temp_string,"taskset -c 0 perf stat --log-fd 2 "
                           "-e %s,%s,cs:u "
                           "./binaries/retired_instr.%s.x86_64 1>/dev/null 2>>"
                           "%s",
