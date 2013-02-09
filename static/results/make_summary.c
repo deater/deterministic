@@ -490,8 +490,8 @@ int main(int argc, char **argv) {
    else if (!strncmp(argv[1],"istanbul",8)) machine_type=ISTANBUL;
    else if (!strncmp(argv[1],"fam10h",6)) machine_type=ISTANBUL;
    else if (!strncmp(argv[1],"core2",5)) machine_type=CORE2;
+   else if (!strncmp(argv[1],"nehalem-ex",10)) machine_type=NEHALEMEX;
    else if (!strncmp(argv[1],"nehalem",7)) machine_type=NEHALEM;
-   else if (!strncmp(argv[1],"nehalem-ex",11)) machine_type=NEHALEMEX;
    else if (!strncmp(argv[1],"atom",4)) machine_type=ATOM;
    else if (!strncmp(argv[1],"sandybridge",11)) machine_type=SANDYBRIDGE;
    else if (!strncmp(argv[1],"bobcat",6)) machine_type=BOBCAT;
