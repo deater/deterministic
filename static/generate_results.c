@@ -78,6 +78,33 @@ struct event_table_t atom_event_table = {
    .sse_event =			"r501fc7:u",
 };
 
+struct event_table_t pentium4_event_table = {
+   .hw_int_name =		"NONE",
+   .hw_int_event =		"NONE",
+   .ret_instr_name =		"INSTR_RETIRED:NBOGUSNTAG",
+   .ret_instr_event =		"",
+   .branches_name =		"BRANCH_RETIRED:MMNP:MMNM:MMTP:MMTM",
+   .branches_event =		"branches:u",
+   .cond_branches_name =	"NONE", /* is this true? */
+   .cond_branches_event =	"NONE",
+   .loads_name =		"FRONT_END_EVENT:NBOGUS,UOPS_TYPE:TAGLOADS",
+   .loads_event =		"",
+   .stores_name =		"FRONT_END_EVENT:NBOGUS,UOPS_TYPE:TAGSTORES",
+   .stores_event =		"",
+   .uops_name =			"UOPS_RETIRED:NBOGUS",
+   .uops_event =		"",
+   .muls_name =			"NONE",
+   .muls_event = 		"NONE",
+   .divs_name = 		"NONE",
+   .divs_event =		"NONE",
+   .fp1_name =			"EXECUTION_EVENT:NBOGUS1,X87_FP_UOP:ALL:TAG1",
+   .fp1_event =			"",
+   .fp2_name =			"NONE",
+   .fp2_event =			"NONE",
+   .sse_name =			"EXECUTION_EVENT:NBOGUS2,PACKED_SP_UOP:ALL:TAG2,PACKED_DP_UOP:ALL:TAG2",
+   .sse_event =			"",
+};
+
 struct event_table_t core2_event_table = {
    .hw_int_name =		"HW_INT_RCV",
    .hw_int_event =		"r5100c8:u",
@@ -304,7 +331,30 @@ static int set_generic_modelname(int vendor, int family, int model) {
    }
 
    if (vendor==VENDOR_INTEL) {
-      if (family==6) {
+      if (family==15) {
+         switch(model) {
+	    case 0:
+	    case 1:
+	    case 2:
+                     strcpy(cpuinfo.generic_modelname,"pentium4");
+                     event_table=&pentium4_event_table;
+                     break;
+	    case 3:
+	    case 4:
+	    case 6:
+                     strcpy(cpuinfo.generic_modelname,"pentiumd");
+                     event_table=&pentium4_event_table;
+                     break;
+	    default:
+                     strcpy(cpuinfo.generic_modelname,"UNKNOWN");
+                     break;
+	 }
+      }
+      else if (family==11) {
+	 /* MIC */
+         strcpy(cpuinfo.generic_modelname,"UNKNOWN");
+      }
+      else if (family==6) {
          switch(model) {
 
             case 14: /* yonah */
