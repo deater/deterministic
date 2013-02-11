@@ -344,7 +344,9 @@ static int read_stats(char *machine_type,
 	 cpuinfo.modelname[strlen(cpuinfo.modelname)-1]=0;
       }
       if (!strncmp(string,"Generic:",8)) {
-         /* should check that this matches */  
+         /* should check that this matches */
+	 strcpy(cpuinfo.generic_modelname,string+9);
+	 cpuinfo.generic_modelname[strlen(cpuinfo.generic_modelname)-1]=0;
       }
       if (!strncmp(string,"generate_results version:",25)) {
 	 sscanf(string,"%*s %*s %s",gathered_version);
@@ -383,6 +385,7 @@ static int read_stats(char *machine_type,
       else printf("Unknown\n");
       printf("\tCPU:       %d/%d/%d\n",
              cpuinfo.family,cpuinfo.model,cpuinfo.stepping);
+      printf("\tCPU type:  %s\n",cpuinfo.generic_modelname);
       printf("\tCPU name:  %s\n",cpuinfo.modelname);
       printf("\tdata gathered with tool version: %s\n",gathered_version);
       printf("\tdata analyzed with tool version: %s\n",
