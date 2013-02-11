@@ -482,9 +482,13 @@ int main(int argc, char **argv) {
 
    /* Detect which benchmark we are using */
    if (!strncmp(bench_name,"fp",2)) bench_type=BENCH_FP;
-   if (!strncmp(bench_name,"int",3)) bench_type=BENCH_INT;
-   if (!strncmp(bench_name,"sse",3)) bench_type=BENCH_SSE;
-   if (!strncmp(bench_name,"all",3)) bench_type=BENCH_ALL;
+   else if (!strncmp(bench_name,"int",3)) bench_type=BENCH_INT;
+   else if (!strncmp(bench_name,"sse",3)) bench_type=BENCH_SSE;
+   else if (!strncmp(bench_name,"all",3)) bench_type=BENCH_ALL;
+   else {
+     fprintf(stderr,"Unknown benchmark type!\n");
+     return -1;
+   }
 
    /* detect machine */
    if (!strncmp(argv[1],"pentiumd",8)) machine_type=PENTIUMD;
@@ -510,7 +514,6 @@ int main(int argc, char **argv) {
    /***************************/
 
    for(j=0;j<NUM_STATS;j++) {
-
       read_stats(argv[1],which,stats[j].filename,bench_name,j);
    }
 
