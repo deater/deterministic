@@ -70,6 +70,10 @@ struct stat_type{
 #define RETIRED_UOPS         3
 #define RETIRED_LOADS        4
 #define RETIRED_STORES       5
+#define RETIRED_MULTIPLIES   6
+#define RETIRED_DIVIDES      7
+#define RETIRED_FP           8
+#define RETIRED_SSE          9
 #define RETIRED_SWPREF_NTA  10
 #define RETIRED_SWPREF_L1   11
 #define RETIRED_SWPREF_L2   12
@@ -125,13 +129,19 @@ long long remove_commas(char *temp_string) {
 }
 
 
-long long total=0,max,min,range;
-long long hwint_adjust=0;
-long long double_ins_adjust=0;
-long long undercount_adjust=0;
-long long mem_adjust=0;
-long long fpu_adjust=0;
-long long exception_adjust=0;
+static long long total=0,max,min,range;
+static long long hwint_adjust=0;
+static long long double_ins_adjust=0;
+static long long undercount_adjust=0;
+static long long mem_adjust=0;
+static long long fpu_adjust=0;
+static long long exception_adjust=0;
+static int uops_architectural=0;
+//static int loads_speculative=0;
+static int loads_uops=0;
+//static int stores_speculative=0;
+static int stores_uops=0;
+static int deterministic=0;
 
 void adjust_for_pagefaults(void) {
    printf("\tAdjusting 10,008 for first-time memory accesses\n");
@@ -482,6 +492,8 @@ static int read_stats(char *machine_type,
 /* Main Routine                  */
 /*********************************/
 
+static int retired_fp_which=0;
+
 int main(int argc, char **argv) {
 
    int i,j,bench_type=BENCH_ALL;
@@ -552,10 +564,25 @@ int main(int argc, char **argv) {
 
    for(j=0;j<NUM_STATS;j++) {
 
+     /* If RETIRED_FP we have to do this twice */
+   re_loop:
+
+      deterministic=0;
+
       printf("\n");
       printf("#############################################\n");
-      printf("# %s\n",stats[j].name);
+      if (j==RETIRED_FP) {
+	printf("# %s%d\n",stats[j].name,retired_fp_which+1);
+      }
+      else {
+         printf("# %s\n",stats[j].name);
+      }
       printf("#############################################\n\n");
+
+      if (stats[j].value1[0]==0) {
+	 printf("No data found for this event\n");
+	 continue;
+      }
 
       printf("%s\n",stats[j].name);
       printf("\tExpected value: %lld\n",stats[j].expected[0]);
@@ -582,8 +609,19 @@ int main(int argc, char **argv) {
       }
 
       /* This is if no Interrupts is recorded, two values instead */
-      /* FIXME: we currently only report the first value          */
       if (stats[j].type==VALUE_VALUE) {
+	 if (retired_fp_which==0) {
+	   /* do nothing */
+	 }
+	 else {
+	    long long temp_value;
+
+            for(i=0;i<RUNS;i++) {
+	       temp_value=stats[j].hw_interrupts[i];
+               stats[j].hw_interrupts[i]=stats[j].value1[i];
+               stats[j].value1[i]=temp_value;
+            }
+	 }
       }
 	
       /* calculate average, min/max */
@@ -617,23 +655,31 @@ int main(int argc, char **argv) {
       printf("\tRaw diff:       %lld +/- %lld\n",
 		stats[j].raw_average-stats[j].expected[bench_type],range);
 
-
       /*************************/
       /* Handle ADJUSTMENTS    */
       /*************************/
 
-      hwint_adjust=0;
-      double_ins_adjust=0;
-      undercount_adjust=0;
-      mem_adjust=0;
-      fpu_adjust=0;
-      exception_adjust=0;
+      if ((stats[j].raw_average-stats[j].expected[bench_type]==0) && 
+	     range==0 && double_ins_adjust==0){
+	 printf("\n\t**** DETERMINISTIC ****\n");
+         deterministic=1;
+      }
+      else {
 
-      printf("\nAttempting to adjust for overcount\n");
+         hwint_adjust=0;
+         double_ins_adjust=0;
+         undercount_adjust=0;
+         mem_adjust=0;
+         fpu_adjust=0;
+         exception_adjust=0;
 
-      if (j!=RETIRED_UOPS) {
+         printf("\nAttempting to adjust for overcount\n");
+
 	 switch(machine_type) {
 
+	   /*******************/
+           /* Pentium D       */
+           /*******************/
 	 case PENTIUMD:
 	      if (j==RETIRED_INSTRUCTIONS) {
 	         adjust_for_hw_interrupts(j);
@@ -745,6 +791,10 @@ int main(int argc, char **argv) {
                  double_ins_adjust+=40920000;
 	      }
 	      break;
+
+	      /**********************/
+              /* Pentium 4          */
+              /**********************/
 	 case PENTIUM4:
 	      if (j==RETIRED_INSTRUCTIONS) {
                  adjust_for_hw_interrupts(j);
@@ -761,6 +811,10 @@ int main(int argc, char **argv) {
 	      if (j==RETIRED_LOADS) adjust_for_hw_interrupts(j);
 	      if (j==RETIRED_STORES) adjust_for_hw_interrupts(j);
 	      break;
+
+	      /**************************/
+              /* AMD Fam10h/Fam14h      */
+              /**************************/
 	 case PHENOM:
 	 case ISTANBUL:
 	 case BOBCAT:
@@ -786,6 +840,10 @@ int main(int argc, char **argv) {
 	      if (j==RETIRED_LOADS) adjust_for_hw_interrupts(j);
 	      if (j==RETIRED_STORES) adjust_for_hw_interrupts(j);
 	      break;
+ 
+              /**************************/
+              /* Atom                   */
+              /**************************/
 	 case ATOM:
 	      if (j==RETIRED_INSTRUCTIONS) {
                  adjust_for_hw_interrupts(j);
@@ -803,6 +861,9 @@ int main(int argc, char **argv) {
 	      if (j==RETIRED_STORES) adjust_for_hw_interrupts(j);
 	      break;
 
+              /******************************/
+              /* Core2                      */
+              /******************************/
 	 case CORE2:
 	      if (j==RETIRED_INSTRUCTIONS) {
                  adjust_for_hw_interrupts(j);
@@ -854,6 +915,10 @@ int main(int argc, char **argv) {
 	      }
               if (j==RETIRED_SWPREF_L2) dont_adjust_for_hw_interrupts(j);
 	      break;
+
+              /****************************/
+              /* Nehalem                  */
+              /****************************/
 	 case NEHALEM:
 	 case NEHALEMEX:
 	      if (j==RETIRED_INSTRUCTIONS) {
@@ -895,6 +960,10 @@ int main(int argc, char **argv) {
                  double_ins_adjust+=100000;
 	      }
 	      break;
+
+              /*********************************/
+              /* Westmere                      */
+              /*********************************/
 	 case WESTMERE:
 	      if (j==RETIRED_INSTRUCTIONS) {
                  adjust_for_hw_interrupts(j);
@@ -925,6 +994,10 @@ int main(int argc, char **argv) {
                  double_ins_adjust+=100000;
 	      }
 	      break;
+
+              /***********************************/
+              /* Sandybridge                     */
+              /***********************************/
 	 case SANDYBRIDGE:
 	      if (j==RETIRED_INSTRUCTIONS) {
                  adjust_for_hw_interrupts(j);
@@ -1019,6 +1092,11 @@ int main(int argc, char **argv) {
 	      }
 
 	      break;
+
+              /******************************************/
+              /* Ivy Bridge                             */
+              /******************************************/
+
 	 case IVYBRIDGE:
 	      if (j==RETIRED_INSTRUCTIONS) {
 		 adjust_for_lazy_fp();
@@ -1032,12 +1110,25 @@ int main(int argc, char **argv) {
                  adjust_for_hw_interrupts(j);
 		 adjust_for_pagefaults();
 	      }
-	      if (j==COND_BRANCHES) dont_adjust_for_hw_interrupts(j);
-	      if (j==RETIRED_UOPS) adjust_for_hw_interrupts(j);
-	      if (j==RETIRED_LOADS) adjust_for_hw_interrupts(j);
-	      if (j==RETIRED_STORES) adjust_for_hw_interrupts(j);
+	      if (j==COND_BRANCHES) {
+                 dont_adjust_for_hw_interrupts(j);
+	      }
+	      if (j==RETIRED_UOPS) {
+                 adjust_for_hw_interrupts(j);
+                 uops_architectural=1;
+	      }
+	      if (j==RETIRED_LOADS) {
+		//adjust_for_hw_interrupts(j);
+		 loads_uops=1;
+	      }
+	      if (j==RETIRED_STORES) {
+		//adjust_for_hw_interrupts(j);
+		 stores_uops=1;
+	      }
 	      break;
 	 }
+
+	 /* Do the adjustment */
 
          stats[j].adj_average=stats[j].raw_average;
          stats[j].adj_average-=hwint_adjust;
@@ -1045,6 +1136,8 @@ int main(int argc, char **argv) {
 	 stats[j].adj_average+=undercount_adjust;
 	 stats[j].adj_average-=mem_adjust;
 	 stats[j].adj_average-=fpu_adjust;
+
+         /* Print the adjustment summary */
 
          printf("\tAdjusted Average: %lld +/- %lld\n",stats[j].adj_average,range);
          printf("\t==============================\n");
@@ -1055,13 +1148,10 @@ int main(int argc, char **argv) {
       /****************************/
       /* Print adjustment summary */
       /****************************/
-      if ((stats[j].adj_average-stats[j].expected[bench_type]==0) && 
-	     range==0 && double_ins_adjust==0){
-	 printf("\t**** DETERMINISTIC ****\n");
-      } else if (j==RETIRED_UOPS) {
+      if (stats[j].expected[bench_type]==0) {
          printf("\tThis is a machine-specific event without a \"known\" correct result.\n");
       }
-      else {
+      else if (!deterministic) {
          printf("\tIssues adjusted for:\n");
 	 if (hwint_adjust) 
             printf("\t\th: hardware interrupts also increment event count\n");
@@ -1075,7 +1165,31 @@ int main(int argc, char **argv) {
             printf("\t\tM: Some instructions are under-counted\n");
 	 if (fpu_adjust) 
             printf("\t\tF: Lazy-FPU handling causes an extra count\n");
+	 if ( ((j==RETIRED_LOADS) && (loads_uops)) ||
+	      ((j==RETIRED_STORES) && (stores_uops)) ) {
+	    printf("\t\tU: This event measures uops, not instructions\n");
+	 }
 	 printf("\n");
+      }
+
+      if ((j==RETIRED_LOADS) && (loads_uops)) {
+	printf("\tOn this machine loads are by uops not by instruction, "
+               "hence the large overcount\n");
+      }
+      if ((j==RETIRED_STORES) && (stores_uops)) {
+	printf("\tOn this machine loads are by uops not by instruction, "
+               "hence the large overcount\n");
+      }
+
+      /* repeat again if RETIRED_FP */
+      if (j==RETIRED_FP) {
+	if (retired_fp_which==0) {
+	   retired_fp_which=1;
+           goto re_loop;
+	}
+	else {
+	   retired_fp_which=0;
+	}
       }
    }
 
