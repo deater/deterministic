@@ -459,22 +459,32 @@ int main(int argc, char **argv) {
    char *ignore;
    int machine_type=UNKNOWN;
    int which=0;
+   char bench_name[BUFSIZ];
    (void) ignore;
 
-   if (argc<3) {
+   if (argc<2) {
       printf("Usage: %s machine bench which\n\n",argv[0]);
       exit(-1);
    }
 
+   /* If a 2nd arguent, it's what benchmark subset to use */
+   if (argc>2) {
+     strncpy(bench_name,argv[2],BUFSIZ);
+   }
+   else {
+      strcpy(bench_name,"all");
+   }
+
+   /* If a 3rd argument, it's what set of runs to use */
    if (argc>3) {
       which=atoi(argv[3]);
    }
 
    /* Detect which benchmark we are using */
-   if (!strncmp(argv[2],"fp",2)) bench_type=BENCH_FP;
-   if (!strncmp(argv[2],"int",3)) bench_type=BENCH_INT;
-   if (!strncmp(argv[2],"sse",3)) bench_type=BENCH_SSE;
-   if (!strncmp(argv[2],"all",3)) bench_type=BENCH_ALL;
+   if (!strncmp(bench_name,"fp",2)) bench_type=BENCH_FP;
+   if (!strncmp(bench_name,"int",3)) bench_type=BENCH_INT;
+   if (!strncmp(bench_name,"sse",3)) bench_type=BENCH_SSE;
+   if (!strncmp(bench_name,"all",3)) bench_type=BENCH_ALL;
 
    /* detect machine */
    if (!strncmp(argv[1],"pentiumd",8)) machine_type=PENTIUMD;
@@ -501,7 +511,7 @@ int main(int argc, char **argv) {
 
    for(j=0;j<NUM_STATS;j++) {
 
-      read_stats(argv[1],which,stats[j].filename,argv[2],j);
+      read_stats(argv[1],which,stats[j].filename,bench_name,j);
    }
 
    /***************************/
