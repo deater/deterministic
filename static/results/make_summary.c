@@ -551,43 +551,87 @@ int main(int argc, char **argv) {
    /* Adjust and print values */
 
    for(j=0;j<NUM_STATS;j++) {
-      printf("\n%s     expected value = %lld\n",
-	  stats[j].name, stats[j].expected[0]);
 
-      /* Calculate average? */
+      printf("\n");
+      printf("#############################################\n");
+      printf("# %s\n",stats[j].name);
+      printf("#############################################\n\n");
+
+      printf("%s\n",stats[j].name);
+      printf("\tExpected value: %lld\n",stats[j].expected[0]);
+
+
+      /* Assume in VALUE / Interrupts format */
+      /* so no more work needs to be done    */
       if (stats[j].type==VALUE_INTS) {
-         total=0;
-         max=stats[j].value1[0];
-         min=stats[j].value1[0];
+      }
+
+      /* If in Interrupts / VALUE format, need to swap */
+      /* This is for events where we record interrupts/event */
+      /* This happens on core2 because we can't trust early */
+      /* perf_event kernels to do event scheduling properly */
+
+      if (stats[j].type==INTS_VALUE) {
+	 long long temp_value;
 
          for(i=0;i<RUNS;i++) {
-	    total+=stats[j].value1[i];
-	    if (stats[j].value1[i]>max) max=stats[j].value1[i];
-	    if (stats[j].value1[i]<min) min=stats[j].value1[i];
+	    temp_value=stats[j].hw_interrupts[i];
+            stats[j].hw_interrupts[i]=stats[j].value1[i];
+            stats[j].value1[i]=temp_value;
          }
-         stats[j].raw_average=total/RUNS;
+      }
 
-         if ((max-stats[j].raw_average) > (stats[j].raw_average-min)) {
-            range=max-stats[j].raw_average;
-         }
-         else {
-            range=min-stats[j].raw_average;
-         }
-         printf("\tRaw Average: %lld +/- %lld (",stats[j].raw_average,range);
-         for(i=0;i<3;i++) printf("%lld, ",stats[j].value1[i]);
-         printf(")\n");
-         printf("\tRaw diff: %lld +/- %lld\n",
+      /* This is if no Interrupts is recorded, two values instead */
+      /* FIXME: we currently only report the first value          */
+      if (stats[j].type==VALUE_VALUE) {
+      }
+	
+      /* calculate average, min/max */
+
+      total=0;
+      max=stats[j].value1[0];
+      min=stats[j].value1[0];
+
+      for(i=0;i<RUNS;i++) {
+	 total+=stats[j].value1[i];
+	 if (stats[j].value1[i]>max) max=stats[j].value1[i];
+	 if (stats[j].value1[i]<min) min=stats[j].value1[i];
+      }
+      stats[j].raw_average=total/RUNS;
+
+      /* calculate range */
+      if ((max-stats[j].raw_average) > (stats[j].raw_average-min)) {
+         range=max-stats[j].raw_average;
+      }
+      else {
+         range=min-stats[j].raw_average;
+      }
+
+      printf("\tRaw Average:    %lld +/- %lld\n",
+                stats[j].raw_average,range);
+
+      printf("\tAll Values:     ");
+      for(i=0;i<10;i++) printf("%lld, ",stats[j].value1[i]);
+      printf(")\n");
+
+      printf("\tRaw diff:       %lld +/- %lld\n",
 		stats[j].raw_average-stats[j].expected[bench_type],range);
 
-         hwint_adjust=0;
-	 double_ins_adjust=0;
-	 undercount_adjust=0;
-	 mem_adjust=0;
-	 fpu_adjust=0;
-	 exception_adjust=0;
 
-	 /* ADJUSTMENTS */
-         printf("Adjustments:\n");
+      /*************************/
+      /* Handle ADJUSTMENTS    */
+      /*************************/
+
+      hwint_adjust=0;
+      double_ins_adjust=0;
+      undercount_adjust=0;
+      mem_adjust=0;
+      fpu_adjust=0;
+      exception_adjust=0;
+
+      printf("\nAttempting to adjust for overcount\n");
+
+      if (j!=RETIRED_UOPS) {
 	 switch(machine_type) {
 
 	 case PENTIUMD:
@@ -1005,107 +1049,37 @@ int main(int argc, char **argv) {
          printf("\tAdjusted Average: %lld +/- %lld\n",stats[j].adj_average,range);
          printf("\t==============================\n");
          printf("\tAdjusted diff: %lld +/- %lld\n",stats[j].adj_average-stats[j].expected[bench_type],range);
-	 if ((stats[j].adj_average-stats[j].expected[bench_type]==0) && 
+         printf("\n");
+      }
+
+      /****************************/
+      /* Print adjustment summary */
+      /****************************/
+      if ((stats[j].adj_average-stats[j].expected[bench_type]==0) && 
 	     range==0 && double_ins_adjust==0){
-	   printf("\t**** DETERMINISTIC ****\n");
-	 }
-	 else {
-           printf("\tIssues: ");
-	   if (hwint_adjust) printf("h");
-	   if (mem_adjust) printf("p");
-	   if (exception_adjust) printf("E");
-	   if (double_ins_adjust) printf("D");
-           if (undercount_adjust) printf("M");
-	   if (fpu_adjust) printf("F");
-	   printf("\n");
-
-	 }
+	 printf("\t**** DETERMINISTIC ****\n");
+      } else if (j==RETIRED_UOPS) {
+         printf("\tThis is a machine-specific event without a \"known\" correct result.\n");
+      }
+      else {
+         printf("\tIssues adjusted for:\n");
+	 if (hwint_adjust) 
+            printf("\t\th: hardware interrupts also increment event count\n");
+	 if (mem_adjust) 
+            printf("\t\tp: page faults also incremement event count\n");
+	 if (exception_adjust) 
+            printf("\t\tE: x87 exceptions increment event count\n");
+	 if (double_ins_adjust) 
+            printf("\t\tD: Some instructions are counted multiple times\n");
+         if (undercount_adjust) 
+            printf("\t\tM: Some instructions are under-counted\n");
+	 if (fpu_adjust) 
+            printf("\t\tF: Lazy-FPU handling causes an extra count\n");
+	 printf("\n");
+      }
    }
 
-      if (stats[j].type==INTS_VALUE) {
-         total=0;
-         max=stats[j].hw_interrupts[0];
-         min=stats[j].hw_interrupts[0];
-
-         for(i=0;i<RUNS;i++) {
-	    total+=stats[j].hw_interrupts[i];
-	    if (stats[j].hw_interrupts[i]>max) max=stats[j].hw_interrupts[i];
-	    if (stats[j].hw_interrupts[i]<min) min=stats[j].hw_interrupts[i];
-         }
-         stats[j].raw_average=total/RUNS;
-
-         if ((max-stats[j].raw_average) > (stats[j].raw_average-min)) range=max-stats[j].raw_average;
-         else range=min-stats[j].raw_average;
-
-         printf("\tRaw Average: %lld +/- %lld (",stats[j].raw_average,range);
-         for(i=0;i<3;i++) printf("%lld, ",stats[j].hw_interrupts[i]);
-         printf(")\n");
-         printf("\tRaw diff: %lld +/- %lld\n",stats[j].raw_average-stats[j].expected[bench_type],range);
-
-	 total=0;
-         max=stats[j].hw_interrupts[0]-stats[j].value1[0];
-         min=stats[j].hw_interrupts[0]-stats[j].value1[0];
-
-         for(i=0;i<RUNS;i++) {
-	    total+=stats[j].hw_interrupts[i]-stats[j].value1[i];
-	    if (stats[j].hw_interrupts[i]-stats[j].value1[i]>max) max=stats[j].hw_interrupts[i]-stats[j].value1[i];
-	    if (stats[j].hw_interrupts[i]-stats[j].value1[i]<min) min=stats[j].hw_interrupts[i]-stats[j].value1[i];	 
-//	 printf("\t%lld\n",stats[j].value1[i]-stats[j].hw_interrupts[i]);
-         }
-         stats[j].adj_average=total/RUNS;
-
-         if ((max-stats[j].adj_average) > (stats[j].adj_average-min)) range=max-stats[j].adj_average;
-         else range=min-stats[j].adj_average;
-
-         printf("\tAdjusted Average: %lld +/- %lld (",stats[j].adj_average,range);
-         for(i=0;i<3;i++) printf("%lld, ",stats[j].hw_interrupts[i]-stats[j].value1[i]);
-         printf(")\n");
-         printf("\tAdjusted diff: %lld +/- %lld\n",stats[j].adj_average-stats[j].expected[bench_type],range);
-      }
-
-      if (stats[j].type==VALUE_VALUE) {
-
-         total=0;
-         max=stats[j].value1[0];
-         min=stats[j].value1[0];
-
-         for(i=0;i<RUNS;i++) {
-	    total+=stats[j].value1[i];
-	    if (stats[j].value1[i]>max) max=stats[j].value1[i];
-	    if (stats[j].value1[i]<min) min=stats[j].value1[i];
-         }
-         stats[j].raw_average=total/RUNS;
-
-         if ((max-stats[j].raw_average) > (stats[j].raw_average-min)) range=max-stats[j].raw_average;
-         else range=min-stats[j].raw_average;
-
-         printf("\tRaw Average: %lld +/- %lld (",stats[j].raw_average,range);
-         for(i=0;i<3;i++) printf("%lld, ",stats[j].value1[i]);
-         printf(")\n");
-         printf("\tRaw diff: %lld +/- %lld\n",stats[j].raw_average-stats[j].expected[bench_type],range);
-
-         total=0;
-         max=stats[j].hw_interrupts[0];
-         min=stats[j].hw_interrupts[0];
-
-         for(i=0;i<RUNS;i++) {
-	    total+=stats[j].hw_interrupts[i];
-	    if (stats[j].hw_interrupts[i]>max) max=stats[j].hw_interrupts[i];
-	    if (stats[j].hw_interrupts[i]<min) min=stats[j].hw_interrupts[i];
-         }
-         stats[j].raw_average=total/RUNS;
-
-         if ((max-stats[j].raw_average) > (stats[j].raw_average-min)) range=max-stats[j].raw_average;
-         else range=min-stats[j].raw_average;
-
-         printf("\tRaw Average: %lld +/- %lld (",stats[j].raw_average,range);
-         for(i=0;i<3;i++) printf("%lld, ",stats[j].hw_interrupts[i]);
-         printf(")\n");
-         printf("\tRaw diff: %lld +/- %lld\n",stats[j].raw_average-stats[j].expected[bench_type],range);
-      }
-
-   }
-
+  
    return 0;
 }
 
