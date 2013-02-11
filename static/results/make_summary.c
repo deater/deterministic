@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "../version.h"
+
 #define RUNS 10
 #define MAX_CPUS 128
 
@@ -285,7 +287,8 @@ static int read_stats(char *machine_type,
    int i,runs=10;
    char *ignore,*result;
 
-   char hostname[BUFSIZ];
+   char hostname[BUFSIZ]="Unknown",kernel[BUFSIZ]="Unknown";
+   char gathered_version[BUFSIZ]="Unknown";
    int interface=INTERFACE_PERF_EVENT;
 
    sprintf(path,"./%s/%d/%s.%s",
@@ -321,19 +324,32 @@ static int read_stats(char *machine_type,
          break;
       }
       if (!strncmp(string,"Kernel:",7)) {
+	 strcpy(kernel,string+8);
+	 kernel[strlen(kernel)-1]=0;
       }
       if (!strncmp(string,"Hostname:",9)) {
          sscanf(string,"%*s %s",hostname);
       }
       if (!strncmp(string,"Family:",7)) {
+         sscanf(string,"%*s %d",&cpuinfo.family);
       }
-      if (!strncmp(string,"Model:",7)) {
+      if (!strncmp(string,"Model:",6)) {
+         sscanf(string,"%*s %d",&cpuinfo.model);
       }
-      if (!strncmp(string,"Stepping:",7)) {
+      if (!strncmp(string,"Stepping:",9)) {
+         sscanf(string,"%*s %d",&cpuinfo.stepping);
       }
-      if (!strncmp(string,"Generic:",7)) {
-         /* should check that this matches */
+      if (!strncmp(string,"Modelname:",10)) {
+	 strcpy(cpuinfo.modelname,string+11);
+	 cpuinfo.modelname[strlen(cpuinfo.modelname)-1]=0;
       }
+      if (!strncmp(string,"Generic:",8)) {
+         /* should check that this matches */  
+      }
+      if (!strncmp(string,"generate_results version:",25)) {
+	 sscanf(string,"%*s %*s %s",gathered_version);
+      }
+
       if (!strncmp(string,"Interface:",10)) {
 	 if (strstr(string,"perf_event")) {
             interface=INTERFACE_PERF_EVENT;
@@ -359,7 +375,18 @@ static int read_stats(char *machine_type,
    if (first_header) {
       first_header=0;
 
-      printf("Hostname: %s\n",hostname);
+      printf("\tHostname:  %s\n",hostname);
+      printf("\tKernel:    %s\n",kernel);
+      printf("\tInterface: ");
+      if (interface==INTERFACE_PERF_EVENT) printf("perf_event\n");
+      else if (interface==INTERFACE_PERFMON) printf("perfmon2\n");
+      else printf("Unknown\n");
+      printf("\tCPU:       %d/%d/%d\n",
+             cpuinfo.family,cpuinfo.model,cpuinfo.stepping);
+      printf("\tCPU name:  %s\n",cpuinfo.modelname);
+      printf("\tdata gathered with tool version: %s\n",gathered_version);
+      printf("\tdata analyzed with tool version: %s\n",
+             DETERMINISTIC_VERSION);
    }
 
    if (debug) {

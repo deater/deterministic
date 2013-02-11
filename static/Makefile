@@ -49,7 +49,7 @@ all: $(BINDIR)/retired_instr.all.$(ARCH) \
 generate_results:	generate_results.o
 	$(CC) $(LFLAGS) -o generate_results generate_results.o
 
-generate_results.o:	generate_results.c
+generate_results.o:	generate_results.c version.h
 	$(CC) $(CFLAGS) -c generate_results.c
 
 $(BINDIR)/retired_instr.arith.$(ARCH): $(SRCDIR)/retired_instr.$(ARCH).s

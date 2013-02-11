@@ -10,6 +10,8 @@
 
 #include <sys/utsname.h>
 
+#include "version.h"
+
 struct cpuinfo_t {
    int vendor;
    int family;
@@ -494,6 +496,7 @@ static int get_cpuinfo(void) {
    printf("Stepping:  %d\n",cpuinfo.stepping);
    printf("Modelname: %s\n",cpuinfo.modelname);
    printf("Generic:   %s\n",cpuinfo.generic_modelname);
+   printf("generate_results version: %s\n",DETERMINISTIC_VERSION);
 
    fclose(fff);
 
