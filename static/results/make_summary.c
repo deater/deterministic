@@ -16,9 +16,7 @@
 #define BENCH_INT 2
 #define BENCH_SSE 3
 
-long long calc_interrupts_file();
-
-int warn_intr_already=0;
+static int debug=0;
 
 struct interrupts {
    long long hw[MAX_CPUS];
@@ -284,7 +282,7 @@ static int read_stats(char *machine_type,
    char path[BUFSIZ];
    char temp_string[BUFSIZ];
    FILE *fff;
-   int i,k,lines,runs=10;
+   int i,runs=10;
    char *ignore,*result;
 
    char hostname[BUFSIZ];
@@ -364,7 +362,9 @@ static int read_stats(char *machine_type,
       printf("Hostname: %s\n",hostname);
    }
 
-   printf("Reading %d values from %s\n",runs,path);
+   if (debug) {
+      printf("Reading %d values from %s\n",runs,path);
+   }
 
    for(i=0;i<runs;i++) {
 
@@ -380,7 +380,6 @@ static int read_stats(char *machine_type,
 
       if (interface==INTERFACE_PERF_EVENT) {
 
-         lines=0;
          stats[which_stat].value1[i]=0;
          stats[which_stat].hw_interrupts[i]=-1;
 
@@ -414,31 +413,25 @@ static int read_stats(char *machine_type,
 	       }
 	       break;
             }
-            lines++;
          }
       }
 
       /******************************/
       /* perfmon2 read              */
       if (interface==INTERFACE_PERFMON) {
-
-         if (stats[which_stat].value1[i]==0) {
-            for(k=0;k<lines-2;k++) {
-               ignore=fgets(string,BUFSIZ,fff);
-            }
+	 /* FIXME: should make this more robust */
+         ignore=fgets(string,BUFSIZ,fff);
+         if (sscanf(string,"%lld",&stats[which_stat].value1[i])==0) {
+	    /* handle if only one stat in file */
+	    ignore=fgets(string,BUFSIZ,fff);
+	    sscanf(string,"%lld",&stats[which_stat].value1[i]);
+            stats[which_stat].hw_interrupts[i]=-1;
+         }
+         else {
             ignore=fgets(string,BUFSIZ,fff);
-            if (sscanf(string,"%lld",&stats[which_stat].value1[i])==0) {
-	       /* handle if only one stat in file */
-	       ignore=fgets(string,BUFSIZ,fff);
-	       sscanf(string,"%lld",&stats[which_stat].value1[i]);
-               stats[which_stat].hw_interrupts[i]=-1;
-            }
-            else {
-               ignore=fgets(string,BUFSIZ,fff);
-               if (sscanf(string,"%lld",
-                  &stats[which_stat].hw_interrupts[i])!=1) {
-	          stats[which_stat].hw_interrupts[i]=-1;
-               }
+            if (sscanf(string,"%lld",
+                &stats[which_stat].hw_interrupts[i])!=1) {
+	        stats[which_stat].hw_interrupts[i]=-1;
             }
          }
       }
