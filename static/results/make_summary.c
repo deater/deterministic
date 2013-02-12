@@ -695,7 +695,7 @@ int main(int argc, char **argv) {
       /*************************/
 
       if ((stats[j].raw_average-stats[j].expected[bench_type]==0) && 
-	     range==0 && double_ins_adjust==0){
+	     range==0 ){
 	 printf("\n\t**** DETERMINISTIC ****\n");
          deterministic=1;
       }
