@@ -168,17 +168,29 @@ void adjust_for_hw_interrupts(int j) {
 
    int i;
 
+   long long hw_interrupts[10];
+   int hwint_from_proc=0;
+
+   for(i=0;i<10;i++) {
+      hw_interrupts[i]=stats[j].hw_interrupts[i];
+      if (hw_interrupts[i]<1) {
+         hwint_from_proc=1;
+         hw_interrupts[i]=stats[j].after_interrupts[i].total[0]-
+                          stats[j].before_interrupts[i].total[0];
+      }
+   }
+   
    total=0;
-   max=stats[j].value1[0]-stats[j].hw_interrupts[0];
-   min=stats[j].value1[0]-stats[j].hw_interrupts[0];
+   max=stats[j].value1[0]-hw_interrupts[0];
+   min=stats[j].value1[0]-hw_interrupts[0];
 
    for(i=0;i<RUNS;i++) {
-      total+=stats[j].value1[i]-stats[j].hw_interrupts[i];
-      if (stats[j].value1[i]-stats[j].hw_interrupts[i]>max) {
-         max=stats[j].value1[i]-stats[j].hw_interrupts[i];
+      total+=stats[j].value1[i]-hw_interrupts[i];
+      if (stats[j].value1[i]-hw_interrupts[i]>max) {
+         max=stats[j].value1[i]-hw_interrupts[i];
       }
-      if (stats[j].value1[i]-stats[j].hw_interrupts[i]<min) {
-         min=stats[j].value1[i]-stats[j].hw_interrupts[i];
+      if (stats[j].value1[i]-hw_interrupts[i]<min) {
+         min=stats[j].value1[i]-hw_interrupts[i];
       }
       stats[j].adj_average=total/RUNS;
    }
@@ -192,10 +204,11 @@ void adjust_for_hw_interrupts(int j) {
    }
 
    for(i=0;i<RUNS;i++) {
-      hwint_adjust+=stats[j].hw_interrupts[i];
+      hwint_adjust+=hw_interrupts[i];
    }
    hwint_adjust/=RUNS;
-   printf("\tAdjusting %lld for hwints\n",hwint_adjust);
+   printf("\tAdjusting %lld for hwints %s\n",
+	  hwint_adjust,hwint_from_proc?"(proc)":"");
 }
 
 static char string[BUFSIZ];
@@ -224,7 +237,6 @@ static void read_interrupts(FILE *fff, int *cpus,
        if (!strncmp(string,"###",3)) break;
 
        type=strtok(string," \t");
-       //printf("%s",ptr);
 
        temp_interrupts=0;
 
@@ -253,7 +265,7 @@ static void read_interrupts(FILE *fff, int *cpus,
 	  intr[run].total[i]+=temp_interrupts;
        }
 
-//       printf("%s %lld\n",type,(*intr)[0].total);
+       //       printf("%s %lld\n",type,intr[run].total[0]);
 
 
       if (feof(fff)) break;
@@ -408,12 +420,20 @@ static int read_stats(char *machine_type,
 
    for(i=0;i<runs;i++) {
 
+      while(1) {
+	if (!strncmp(string,"### Interrupts",14)) break;
+	fgets(string,BUFSIZ,fff);
+      }
+
       /**********************************/
       /* Read before-interrupt values   */
       /* Not necesary for all machines, */
       /*        but values always there */
       read_interrupts(fff,&cpuinfo.num_cpus,
                       stats[which_stat].before_interrupts,i);
+      //      printf("before_interrupts %s %s %d=%lld\n",
+      //     filename,benchmark_type,i,
+      //     stats[which_stat].before_interrupts[i].total[0]);
 
       /********************/
       /* perf_events read */
@@ -476,11 +496,22 @@ static int read_stats(char *machine_type,
          }
       }
 
+      while(1) {
+	if (!strncmp(string,"### Interrupts",14)) break;
+	fgets(string,BUFSIZ,fff);
+      }
+
       /**********************************/
       /* Read after-interrupt values    */
       read_interrupts(fff,&cpuinfo.num_cpus,
-                          stats[which_stat].after_interrupts,which_stat);
+                          stats[which_stat].after_interrupts,
+                          i);
 
+      //      printf("after_interrupts=%lld\n",
+      //       stats[which_stat].after_interrupts[i].total[0]);
+      //printf("diff_interrupts=%lld\n",
+      //       stats[which_stat].after_interrupts[i].total[0]-
+      //       stats[which_stat].before_interrupts[i].total[0]);
    }
 
    (void) ignore;
