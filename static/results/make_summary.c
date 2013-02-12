@@ -610,15 +610,6 @@ int main(int argc, char **argv) {
       }
       printf("#############################################\n\n");
 
-      if (stats[j].value1[0]==0) {
-	 printf("No data found for this event\n");
-	 continue;
-      }
-
-      printf("%s\n",stats[j].name);
-      printf("\tExpected value: %lld\n",stats[j].expected[0]);
-
-
       /* Assume in VALUE / Interrupts format */
       /* so no more work needs to be done    */
       if (stats[j].type==VALUE_INTS) {
@@ -654,6 +645,19 @@ int main(int argc, char **argv) {
             }
 	 }
       }
+
+      /* Detect if no value for this event */
+
+      if (stats[j].value1[0]==0) {
+	 printf("No data found for this event\n");
+	 continue;
+      }
+
+      printf("%s\n",stats[j].name);
+      printf("\tExpected value: %lld\n",stats[j].expected[0]);
+
+
+
 	
       /* calculate average, min/max */
 
