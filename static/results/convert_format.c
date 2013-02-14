@@ -23,8 +23,18 @@ char event_names[MAX_EVENTS][100]={
 };
 
 
+#if 0
 char dir_in[BUFSIZ]="domori/5";
 char dir_out[BUFSIZ]="domori.new";
+#endif
+
+#if 0
+char dir_in[BUFSIZ]="toad4/5";
+char dir_out[BUFSIZ]="toad4.new";
+#endif
+
+char dir_in[BUFSIZ]="venchi/5";
+char dir_out[BUFSIZ]="venchi.new";
 
 int main(int argc, char **argv) {
 
@@ -42,7 +52,17 @@ int main(int argc, char **argv) {
         ggg=fopen(filename,"w");
 	if (ggg==NULL) continue;
 
+        fprintf(ggg,"### System info\n");
+        fprintf(ggg,"Kernel:    Linux 2.6.29\n");
+	fprintf(ggg,"Interface: perfmon2\n");
+	fprintf(ggg,"Hostname:  venchi.csl.cornell.edu\n");
+        fprintf(ggg,"Family:    16\n");
+	fprintf(ggg,"Model:     2\n");
+	fprintf(ggg,"Stepping:  2\n");
+	fprintf(ggg,"Modelname: AMD Phenom(tm) 9500 Quad-Core Processor\n");
+	fprintf(ggg,"Generic:   fam10h\n");
 
+#if 0
         fprintf(ggg,"### System info\n");
         fprintf(ggg,"Kernel:    Linux 2.6.28\n");
 	fprintf(ggg,"Interface: perfmon2\n");
@@ -52,6 +72,7 @@ int main(int argc, char **argv) {
 	fprintf(ggg,"Stepping:  4\n");
 	fprintf(ggg,"Modelname: Intel(R) Xeon(TM) CPU 3.46GHz\n");
 	fprintf(ggg,"Generic:   pentiumd\n");
+#endif
 
 #if 0
         fprintf(ggg,"### System info\n");
@@ -59,10 +80,10 @@ int main(int argc, char **argv) {
 	fprintf(ggg,"Interface: perf_event\n");
 	fprintf(ggg,"Hostname:  toad4\n");
         fprintf(ggg,"Family:    6\n");
-	fprintf(ggg,"Model:     42\n");
-	fprintf(ggg,"Stepping:  4\n");
-	fprintf(ggg,"Modelname: Intel(R) Xeon(TM) CPU 3.46GHz\n");
-	fprintf(ggg,"Generic:   pentiumd\n");
+	fprintf(ggg,"Model:     45\n");
+	fprintf(ggg,"Stepping:  5\n");
+	fprintf(ggg,"Modelname: Intel(R) Xeon(R) CPU 2.6GHz\n");
+	fprintf(ggg,"Generic:   sandybridge-ep\n");
 #endif
 
         for(i=0;i<10;i++) {
