@@ -1,0 +1,261 @@
+Generating results for SandyBridge machine #0
+	Hostname:  toad4
+	Kernel:       Linux 2.6.32-RHEL6
+	Interface: perf_event
+	CPU:       6/45/5
+	CPU type:    sandybridge-ep
+	CPU name:  Intel(R) Xeon(R) CPU 2.6GHz
+	data gathered with tool version: Unknown
+	data analyzed with tool version: 0.23
+
+#############################################
+# Retired Instructions
+#############################################
+
+Retired Instructions
+	Expected value: 226990030
+	Raw Average:    227012116 +/- 14
+	All Values:     227012105, 227012112, 227012105, 227012115, 227012107, 227012125, 227012124, 227012130, 227012117, 227012124, )
+	Raw diff:       22086 +/- 14
+
+Attempting to adjust for overcount
+	Adjusting 1792 for hwints 
+	Adjusting 1 for first-time FPU use
+	Affected by FP Exceptions
+	Adjusting 10,008 for first-time memory accesses
+	OS: Adjusting 10,000 for page faults
+	Adjusted Average: 226990315 +/- 11
+	==============================
+	Adjusted diff: 285 +/- 11
+
+	Issues adjusted for:
+		h: hardware interrupts also increment event count
+		p: page faults also incremement event count
+		E: x87 exceptions increment event count
+		F: Lazy-FPU handling causes an extra count
+
+
+#############################################
+# Retired Branches
+#############################################
+
+Retired Branches
+	Expected value: 9240001
+	Raw Average:    9251840 +/- 10
+	All Values:     9251835, 9251842, 9251841, 9251842, 9251837, 9251836, 9251840, 9251850, 9251842, 9251842, )
+	Raw diff:       11839 +/- 10
+
+Attempting to adjust for overcount
+	Adjusting 1791 for hwints 
+	Adjusting 10,008 for first-time memory accesses
+	Adjusted Average: 9240041 +/- -1
+	==============================
+	Adjusted diff: 40 +/- -1
+
+	Issues adjusted for:
+		h: hardware interrupts also increment event count
+		p: page faults also incremement event count
+
+
+#############################################
+# Conditional Branches
+#############################################
+
+Conditional Branches
+	Expected value: 8220000
+	Raw Average:    8220000 +/- 0
+	All Values:     8220000, 8220000, 8220000, 8220000, 8220000, 8220000, 8220000, 8220000, 8220000, 8220000, )
+	Raw diff:       0 +/- 0
+
+	**** DETERMINISTIC ****
+
+#############################################
+# Retired Uops
+#############################################
+
+Retired Uops
+	Expected value: 0
+	Raw Average:    12292221237 +/- 7258
+	All Values:     12292228495, 12292220525, 12292220754, 12292218577, 12292216436, 12292226682, 12292217305, 12292221452, 12292220297, 12292221849, )
+	Raw diff:       12292221237 +/- 7258
+
+Attempting to adjust for overcount
+	Adjusting 1793 for hwints 
+	Adjusted Average: 12292219444 +/- 7256
+	==============================
+	Adjusted diff: 12292219444 +/- 7256
+
+	This is a machine-specific event without a "known" correct result.
+
+#############################################
+# Retired Loads
+#############################################
+
+Retired Loads
+	Expected value: 79590000
+	Raw Average:    2484166667 +/- 18657
+	All Values:     2484162868, 2484153939, 2484158293, 2484168051, 2484166693, 2484166178, 2484159912, 2484161985, 2484185324, 2484183431, )
+	Raw diff:       2404576667 +/- 18657
+
+Attempting to adjust for overcount
+	Adjusting 1792 for hwints 
+	STACK: Adjusting 200,000 for pop fs/gs
+	SSE1: Adjusting 200,000 for movups (load)
+	SSE1: Adjusting 400,000 for movdqu
+	SSE1: Adjusting -800,000 for SW prefetches
+	SSE1: Adjusting 200,000 for lddqu
+	SSE2: Adjusting 200,000 for movupd
+	SSE2: Adjusting 700,000 for movdqu again
+	SSE2: Adjusting 200,000 for lddqu
+	X87: Adjusting 200,000 for fstps
+	X87: Adjusting 100,000 for fldt
+	X87: Adjusting 600,000 for fldenv
+	X87: Adjusting 2,200,000 for frstor
+	X87: Adjusting 2,500,000 for fxrstor
+	STRING: Adjusting 511,930,000 for rep lods
+	STRING: Adjusting 40,920,000 for rep movs
+	STRING: Adjusting 1,228,720,000 for rep cmps
+	STRING: Adjusting 614,320,000 for rep scas
+	Adjusted Average: 81374875 +/- 18660
+	==============================
+	Adjusted diff: 1784875 +/- 18660
+
+	Issues adjusted for:
+		h: hardware interrupts also increment event count
+		D: Some instructions are counted multiple times
+		U: This event measures uops, not instructions
+
+	On this machine loads are by uops not by instruction, hence the large overcount
+
+#############################################
+# Retired Stores
+#############################################
+
+Retired Stores
+	Expected value: 24060000
+	Raw Average:    189960642 +/- -112
+	All Values:     189960550, 189960674, 189960698, 189960670, 189960530, 189960650, 189960654, 189960614, 189960674, 189960714, )
+	Raw diff:       165900642 +/- -112
+
+Attempting to adjust for overcount
+	Adjusting 1792 for hwints 
+	STACK: Adjusting 100,000 for nested enter
+	CPUID: Adjusting 100,000 for cpuid
+	X87: Adjusting 100,000 for fbstp
+	X87: Adjusting 100,000 for fstps
+	X87: Adjusting 200,000 for fstpt
+	X87: Adjusting 1,200,000 for fstenv
+	X87: Adjusting 4,400,000 for fsave
+	X87: Adjusting 2,500,000 for fxsave
+	SSE1: Adjusting 200,000 for movups (store)
+	SSE1: Adjusting 100,000 for sfence
+	SSE2: Adjusting 200,000 for movupd (store)
+	SSE2: Adjusting 300,000 for movdqu (store)
+	SSE2: Adjusting 100,000 for clflush
+	SSE2: Adjusting 200,000 for maskmovdqu
+	SSE2: Adjusting 100,000 for mfence
+	STRING: Adjusting 71,610,000 for rep stos (forward)
+	STRING: Adjusting 40,950,000 for rep stos (backward)
+	STRING: Adjusting 40,920,000 for rep movs
+	Adjusted Average: 26578850 +/- -113
+	==============================
+	Adjusted diff: 2518850 +/- -113
+
+	Issues adjusted for:
+		h: hardware interrupts also increment event count
+		D: Some instructions are counted multiple times
+		U: This event measures uops, not instructions
+
+	On this machine loads are by uops not by instruction, hence the large overcount
+
+#############################################
+# Multiplies
+#############################################
+
+No data found for this event
+
+#############################################
+# Divides
+#############################################
+
+Divides
+	Expected value: 0
+	Raw Average:    5800304 +/- -56
+	All Values:     5800321, 5800272, 5800248, 5800338, 5800310, 5800323, 5800329, 5800333, 5800263, 5800307, )
+	Raw diff:       5800304 +/- -56
+
+Attempting to adjust for overcount
+	Adjusted Average: 5800304 +/- -56
+	==============================
+	Adjusted diff: 5800304 +/- -56
+
+	This is a machine-specific event without a "known" correct result.
+
+#############################################
+# FP1
+#############################################
+
+FP
+	Expected value: 0
+	Raw Average:    48784041 +/- 1325
+	All Values:     48783608, 48785263, 48783819, 48782987, 48784600, 48784221, 48785366, 48783782, 48783786, 48782987, )
+	Raw diff:       48784041 +/- 1325
+
+Attempting to adjust for overcount
+	Adjusted Average: 48784041 +/- 1325
+	==============================
+	Adjusted diff: 48784041 +/- 1325
+
+	This is a machine-specific event without a "known" correct result.
+
+#############################################
+# FP2
+#############################################
+
+FP
+	Expected value: 0
+	Raw Average:    17200028 +/- 8
+	All Values:     17200029, 17200030, 17200025, 17200024, 17200026, 17200032, 17200022, 17200030, 17200026, 17200036, )
+	Raw diff:       17200028 +/- 8
+
+Attempting to adjust for overcount
+	Adjusted Average: 17200028 +/- 8
+	==============================
+	Adjusted diff: 17200028 +/- 8
+
+	This is a machine-specific event without a "known" correct result.
+
+#############################################
+# SSE
+#############################################
+
+SSE
+	Expected value: 0
+	Raw Average:    23136313 +/- -18585
+	All Values:     23133124, 23135552, 23119720, 23134894, 23126128, 23144466, 23150879, 23146647, 23117728, 23154000, )
+	Raw diff:       23136313 +/- -18585
+
+Attempting to adjust for overcount
+	Adjusted Average: 23136313 +/- -18585
+	==============================
+	Adjusted diff: 23136313 +/- -18585
+
+	This is a machine-specific event without a "known" correct result.
+
+#############################################
+# SW Prefetch NTA
+#############################################
+
+No data found for this event
+
+#############################################
+# SW Prefetch L1
+#############################################
+
+No data found for this event
+
+#############################################
+# SW Prefetch L2
+#############################################
+
+No data found for this event
