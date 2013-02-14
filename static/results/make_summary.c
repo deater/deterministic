@@ -1087,6 +1087,7 @@ int main(int argc, char **argv) {
                  double_ins_adjust+=1228720000;
 	         printf("\tSTRING: Adjusting 614,320,000 for rep scas\n");
                  double_ins_adjust+=614320000;
+		 loads_uops=1;
 	      }
 	      if (j==RETIRED_STORES) {
                  adjust_for_hw_interrupts(j);
@@ -1126,6 +1127,7 @@ int main(int argc, char **argv) {
                  double_ins_adjust+=40950000;
                  printf("\tSTRING: Adjusting 40,920,000 for rep movs\n");
                  double_ins_adjust+=40920000;
+		 stores_uops=1;
 	      }
 
 	      break;
