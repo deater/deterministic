@@ -1,0 +1,239 @@
+Generating results for Westmere machine #0
+	Hostname:  mirasol
+	Kernel:       Linux 3.2.0-rc5-mirasol3
+	Interface: perf_event
+	CPU:       6/47/2
+	CPU type:    westmere-ex
+	CPU name:  Intel(R) Xeon(R) CPU E7- 8870  @ 2.40GHz
+	data gathered with tool version: Unknown
+	data analyzed with tool version: 0.23
+
+#############################################
+# Retired Instructions
+#############################################
+
+Retired Instructions
+	Expected value: 226990030
+	Raw Average:    227000888 +/- 2
+	All Values:     227000887, 227000889, 227000889, 227000890, 227000888, 227000889, 227000890, 227000887, 227000888, 227000888, )
+	Raw diff:       10858 +/- 2
+
+Attempting to adjust for overcount
+	Adjusting 836 for hwints 
+	Adjusting 1 for first-time FPU use
+	Affected by FP Exceptions
+	Adjusting 10,008 for first-time memory accesses
+	Adjusted Average: 226990043 +/- 1
+	==============================
+	Adjusted diff: 13 +/- 1
+
+	Issues adjusted for:
+		h: hardware interrupts also increment event count
+		p: page faults also incremement event count
+		E: x87 exceptions increment event count
+		F: Lazy-FPU handling causes an extra count
+
+
+#############################################
+# Retired Branches
+#############################################
+
+Retired Branches
+	Expected value: 9240001
+	Raw Average:    9250859 +/- 3
+	All Values:     9250858, 9250858, 9250862, 9250858, 9250858, 9250861, 9250860, 9250860, 9250859, 9250860, )
+	Raw diff:       10858 +/- 3
+
+Attempting to adjust for overcount
+	Adjusting 836 for hwints 
+	Adjusting 10,008 for first-time memory accesses
+	Adjusted Average: 9240015 +/- 1
+	==============================
+	Adjusted diff: 14 +/- 1
+
+	Issues adjusted for:
+		h: hardware interrupts also increment event count
+		p: page faults also incremement event count
+
+
+#############################################
+# Conditional Branches
+#############################################
+
+Conditional Branches
+	Expected value: 8220000
+	Raw Average:    8220000 +/- 0
+	All Values:     8220000, 8220000, 8220000, 8220000, 8220000, 8220000, 8220000, 8220000, 8220000, 8220000, )
+	Raw diff:       0 +/- 0
+
+	**** DETERMINISTIC ****
+
+#############################################
+# Retired Uops
+#############################################
+
+Retired Uops
+	Expected value: 0
+	Raw Average:    11740683274 +/- -218900
+	All Values:     11740764556, 11740764476, 11740464374, 11740553857, 11740764835, 11740560341, 11740737371, 11740764917, 11740693258, 11740764756, )
+	Raw diff:       11740683274 +/- -218900
+
+Attempting to adjust for overcount
+	Adjusting 836 for hwints 
+	Adjusted Average: 11740682438 +/- -218899
+	==============================
+	Adjusted diff: 11740682438 +/- -218899
+
+	This is a machine-specific event without a "known" correct result.
+
+#############################################
+# Retired Loads
+#############################################
+
+Retired Loads
+	Expected value: 79590000
+	Raw Average:    79600859 +/- -2
+	All Values:     79600860, 79600860, 79600860, 79600860, 79600857, 79600858, 79600859, 79600861, 79600859, 79600858, )
+	Raw diff:       10859 +/- -2
+
+Attempting to adjust for overcount
+	Adjusting 10,008 for first-time memory accesses
+	Adjusting 836 for hwints 
+	Adjusted Average: 79590015 +/- 1
+	==============================
+	Adjusted diff: 15 +/- 1
+
+	Issues adjusted for:
+		h: hardware interrupts also increment event count
+		p: page faults also incremement event count
+
+
+#############################################
+# Retired Stores
+#############################################
+
+Retired Stores
+	Expected value: 24060000
+	Raw Average:    24470859 +/- 2
+	All Values:     24470858, 24470861, 24470861, 24470858, 24470859, 24470860, 24470860, 24470860, 24470858, 24470859, )
+	Raw diff:       410859 +/- 2
+
+Attempting to adjust for overcount
+	Adjusting 836 for hwints 
+	Adjusting 10,008 for first-time memory accesses
+	Adjusting 100,000 for cpuid instruction
+	Adjusting 100,000 for sfence instruction
+	Adjusting 100,000 for clflush instruction
+	Adjusting 100,000 for mfence instruction
+	Adjusted Average: 24060015 +/- 1
+	==============================
+	Adjusted diff: 15 +/- 1
+
+	Issues adjusted for:
+		h: hardware interrupts also increment event count
+		p: page faults also incremement event count
+		D: Some instructions are counted multiple times
+
+
+#############################################
+# Multiplies
+#############################################
+
+Multiplies
+	Expected value: 0
+	Raw Average:    19866413 +/- -196031
+	All Values:     19999375, 19899627, 19861770, 19849297, 20006442, 19888250, 19912953, 19829846, 19670382, 19746196, )
+	Raw diff:       19866413 +/- -196031
+
+Attempting to adjust for overcount
+	Adjusted Average: 19866413 +/- -196031
+	==============================
+	Adjusted diff: 19866413 +/- -196031
+
+	This is a machine-specific event without a "known" correct result.
+
+#############################################
+# Divides
+#############################################
+
+Divides
+	Expected value: 0
+	Raw Average:    5800072 +/- 64
+	All Values:     5800067, 5800061, 5800069, 5800136, 5800070, 5800070, 5800059, 5800067, 5800060, 5800064, )
+	Raw diff:       5800072 +/- 64
+
+Attempting to adjust for overcount
+	Adjusted Average: 5800072 +/- 64
+	==============================
+	Adjusted diff: 5800072 +/- 64
+
+	This is a machine-specific event without a "known" correct result.
+
+#############################################
+# FP1
+#############################################
+
+FP
+	Expected value: 0
+	Raw Average:    50015343 +/- -43898
+	All Values:     50003548, 50008309, 50054072, 49990822, 49971445, 50041667, 50024585, 50041590, 49974075, 50043318, )
+	Raw diff:       50015343 +/- -43898
+
+Attempting to adjust for overcount
+	Adjusted Average: 50015343 +/- -43898
+	==============================
+	Adjusted diff: 50015343 +/- -43898
+
+	This is a machine-specific event without a "known" correct result.
+
+#############################################
+# FP2
+#############################################
+
+FP
+	Expected value: 0
+	Raw Average:    17199998 +/- 2
+	All Values:     17200000, 17199999, 17199998, 17199999, 17199999, 17199998, 17199998, 17199999, 17199998, 17199998, )
+	Raw diff:       17199998 +/- 2
+
+Attempting to adjust for overcount
+	Adjusted Average: 17199998 +/- 2
+	==============================
+	Adjusted diff: 17199998 +/- 2
+
+	This is a machine-specific event without a "known" correct result.
+
+#############################################
+# SSE
+#############################################
+
+SSE
+	Expected value: 0
+	Raw Average:    24921548 +/- 38051
+	All Values:     24900417, 24900409, 24945153, 24900640, 24900349, 24900589, 24948541, 24900445, 24959599, 24959343, )
+	Raw diff:       24921548 +/- 38051
+
+Attempting to adjust for overcount
+	Adjusted Average: 24921548 +/- 38051
+	==============================
+	Adjusted diff: 24921548 +/- 38051
+
+	This is a machine-specific event without a "known" correct result.
+
+#############################################
+# SW Prefetch NTA
+#############################################
+
+No data found for this event
+
+#############################################
+# SW Prefetch L1
+#############################################
+
+No data found for this event
+
+#############################################
+# SW Prefetch L2
+#############################################
+
+No data found for this event
