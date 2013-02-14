@@ -612,7 +612,7 @@ static int generate_results(char *directory, char *name,
       sprintf(temp_string,"echo \"### Perf Results %d\">> %s",
                            i,filename);
       system(temp_string);
-      sprintf(temp_string,"taskset -c 0 perf stat " //"--log-fd 2 "
+      sprintf(temp_string,"taskset -c 0 perf stat --log-fd 2 "
                           "-e %s,%s,cs:u "
                           "./binaries/retired_instr.%s.x86_64 1>/dev/null 2>>"
                           "%s",
@@ -861,6 +861,14 @@ int main (int argc, char **argv) {
 
    /* Retired Divides */
    /* flipped hw/div due to scheduling bug on older perf_event and core2 */
+         
+   /* fam10h does this, and since we have the backward event order */
+   /* going on here it's not trivial to detect this in the */
+   /* generate_results function.                           */
+   if (!strncmp(event_table->divs_event,"NONE",4)) {
+      goto skip_divs;
+   }   
+
    generate_results(dirname,"divs_retired",
                     event_table->hw_int_event,
                     event_table->divs_event,
@@ -890,7 +898,8 @@ int main (int argc, char **argv) {
                     event_table->divs_name,
                     "all", RUNS);
 
-
+skip_divs:
+   
    /* Retired FP */
    generate_results(dirname,"fp_retired",
                     event_table->fp1_event,
