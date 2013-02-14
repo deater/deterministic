@@ -603,7 +603,7 @@ int main(int argc, char **argv) {
       printf("\n");
       printf("#############################################\n");
       if (j==RETIRED_FP) {
-	printf("# %s%d\n",stats[j].name,retired_fp_which+1);
+	 printf("# %s%d\n",stats[j].name,retired_fp_which+1);
       }
       else {
          printf("# %s\n",stats[j].name);
@@ -788,6 +788,8 @@ int main(int argc, char **argv) {
 	      }
 	      if (j==RETIRED_STORES) {
 		 adjust_for_hw_interrupts(j);
+		 adjust_for_pagefaults(); /* 2 for each? */
+		 adjust_for_pagefaults();
                  printf("\tSTACK: Adjusting 100,000 for nested enter\n");
                  double_ins_adjust+=100000;
                  printf("\tCPUID: Adjusting 100,000 for cpuid\n");
@@ -1218,7 +1220,10 @@ int main(int argc, char **argv) {
 
       /* repeat again if RETIRED_FP */
       if (j==RETIRED_FP) {
-	if (retired_fp_which==0) {
+
+	 /* Pentium 2 requires two events to measure          */
+	 /* FP but only the first value has the actual result */
+	if ((retired_fp_which==0) && (machine_type!=PENTIUMD)) {
 	   retired_fp_which=1;
            goto re_loop;
 	}
