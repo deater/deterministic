@@ -496,7 +496,6 @@ static int get_cpuinfo(void) {
    printf("Stepping:  %d\n",cpuinfo.stepping);
    printf("Modelname: %s\n",cpuinfo.modelname);
    printf("Generic:   %s\n",cpuinfo.generic_modelname);
-   printf("generate_results version: %s\n",DETERMINISTIC_VERSION);
 
    fclose(fff);
 
@@ -595,6 +594,7 @@ static int generate_results(char *directory, char *name,
    fprintf(fff,"Modelname: %s\n",cpuinfo.modelname);
    fprintf(fff,"Generic:   %s\n",cpuinfo.generic_modelname);
    fprintf(fff,"Counters used: %s/%s\n",name1,name2);
+   fprintf(fff,"generate_results version: %s\n",DETERMINISTIC_VERSION);
    fprintf(fff,"Runs:      %d\n",count);
    fclose(fff);
 
@@ -612,7 +612,8 @@ static int generate_results(char *directory, char *name,
       sprintf(temp_string,"echo \"### Perf Results %d\">> %s",
                            i,filename);
       system(temp_string);
-      sprintf(temp_string,"taskset -c 0 perf stat --log-fd 2 "
+      sprintf(temp_string,"taskset -c 0 perf stat "
+	      "--log-fd 2 " // comment out this line if using old perf
                           "-e %s,%s,cs:u "
                           "./binaries/retired_instr.%s.x86_64 1>/dev/null 2>>"
                           "%s",
