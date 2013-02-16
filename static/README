@@ -5,7 +5,7 @@ instructions on an architecture, and then count them with performance
 counters to validate that the various retired instruction counters
 are working.
 
-Currently only x86_64 is implememnted.
+Currently only x86_64 is implemented.
 
 
 Directories Included
@@ -17,46 +17,66 @@ Directories Included
                  that interpret the results
   sample_code/ - other code I used when tracking down corner-cases
                  in the results
-  mov_graph/  -- code to generate the graphs of the weird pentium D
+  mov_graph/  -- code to generate the graphs of the weird Pentium D
                  string instruction behavior
-  objects/    -- holds the .o files
-  src/        -- holds the source code
+  obj/        -- holds the .o files
+  src/        -- holds the assembly benchmark source code
 
 
 
-To Build
-~~~~~~~~
+To Generate Counter Results
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
   run "make"
-  To force a rebuild, run "touch ./src/retired_instr.i386.s"
-
+  run "./generate_results" on your machine of interest
+     this will run the assembly benchmark 10 times and store
+     the results under ./results/ARCH/NUM where ARCH is the
+     type of machine and NUM is the next available directory slot
+  if you are running on a new or unusual machine then you will first
+     have to edit generate_results.c to recognize your vendor/family/model
+     as well as create an event table with the events to measure
+  if you are running on older systems with an older version of "perf" 
+     you'll have to edit generate_results.c to not use the
+     "--log-fd=2" option.  This is needed on newer perf but is unnecessary
+     (and reports an error) on older perf.
 
 To Analyze Results
 ~~~~~~~~~~~~~~~~~~
-  First gather data.  Run the appropriate script.  For example
-  on a Core2 system run
-     ./make_results_core2.sh 5
-  This can take a while, as it runs each sub-benchmark 10 times.
+  First gather data as described in the previous section.
+  Included are results for a wide variety of x86_64 machines.
 
-  Enter the results directory
+  Enter the results directory: "cd results"
   Run "make"
-  Run "./make_summary deater all"
-    (Unfortunately the results directory are named after
-     the machines I used, rather than CPU type.  I should fix that).
-  The "Adjusted diff" lines are the more interesting ones.  Some
-    of the results (like uops) are known to not be determinsitic.
+  
+  Run "./make_summary ARCH" where ARCH is the machine type you care about,
+    for example "./make_summary core2"
+
+  The full command is "./make_summary ARCH TYPE NUM"
+    where TYPE is all / int / fp / sse (default all).  When generating
+    results there are actually 4 benchmarks.  All has all instructions,
+    int only int benchmarks, fp only fp, sse only sse.
+    NUM is the machine number; if multiple runs exist this specifies
+    which run to use.
+  The results from make_summary should explain which events are deterministic
+    and which adjustments need to be made to get expected results.  For more
+    details see one of the papers below.
 
 References
 ~~~~~~~~~~
-  This work is described in my FHPM2010 paper.
+  This work is described in my ISPASS2013 paper.
+      V.M. Weaver, D. Terpstra, S. Moore. "Non-Determinism and 
+           Overcount on Modern Hardware Performance Counter Implementations", 
+           IEEE International Symposium on Performance Analysis of Systems 
+           and Software (ISPASS 2013), Austin, Texas, April 2013. 
+
+  An earlier version appeared in FHPM2012.
       V. Weaver and J. Dongarra.  Can Hardware Performance Counters 
          Produce Expected, Deterministic Results?  FHPM2010, 
          December 2010, Atlanta GA.
 
    Additional info can be found here:
-      http://web.eecs.utk.edu/~vweaver1/projects/deterministic/
-
+      http://www.eece.maine.edu/~vweaver/projects/deterministic/
 
 Author
 ~~~~~~
-  Vince Weaver  vweaver1 _at_ eecs.utk.edu
-  19 January 2011
+  Vince Weaver  vincent.weaver@maine.edu
+  15 February 2013
