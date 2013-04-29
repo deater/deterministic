@@ -1,0 +1,89 @@
+Contributed by Grant Zhou and Peggy Irelan
+
+==============================================================================
+Events investigated:
+1.	BR_INST_RETIRED.ALL (0x04C4). The event should count all near and far 
+	branches.
+2.	INST_RETIRED.ALL (0x01C0). This is a programmable event for a general 
+	counter to count retired instructions.
+3.	The PerfMon fixed counter 0. This is specifically to count retired 
+	instructions and should behave the same as INST_RETIRED.ALL (0x01C0) 
+	in theory.
+
+Tests:
+1.	All the 17 single tests (Empty, Nops, String, OS, ...) in Vince's 
+	suite instead of their combinations.
+2.	The loop iterations of code (instructions) vary from 10, 100, ..., 
+	to 1,000,000 (except the OS test with 10,000 as maximum).
+
+Tools:
+1.	Linux Perf.
+2.	Intel EMON: Intel provided public tool specifically for PerfMon events
+	(recently merged to SEP), which can be downloaded at emon.intel.com or
+	sep.intel.com.
+3.	The mini-driver (or mini-EMON): Specifically developed for the
+	investigation.
+
+Products investigated:
+1.	Sandybridge (SNB)
+2.	Ivybridge (IVB)
+3.	Atom Silvermont
+4.	Haswell (HSW)
+
+OS installed:
+1.	Linux 64-bit on all the products above.
+2.	Linux 32-bit on Atom (working in progress).
+
+Conclusions on the event determinism:
+1.	BR_INST_RETIRED.ALL (0x04C4)
+a.	Near branch (no code segment change): Vince tested 
+	BR_INST_RETIRED.CONDITIONAL and concluded it as deterministic. 
+	We verified that this applies to the near branch event by using 
+	BR_INST_RETIRED.ALL - BR_INST_RETIRED.FAR_BRANCHES.
+b.	Far branch (with code segment change): BR_INST_RETIRED.FAR_BRANCHES 
+	counts interrupts and page-faults. In particular, for all ring 
+	(OS and user) levels the event counts 2 for each interrupt or 
+	page-fault, which occurs on interrupt/fault entry and exit (IRET).
+	For Ring 3 (user) level,  the counter counts 1 for the interrupt/fault
+	exit. Subtracting the interrupts and faults (PerfMon event 0x01cb and
+	Linux Perf event - faults), BR_INST_RETIRED.FAR_BRANCHES remains a 
+	constant of 2 for all the 17 tests by Perf (the 2 count appears coming
+	from the Linux Perf for counter enabling and disabling). 
+	Consequently, BR_INST_RETIRED.FAR_BRANCHES is deterministic. 
+Thus, the BR_INST_RETIRED.ALL is deterministic.
+
+2.	INST_RETIRED.ALL (0x01C0)
+a.	Using BR_INST_RETIRED.ALL as a reference, we identified that event is
+	slightly under-counting for the String test on SNB, IVB, Atom, and HSW.
+	This is a known issue that may happen when REP instruction was 
+	interrupted and may be fixed in future Intel products. 
+b.	We also identified that event is slightly over-counting for any single
+	test when interrupts are present (or roughly double counting 
+	interrupts), but this happens only on SNB and IVB, not on Atom and HSW. 
+
+3.	The PerfMon fixed counter 0
+a.	Like INST_RETIRED.ALL (0x01C0), the fixed counter is slightly 
+	under-counting for the String test on SNB, IVB, Atom, and HSW. 
+b.	Unlike INST_RETIRED.ALL (0x01C0), the counter does not over-count 
+	for any single test when interrupts are present. 
+
+Comments on the tools we used: 
+1.	On Linux Perf, the fixed counter is not visible to users which is 
+	probably reserved for some specific uses and hence cannot be checked.
+	But with EMON or the mini-driver, we can easily see that the fixed 
+	counter is not over-counting interrupt activities. We have requested 
+	Intel Linux Perf team to investigate.
+
+2.	The EMON tool provides users the flexibility with any fixed or 
+	counter, and a lot of PerfMon events. However, the tool does not 
+	control context switches, and hence it may return big over-counts 
+	sometimes (we have requested Intel EMON tool team to improve on this
+	problem). Another limitation is that the tool cannot provide context
+	switch information because there is not such an event in Intel PerMon
+	Unit.
+
+3.	Mini-driver is a simple and handy driver with a lot of flexibility and
+	transparency for PerfMon studies and uses. A good presentation in 
+	PowerPoint slides is ready for internal users but also external users
+	per requests .
+
