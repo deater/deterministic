@@ -1,0 +1,79 @@
+\section{Introduction}
+
+Most modern CPUs have hardware performance counters; these
+counters allow detailed, low-level measurement of processor behavior.
+The counters are most commonly used for performance analysis, especially
+in the High Performance Computing (HPC) field.  Usage has spread
+to the desktop and embedded areas, with many new and novel
+utilization scenarios.
+
+There are a wide variety of events that can be measured with performance
+counters, with event availability varying considerably among CPUs and vendors.
+Some processors provide hundreds of events; separating the
+useful and accurate ones from those that are broken and/or measure
+esoteric architectural minutia can be a harrowing process.
+Event details are buried in architectural manuals, often accompanied
+by disclaimers disavowing any guarantees of useful results.
+
+Counter validation is a difficult process.  Some events cannot
+be validated effectively, as they require exact knowledge of
+the underlying CPU architecture and can be influenced
+by outside timing effects not under user control
+~\cite{mytkowicz+:asplos09}.
+This includes most cache events, cycle counts, and any event
+affected by speculative execution. 
+
+A subset of events exists that {\em is} architecturally specified;
+these measure various kinds of retired instructions.
+With a deterministic program (one that when provided
+with the same input traverses the exact same code path
+and generates the exact same output)
+the counter results should be the same for every run.
+These counts should be consistent; otherwise
+the processor would not be ISA compatible with others in
+the same architecture.
+
+\subsection{The Need for Deterministic Events}
+
+There are many situations where deterministic software execution
+is necessary.  
+Deterministic execution is useful when validating 
+architectural simulators~\cite{weaver+:wddd08,desikan+:trut01},
+when analyzing program behavior using 
+basic block vectors (BBVs)~\cite{weaver+:hipeac08},
+when performing Feedback Directed Optimization (FDO)~\cite{chen+:cgo10},
+when using hardware checkpointing and 
+rollback recovery~\cite{stodden+:isas06}, 
+when performing intrusion analysis~\cite{dunlap+:osdi02},
+and when implementing parallel deterministic 
+execution.
+
+Parallel deterministic execution enables debugging and analysis of 
+multi-threaded applications in a repeatable way.  
+Deterministic lock interleaving makes it possible to track down 
+locking problems in large parallel applications.
+There have been many proposals about how to best implement parallel
+deterministic execution; many require modified hardware or modified
+operating systems.  A quick and easy way to build deterministic
+locks is to use hardware performance counters to ensure that
+previously non-deterministic lock behavior happens
+in a consistent, repeatable 
+way~\cite{olszewski+:asplos09,yun:code2010,aviram+:osdi10,bergan+:osdi10}.
+The need for parallel deterministic execution has been the primary
+impetus for the search for deterministic performance events.
+
+\subsection{Definitions}
+
+In this work we search for {\em useful deterministic events}.
+We define a useful deterministic event as one where the value
+does not change run-to-run due to the microarchitecture of the 
+processor (it is not affected by speculative execution),
+the expected value can be determined via code inspection, and
+the event occurs with enough frequency and distribution 
+to be useful in program analysis.
+
+We find two primary causes for events to deviate from the expected
+result:
+{\em nondeterminism} (identical runs returning different values) 
+and {\em overcount} (some instructions counting multiple times).  
+We investigate both sources of deviation.

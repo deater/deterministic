@@ -1,0 +1,75 @@
+\section{Related Work}
+
+The primary use of deterministic events is for 
+parallel deterministic execution and deterministic replay.
+In these cases any deterministic event will do, and 
+once one is found it tends to be mentioned in passing without
+discussing the methodology used to analyze the
+determinism.
+
+Olszewski et al.~\cite{olszewski+:asplos09},
+while attempting to create a user-space deterministic multi-threading library,
+find that {\tt RETIRED\_STORES} is deterministic on Core2 processors.  They do
+not describe their methodology for how this was determined, nor do they
+look at any other architectures.
+Bergan et al.~\cite{bergan+:osdi10} use retired instructions while
+doing deterministic multi-threading; they use the methodology of
+Dunlap et al.~\cite{dunlap+:osdi02} which used retired branches on
+AMD machines but stopped early and single-stepped to avoid hardware
+interrupt issues.  
+
+Many other studies use hardware performance counters in various ways,
+but there has been little research into deterministic variation or
+overcount.
+Our work is unique
+in looking at a wide range of architectures and a wide variety of modern
+64-bit machines, as well as determining correctness based on code inspection
+rather than using a simulator.
+
+Stodden et al.~\cite{stodden+:isas06} use assembly-language programs
+to validate use of hardware counters for log-based rollback recovery,
+but they do not analyze the determinism of the events, only the amount
+of interrupt lag when trying to stop at a precise instruction address.
+
+Zaparanuks et al.~\cite{zaparanuks+:ispass09} investigate the performance
+counter accuracy as provided by various high-level counter APIs on
+three different x86 architectures.  They measure overhead of the cycle
+and total retired instruction events, but use a very small 
+(4 instruction long) assembly benchmark and do not fully explore
+the underlying causes of the variation.
+
+Mytkowicz et al.~\cite{mytkowicz+:asplos09} investigate sources
+of measurement bias and non-determinism in program execution.  
+The cycles event was used in this work, and the
+problems found focused on high-level executable layout and operating system
+issues and not limitations of the underlying PMU.
+
+Korn, Teller, and Castillo~\cite{korn+:ipcc01} validate
+MIPS R12000 performance counters with  microbenchmarks,
+reporting up to 25\% error with {\tt INSTRUCTIONS\_DECODED} 
+when comparing against a hardware simulator.
+Black et al.~\cite{black+:iccd96} investigate the number
+of retired instructions and cycles on the PowerPC 604 platform,
+comparing their results against a cycle-accurate simulator. 
+Cycle-accurate simulators have their own inherent error, so unless that
+is known exactly it limits what can be learned about the accuracy
+of the hardware counters being compared.
+
+We previously
+investigate the determinism
+of the {\tt RETIRED\_INSTRUCTION}
+counter on a wide range of 32-bit x86 processors
+using the SPEC CPU benchmarks~\cite{weaver+:iiswc08}, 
+finding upward of 2\% error on 
+Pentium~D.  This work found many sources of variation but
+was limited to one event and did not fully explore the causes
+of non-determinism.
+
+Maxwell et al.~\cite{maxwell+:lacsi02} look at accuracy of performance
+counters on a variety of architectures, reporting less than 1\% error with 
+retired instructions when using a microbenchmark.
+DeRose et al.~\cite{derose+:europar01} look at variation and error with
+performance counters on a Power3 system, but only for startup and shutdown
+costs; they do not report total benchmark behavior.
+
+% cite salayandia:thesis2002

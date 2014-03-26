@@ -1,0 +1,233 @@
+\begin{tabular}{|l||c|c|c|}
+
+\hline
+                  & 
+Intel Atom        & 
+Intel Core2       &
+Intel Pentium D \\
+\hline
+\hline
+
+
+%%%%%%%%%%%%%%%%%
+% Retired Instructions
+%%%%%%%%%%%%%%%%%
+\multirow{2}{*}{\parbox{0.5in}{Retired \\
+Instructions}}            &
+INSTRUCTIONS\_RETIRED     & % Atom 
+INSTRUCTIONS\_RETIRED     & % Core 2
+INSTR\_RETIRED:NBOGUSNTAG \\ % P4
+          &
+{\em (instructions:u)}      & % Atom   
+{\em (instructions:u)}      & % Core 2
+{\em (instructions:u)}      \\ % p4
+
+%%%%%%%%%%%%%%%%%
+% Retired Branches
+%%%%%%%%%%%%%%%%%
+\hline
+\multirow{3}{*}{\parbox{0.5in}{Retired \\
+Branches}}                 &  
+BRANCH\_INSTRUCTIONS      & % Atom
+BRANCH\_INSTRUCTIONS      & % Core 2
+BRANCH\_RETIRED           \\ % Pentium D
+
+                  &  
+\_RETIRED      & % Atom
+\_RETIRED      & % Core 2
+:MMNP:MMNM:MMTP:MMTM \\ % Pentium D
+
+                      &
+{\em (branches:u)}         & % Atom
+{\em (branches:u)}         & % Core 2
+{\em (branches:u)}         \\ % Pentium D
+
+%%%%%%%%%%%%%%%%%
+% Retired Conditional Branches
+%%%%%%%%%%%%%%%%%
+\hline
+\multirow{3}{*}{\parbox{0.5in}{Retired \\
+Conditional \\
+Branches}}                &  
+\multirow{3}{*}{n/a}      & % Atom
+\multirow{2}{*}{BR\_CND\_EXEC}             & % Core 2
+RETIRED\_BRANCH\_TYPE  \\ % Pentium D
+                  &  
+& % Atom
+& % Core 2
+:CONDITIONAL      \\ % Pentium D
+
+
+
+			&
+			& % Atom
+{\em (r53008b:u)}	& % Core 2
+			\\ % Pentium D
+
+
+
+%%%%%%%%%%%%%%%%%
+% Retired Loads
+%%%%%%%%%%%%%%%%%
+\hline
+\multirow{3}{*}{\parbox{0.5in}{Retired \\
+Loads}}   &  
+\multirow{3}{*}{n/a}				& % Atom
+\multirow{2}{*}{INST\_RETIRED:LOADS}		& % Core 2
+FRONT\_END\_EVENT:NBOGUS, 			\\ % Pentium D
+
+                         &
+                         & % Atom
+                         & % Core 2
+UOPS\_TYPE:TAGLOADS      \\ % Pentium D
+
+
+
+                         &
+                         & % Atom
+{\em (r5001c0:u)}        & % Core 2
+			\\ % Pentium D
+
+%%%%%%%%%%%%%%%%%
+% Retired Stores
+%%%%%%%%%%%%%%%%%
+\hline
+\multirow{3}{*}{\parbox{0.5in}{Retired \\Stores}}              &  
+\multirow{3}{*}{n/a}  & % Atom
+\multirow{2}{*}{INST\_RETIRED:STORES}                           & % Core 2
+INSTR\_RETIRED:NBOGUSTAG, \\ % Pentium D
+
+                          &   
+                          & % Atom
+                          & % Core 2
+UOPS\_TYPE:TAGSTORES      \\ % Pentium D
+
+                          &
+                          & % Atom
+{\em (r5002c0:u)}         & % Core 2
+			\\ % Pentium D
+
+%%%%%%%%%%%%%%%%%
+% Multiplies
+%%%%%%%%%%%%%%%%%
+\hline
+\multirow{2}{*}{\parbox{0.5in}{Multiplies}}                 &  
+MUL:AR                & % Atom
+MUL                   & % Core 2
+\multirow{2}{*}{n/a}  \\ % Pentium D
+
+
+                      &
+{\em (r508112:u)}     & % Atom
+{\em (r510012:u)}     & % Core 2
+			\\ % Pentium D
+
+%%%%%%%%%%%%%%%%%
+% Divides
+%%%%%%%%%%%%%%%%%
+\hline
+\multirow{2}{*}{\parbox{0.5in}{Divides}}                 &  
+DIV:AR                & % Atom
+DIV                   & % Core 2
+\multirow{2}{*}{n/a}    \\ % Pentium D
+
+                      &
+{\em (r508113:u)}     & % Atom
+{\em (r510013:u)}     & % Core 2
+			\\ % Pentium D
+
+%%%%%%%%%%%%%%%%%
+% FP1
+%%%%%%%%%%%%%%%%%
+\hline
+\multirow{3}{*}{\parbox{0.5in}{FP1}}                 &  
+X87\_COMP\_OPS\_EXE:ANY\_AR             & % Atom
+FP\_COMP\_OPS\_EXE     & % Core 2
+EXECUTION\_EVENT:NBOGUS1, \\ % Pentium D
+
+                      &
+			& % Atom
+			& % Core 2
+X87\_FP\_UOP:ALL:TAG1   \\ % Pentium D
+
+                      &
+{\em (r508110:u)}     & % Atom
+{\em (r500010:u)}     & % Core 2
+			\\ % Pentium D
+
+%%%%%%%%%%%%%%%%%
+% FP2
+%%%%%%%%%%%%%%%%%
+\hline
+\multirow{2}{*}{\parbox{0.5in}{FP2}}     &  
+X87\_COMP\_OPS\_EXE:ANY\_S   & % Atom
+X87\_OPS\_RETIRED:ANY        & % Core 2
+\multirow{2}{*}{n/a}         \\ % Pentium D
+
+
+                      &
+{\em (r530110:u)}     & % Atom
+{\em (r50fec1:u)}     & % Core 2
+			\\ % Pentium D
+
+
+%%%%%%%%%%%%%%%%%
+% SSE
+%%%%%%%%%%%%%%%%%
+\hline
+\multirow{4}{*}{\parbox{0.5in}{SSE}}   &  
+\multirow{3}{*}{SIMD\_INST\_RETIRED}    & % Atom
+\multirow{3}{*}{SIMD\_INSTR\_RETIRED}   & % Core 2
+EXECUTION\_EVENT:NBOGUS2,            \\ % Pentium D
+
+               &  
+               & % Atom
+               & % Core 2
+PACKED\_SP\_UOP:ALL:TAG2,  \\ % Pentium D
+
+               &  
+               & % Atom
+               & % Core 2
+PACKED\_DP\_UOP:ALL:TAG2  \\ % Pentium D
+
+                      &
+{\em (r501fc7:u)}     & % Atom
+{\em (r5000ce:u)}     & % Core 2
+			\\ % Pentium D
+
+
+
+%%%%%%%%%%%%%%%%%
+% Retired Uops
+%%%%%%%%%%%%%%%%%
+\hline
+\multirow{2}{*}{\parbox{0.5in}{Retired\\
+Uops}}   &
+UOPS\_RETIRED         & % Atom
+UOPS\_RETIRED         & % Core 2
+UOPS\_RETIRED:NBOGUS  \\ % Pentium D
+
+                  &
+{\em (r5010c2:u)}     & % Atom
+{\em (r500fc2:u)}     & % Core 2
+			\\ % Pentium D
+
+%%%%%%%%%%%%%%%%%
+% Hardware Interrupts
+%%%%%%%%%%%%%%%%%
+\hline
+\multirow{2}{*}{\parbox{0.5in}{Hardware\\
+Interrupts}}                 &
+HW\_INT\_RCV$^{\dagger}$ & % Atom
+HW\_INT\_RCV             & % Core 2
+\multirow{2}{*}{n/a}     \\ % Pentium D
+
+                      &
+{\em (r5100c8:u)}     & % Atom
+{\em (r5000c8:u)}     & % Core 2
+			\\ % Pentium D
+
+\hline
+
+\end{tabular}
+

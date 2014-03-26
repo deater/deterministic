@@ -1,0 +1,61 @@
+\section{Conclusions and Future Work}
+In our experiments we have found only a small minority of
+x86\_64 events to be deterministic and without overcount:
+{\tt RETIRED\_STORES} on Core2 and 
+{\tt BR\_INST\_RETIRED\_CONDITIONAL} on SandyBridge and Westmere.
+This lack of useful events limits 
+the use of performance counters for advanced applications such
+as deterministic replay and threading libraries on the popular x86\_64
+architecture.  
+
+Many potentially deterministic events are rendered unusable
+by including the unpredictable hardware interrupt count.
+This can be mitigated by subtracting off a separate
+interrupt counter event (if available),
+but this will not help in the deterministic
+use case where exact overflow is desired in order to 
+stop at precise locations.  
+
+Our investigation of other architectures shows that
+deterministic events are more common on non-x86 hardware.
+This shows that deterministic events can be accomplished
+and are not an unsolvable problem.  Unfortunately 
+these platforms are typically not available to most
+users.
+
+New users of performance counters are often frustrated that the results
+they measure are not the ones they ``know'' to be correct.
+Eventually the users learn the sources of the error, and undertake 
+analysis that allows for run-to-run variation in the results.
+It becomes almost a rite of passage, learning why the counters work
+the way they do, and working around them.  This fatalistic view
+of the quality of counters explains the lack of
+impetus for fixing the underlying problem.
+
+We propose that there are definite benefits to providing deterministic
+counters with little overcount or variation.  
+Existing methodologies that can stand some variation will not be harmed, 
+and new and better uses for the counters will be found.  
+Use of counters by non-experts can then be encouraged, 
+as there will be so many fewer caveats to their use.
+
+The various x86\_64 vendors need to be strongly encouraged
+to fix the performance monitoring units on their respective CPUs.
+There are many inherent hardware problems with providing deterministic
+counters, but other non-x86 architectures seem to have solved them.
+This may mean simplifying the available counters or limiting the
+number of available events, but in practice few people use the counters
+at all, let alone the full feature set.
+
+A change like this will not happen overnight;
+In the meantime more work on analyzing the causes and amounts
+of variations can be done.  Manually generating and validating
+test suites is a slow, tedious process.  We are investigating
+a method of automated testcase generation and validation that
+can vastly improve the process.
+
+When deterministic counters do become available, they will
+be welcomed not only by those working on deterministic replay and simulator
+validators, but also by all users of performance counters.  
+
+

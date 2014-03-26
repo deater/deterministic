@@ -1,0 +1,25 @@
+Ideal hardware performance counters provide exact deterministic results.
+Real-world performance monitoring unit (PMU) implementations
+do not always live up to this ideal.
+Events that should be exact and deterministic 
+(such as retired instructions) show run-to-run 
+variation and overcount on x86\_64 machines, even when 
+run in strictly controlled environments. 
+These effects are non-intuitive to casual users and 
+cause difficulties when strict determinism is desirable,
+such as when implementing
+deterministic replay or deterministic threading libraries.
+
+We investigate eleven different x86\_64 CPU implementations and
+discover the sources of divergence from expected count totals.  
+Of all the counter events investigated, we find only a few
+that exhibit enough determinism to be used without adjustment in
+deterministic execution environments.  
+We also briefly investigate ARM, IA64, POWER and SPARC systems
+and find that on these platforms the counter events have more
+determinism.  
+
+We explore various methods of working around the limitations 
+of the x86\_64 events, but in many cases this is not possible
+and would require architectural redesign of the underlying
+PMU.

@@ -1,0 +1,274 @@
+\begin{tabular}{|l||c|c|c|}
+
+\hline
+    & 
+Intel Nehalem				&
+\multirow{3}{*}{Intel Sandybridge}	&
+\multirow{3}{*}{Intel IvyBridge} 	\\
+
+                 & 
+Intel Nehalem-EX & 
+                 & 
+                 \\
+
+                 & 
+Intel Westmere   & 
+                 & 
+                 \\
+
+
+
+
+\hline
+\hline
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Retired Instructions
+%%%%%%%%%%%%%%%%%%%%%%
+Retired                   &
+INSTRUCTIONS\_RETIRED     & % Nehalem
+INSTRUCTION\_RETIRED      & % snb
+INSTRUCTION\_RETIRED      \\ % ivb
+
+
+Instructions                &
+{\em (instructions:u)}      & % Nehalem
+{\em (instructions:u)}      & % snb
+{\em (instructions:u)}      \\ % ivb
+
+
+
+%%%%%%%%%%%%%%%%%
+% Retired Branches
+%%%%%%%%%%%%%%%%%
+\hline
+\multirow{3}{*}{\parbox{0.5in}{Retired \\
+Branches}}                &
+BRANCH\_INSTRUCTIONS      		& % Nehalem
+BRANCH\_INSTRUCTIONS			& % SNB
+\multirow{2}{*}{BR\_INST\_RETIRED}	\\ % IVB
+
+		&
+\_RETIRED	& % Nehalem  
+\_RETIRED       & % SNB
+		\\ % IVB
+
+
+                           &
+{\em (branches:u)}         & % Nehalem
+{\em (branches:u)}         & % SNB
+{\em (branches:u)}         \\ % IVB
+
+
+
+%%%%%%%%%%%%%%%%%
+% Retired Conditional Branches
+%%%%%%%%%%%%%%%%%
+\hline
+\multirow{3}{*}{\parbox{0.5in}{Retired \\
+Conditional \\
+Branches}}                &
+BR\_INST\_RETIRED         & % Nehalem
+BR\_INST\_RETIRED         & % SNB
+\multirow{2}{*}{BR\_INST\_RETIRED:COND}    \\ % IVB
+
+                  &
+:CONDITIONAL      & % Nehalem
+:CONDITIONAL      & % SNB
+                  \\ % IVB
+
+			&
+{\em (r5301c4:u)}	& % Nehalem
+{\em (r5301c4:u)}	& % SNB
+{\em (r5301c4:u)}	\\ % IVB		      
+
+
+%%%%%%%%%%%%%%%%%
+% Retired Loads
+%%%%%%%%%%%%%%%%%
+\hline
+\multirow{3}{*}{\parbox{0.5in}{Retired \\Loads}}   &  
+MEM\_INST\_RETIRED                                 & % Nehalem
+MEM\_UOP\_RETIRED                                  & % SNB
+MEM\_UOPS\_RETIRED        \\ % IVB  MEM_LOAD_UOPS_RETIRED?
+
+                         &
+:LOADS                   & % Nehalem
+:ANY\_LOADS              & % SNB
+:ALL\_LOADS              \\ % IVB
+
+
+                         &
+{\em (r50010b:u)}        & % Nehalem
+{\em (r5381d0:u)}        & % SNB
+{\em (r5381d0:u)}	\\ % IVB
+
+
+%%%%%%%%%%%%%%%%%
+% Retired Stores
+%%%%%%%%%%%%%%%%%
+\hline
+\multirow{3}{*}{\parbox{0.5in}{Retired \\Stores}}              &  
+MEM\_INST\_RETIRED        & % Nehalem
+MEM\_UOP\_RETIRED         & % SNB
+MEM\_UOPS\_RETIRED:       \\ % IVB
+
+                          &
+:STORES                   & % Nehalem
+:ANY\_STORES              & % SNB
+:ALL\_STORES              \\ % IVB
+
+
+                          &
+{\em (r50020b:u)}         & % Nehalem
+{\em (r5382d0:u)}         & % SNB
+{\em (r5382d0:u)}         \\ % IVB
+
+
+%%%%%%%%%%%%%%%%%
+% Multiplies
+%%%%%%%%%%%%%%%%%
+\hline
+\multirow{3}{*}{\parbox{0.5in}{Multiplies}}                 &  
+\multirow{2}{*}{ARITH:MUL}             & % Nehalem
+\multirow{3}{*}{n/a}                   & % SNB
+\multirow{2}{*}{\parbox{1in}{\centering UOPS\_ISSUED\\
+:SINGLE\_MUL}}             \\ % IVB
+
+
+			&
+			&  % Nehalem
+			&  % SNB
+			\\ % IVB
+
+
+                      &
+{\em (r500214:u)}     & % Nehalem
+                      & % SNB
+{\em (r53400e:u)}     \\ % IVB 
+
+
+
+%%%%%%%%%%%%%%%%%
+% Divides
+%%%%%%%%%%%%%%%%%
+\hline
+\multirow{2}{*}{\parbox{0.5in}{Divides}} &
+ARITH:DIV		& % Nehalem
+ARITH:FPU\_DIV		& % SNB
+ARITH:FPU\_DIV		\\ % IVB
+
+                      &
+{\em (r1d40114:u)}    & % Nehalem
+{\em (r1570114:u)}    & % SNB
+{\em (r1570114:u)}    \\ % IVB
+
+
+%%%%%%%%%%%%%%%%%
+% FP1
+%%%%%%%%%%%%%%%%%
+\hline
+\multirow{3}{*}{\parbox{0.5in}{FP1}}  &
+FP\_COMP\_OPS\_EXE:X87 & % Nehalem
+FP\_COMP\_OPS\_EXE:X87 & % SNB
+Undocumented              \\ % IVB
+
+                        &
+			&
+			&
+Used SandyBridge event          \\  % IVB
+
+
+
+                      &
+{\em (r500110:u)}     & % Nehalem
+{\em (r5302c0:u)}     & % SNB
+{\em (r5302c0:u)}     \\ % IVB
+
+
+%%%%%%%%%%%%%%%%%
+% FP2
+%%%%%%%%%%%%%%%%%
+\hline
+\multirow{3}{*}{\parbox{0.5in}{FP2}}     &  
+INST\_RETIRED:X87        & % Nehalem
+INST\_RETIRED:X87        & % SNB
+Undocumented                              \\ %IVB
+
+               &  
+		&
+		&
+Used SandyBridge event \\ % IVB
+
+
+
+                      &
+{\em (r5002c0:u)}     & % Nehalem
+{\em (r5302c0:u)}     & % SNB
+{\em (r5302c0:u)}     \\ % IVB
+
+
+%%%%%%%%%%%%%%%%%
+% SSE
+%%%%%%%%%%%%%%%%%
+\hline
+\multirow{3}{*}{\parbox{0.5in}{SSE}}   & 
+\multirow{2}{*}{\parbox{1.2in}{\centering FP\_COMP\_OPS\_EXE\\:SSE\_FP}} & % Nehalem
+\multirow{2}{*}{\parbox{1.4in}{\centering FP\_COMP\_OPS\_EXE\\:SSE\_DOUBLE\_PRECISION}} & % SNB
+\multirow{2}{*}{\parbox{1.3in}{\centering Undocumented\\
+Used SandyBridge event}}                 \\ % IVB
+
+
+               &  
+		& % Nehalem
+		& % SNB
+		\\  % IVB
+
+                      &
+{\em (r500410:u)}     & % Nehalem
+{\em (r538010:u)}     & % SNB
+{\em (r538010:u)}     \\ % IVB
+
+
+
+%%%%%%%%%%%%%%%%%
+% Retired Uops
+%%%%%%%%%%%%%%%%%
+\hline
+Retired               &  
+UOPS\_RETIRED:ANY     & % Nehalem
+UOPS\_RETIRED:ANY     & % SNB
+UOPS\_RETIRED:ALL     \\ % IVB
+
+
+Uops                  &
+{\em (r5001c2:u)}     & % Nehalem
+{\em (r5301c2:u)}     & % SNB
+{\em (r5301c2:u)}     \\ % IVB
+
+
+%%%%%%%%%%%%%%%%%%%%%
+% Hardware Interrupts
+%%%%%%%%%%%%%%%%%%%%%
+\hline
+\multirow{3}{*}{\parbox{0.5in}{Hardware\\
+Interrupts}}				&
+\multirow{2}{*}{HW\_INT:RCV$^{\ddagger}$} & % Nehalem
+HW\_INTERRUPTS				& % SNB
+\multirow{2}{*}{HW\_INTERRUPTS}          \\ % IVB
+
+			&
+			& % Nehalem
+:RECEIVED		& % SNB
+			\\ % IVB
+
+			&
+{\em (r50011d:u)}     & % Nehalem
+{\em (r5301cb:u)}     & % SNB
+{\em (r5301cb:u)}     \\ % IVB
+
+
+\hline
+
+\end{tabular}
