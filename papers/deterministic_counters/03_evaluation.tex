@@ -191,7 +191,7 @@ for the other results has been decommissioned).
 Noll~\cite{noll:pc2011} reports that this event
 is deterministic on SandyBridge; we have verified
 this result and found that the equivalent event
-is likewise deterministic on Westmere and Nehalem.
+is likewise deterministic on IvyBridge, Haswell, Westmere and Nehalem.
 The Nehalem event suffers from overcount:
 in addition to conditional branches (which start with opcode {\tt 0F})
 many instructions are counted that also start with opcode {\tt 0F},
@@ -258,7 +258,7 @@ as two loads.
 
 The SandyBridge load event measures load $\mu$ops so it has
 limitations similar to Pentium D.  
-On IvyBridge the event name
+On IvyBridge and Haswell the event name
 for this event was changed to make its $\mu$op nature more obvious.
 
 \paragraph{Retired Store Overcount}
@@ -286,7 +286,7 @@ The {\tt rep stos} string instruction counts stores
 in 16B blocks (unless storing backwards in memory).
 The {\tt rep movs} instruction counts stores in 16B blocks.
 
-The SandyBridge and IvyBridge store events measure $\mu$ops 
+The SandyBridge, IvyBridge, and Haswell store events measure $\mu$ops 
 and have similar limitations to Pentium~D.
 
 \subsubsection{Other Events}
