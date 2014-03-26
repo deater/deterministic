@@ -16,6 +16,7 @@ deterministic_counters.pdf:	deterministic_counters.tex \
 			tables/events_part1.tex \
 			tables/events_part2.tex \
 			tables/events_part3.tex \
+			tables/events_part4.tex \
 			tables/deterministic_events.tex \
 			tables/results_fp.tex \
 			tables/results_instr_small.tex \
