@@ -91,7 +91,8 @@ struct stat_type{
 #define WESTMERE   10
 #define IVYBRIDGE  11
 #define ATOM       12
-#define MAX_NAME   13
+#define HASWELL		13
+#define MAX_NAME	14
 
 char machine_names[MAX_NAME][BUFSIZ]={
   "UNKNOWN",
@@ -105,8 +106,9 @@ char machine_names[MAX_NAME][BUFSIZ]={
   "SandyBridge",
   "Bobcat",
   "Westmere",
-  "IvyBridge",
-  "Atom",
+	"IvyBridge",
+	"Atom",
+	"Haswell",
 };
 
 long long remove_commas(char *temp_string) {
@@ -577,6 +579,7 @@ int main(int argc, char **argv) {
    else if (!strncmp(argv[1],"bobcat",6)) machine_type=BOBCAT;
    else if (!strncmp(argv[1],"westmere",7)) machine_type=WESTMERE;
    else if (!strncmp(argv[1],"ivybridge",9)) machine_type=IVYBRIDGE;
+   else if (!strncmp(argv[1],"haswell",7)) machine_type=HASWELL;
    else machine_type=UNKNOWN;
 
    printf("Generating results for %s machine #%d\n",
@@ -1144,6 +1147,40 @@ int main(int argc, char **argv) {
 		 adjust_for_pagefaults();
                  printf("\tOS: Adjusting 10,000 for page faults\n");
                  mem_adjust+=10000;
+	      }
+	      if (j==RETIRED_BRANCHES) {
+                 adjust_for_hw_interrupts(j);
+		 adjust_for_pagefaults();
+	      }
+	      if (j==COND_BRANCHES) {
+                 dont_adjust_for_hw_interrupts(j);
+	      }
+	      if (j==RETIRED_UOPS) {
+                 adjust_for_hw_interrupts(j);
+                 uops_architectural=1;
+	      }
+	      if (j==RETIRED_LOADS) {
+		//adjust_for_hw_interrupts(j);
+		 loads_uops=1;
+	      }
+	      if (j==RETIRED_STORES) {
+		//adjust_for_hw_interrupts(j);
+		 stores_uops=1;
+	      }
+	      break;
+
+              /******************************************/
+              /* Haswell                                */
+              /******************************************/
+
+	 case HASWELL:
+	      if (j==RETIRED_INSTRUCTIONS) {
+		 adjust_for_lazy_fp();
+                 adjust_for_hw_interrupts(j);
+		 adjust_for_fp_exception();
+		 adjust_for_pagefaults();
+                 //printf("\tOS: Adjusting 10,000 for page faults\n");
+                 //mem_adjust+=10000;
 	      }
 	      if (j==RETIRED_BRANCHES) {
                  adjust_for_hw_interrupts(j);
