@@ -271,7 +271,36 @@ struct event_table_t hsw_event_table = {
 	.sse_event =		"r538010:u",
 };
 
-struct event_table_t bobcat_event_table = {
+struct event_table_t fam15h_event_table = {
+	/* SMIS_RECEIVED? */
+	.hw_int_name = 		"INTERRUPTS_TAKEN",
+	.hw_int_event =		"r5000cf:u",
+	.ret_instr_name =	"RETIRED_INSTRUCTIONS",
+	.ret_instr_event =	"instructions:u",
+	.branches_name =	"RETIRED_BRANCH_INSTRUCTIONS",
+	.branches_event =	"branches:u",
+	.cond_branches_name =	"RETIRED_TAKEN_BRANCH_INSTRUCTIONS",
+	.cond_branches_event =	"r5300c4:u",
+	.loads_name =		"LS_DISPATCH:LOADS",
+	.loads_event =		"r530129:u",
+	.stores_name =		"LS_DISPATCH:STORES",
+	.stores_event =		"r530229:u",
+	.uops_name =		"RETIRED_UOPS",
+	.uops_event =		"r5000c1:u",
+	.muls_name =		"RETIRED_SSE_OPS:SINGLE_MUL_OPS:DOUBLE_MUL_OPS",
+	.muls_event =		"r532203:u",
+	.divs_name =		"RETIRED_SSE_OPS:SINGLE_DIV_OPS:DOUBLE_DIV_OPS",
+	.divs_event =		"r534403:u",
+	.fp1_name =		"DISPATCHED_FPU_OPS:ALL",
+	.fp1_event =		"r53ff00:u",
+	.fp2_name =		"RETIRED_MMX_FP_INSTRUCTIONS:ALL",
+	.fp2_event =		"r5307cb:u",
+	.sse_name =		"RETIRED_SSE_OPS:ALL",
+	.sse_event =		"r53ff03:u",
+};
+
+
+struct event_table_t fam14h_event_table = {
    .hw_int_name = 		"INTERRUPTS_TAKEN",
    .hw_int_event =		"r5000cf:u",
    .ret_instr_name =		"RETIRED_INSTRUCTIONS",
@@ -340,19 +369,19 @@ static int set_generic_modelname(int vendor, int family, int model) {
          strcpy(cpuinfo.generic_modelname,"fam10h");
          event_table=&fam10h_event_table;
       }
-      /* 14h */
+      /* 14h -- bobcat */
       else if (family==20) {
-         strcpy(cpuinfo.generic_modelname,"bobcat");
-         event_table=&bobcat_event_table;
+         strcpy(cpuinfo.generic_modelname,"fam14h");
+         event_table=&fam14h_event_table;
       }
-      /* 15h */
+      /* 15h -- bulldozer/piledriver */
       else if (family==21) {
-         strcpy(cpuinfo.generic_modelname,"bulldozer");
-         event_table=NULL; /* TODO */
+         strcpy(cpuinfo.generic_modelname,"fam15h");
+         event_table=&fam15h_event_table;
       }
-      /* 16h */
+      /* 16h -- jaguar */
       else if (family==22) {
-         strcpy(cpuinfo.generic_modelname,"piledriver");
+         strcpy(cpuinfo.generic_modelname,"fam16h");
          event_table=NULL; /* TODO */
       } else {
          strcpy(cpuinfo.generic_modelname,"UNKNOWN");
