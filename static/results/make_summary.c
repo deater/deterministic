@@ -855,13 +855,13 @@ int main(int argc, char **argv) {
 	      if (j==RETIRED_STORES) adjust_for_hw_interrupts(j);
 	      break;
 
+
 	      /**************************/
               /* AMD Fam10h/Fam14h      */
               /**************************/
 	case PHENOM:
 	case ISTANBUL:
 	case FAM14H:
-	case FAM15H:
 	      if (j==RETIRED_INSTRUCTIONS) {
                  adjust_for_hw_interrupts(j);
 		 adjust_for_lazy_fp();
@@ -884,7 +884,41 @@ int main(int argc, char **argv) {
 	      if (j==RETIRED_LOADS) adjust_for_hw_interrupts(j);
 	      if (j==RETIRED_STORES) adjust_for_hw_interrupts(j);
 	      break;
- 
+
+	      /**************************/
+              /* AMD Fam15h             */
+              /**************************/
+	case FAM15H:
+		if (j==RETIRED_INSTRUCTIONS) {
+			adjust_for_hw_interrupts(j);
+			adjust_for_lazy_fp();
+			adjust_for_fp_exception();
+			adjust_for_pagefaults();
+			printf("\tAdjusting 100,000 for fclex with PE set\n");
+			double_ins_adjust+=100000;
+			printf("\tAdjusting 100,000 for finit with PE set\n");
+			double_ins_adjust+=100000;
+			printf("\tAdjusting 100,000 for fnsave with PE set\n");
+			double_ins_adjust+=100000;
+			printf("\tAdjusting 400,000 for fldcw to change rounding mode\n");
+			double_ins_adjust+=400000;
+		}
+
+		if (j==RETIRED_BRANCHES) {
+			adjust_for_hw_interrupts(j);
+			adjust_for_pagefaults();
+		}
+		if (j==COND_BRANCHES) {
+			/* Adjust because we are taken branches */
+			adjust_for_hw_interrupts(j);
+			printf("\tAdjusting 1,370,000 as we measure only taken branches\n");
+			double_ins_adjust-=1370000;
+		}
+		if (j==RETIRED_UOPS) adjust_for_hw_interrupts(j);
+		if (j==RETIRED_LOADS) adjust_for_hw_interrupts(j);
+		if (j==RETIRED_STORES) adjust_for_hw_interrupts(j);
+		break;
+
               /**************************/
               /* Atom                   */
               /**************************/
