@@ -87,10 +87,10 @@ struct stat_type{
 #define NEHALEM     6
 #define NEHALEMEX   7
 #define SANDYBRIDGE 8
-#define BOBCAT      9
-#define WESTMERE   10
-#define IVYBRIDGE  11
-#define ATOM       12
+#define FAM14H		9
+#define WESTMERE	10
+#define IVYBRIDGE	11
+#define ATOM		12
 #define HASWELL		13
 #define MAX_NAME	14
 
@@ -104,8 +104,8 @@ char machine_names[MAX_NAME][BUFSIZ]={
   "Nehalem",
   "Nehalem-EX",
   "SandyBridge",
-  "Bobcat",
-  "Westmere",
+	"Fam14h",
+	"Westmere",
 	"IvyBridge",
 	"Atom",
 	"Haswell",
@@ -576,7 +576,7 @@ int main(int argc, char **argv) {
    else if (!strncmp(argv[1],"nehalem",7)) machine_type=NEHALEM;
    else if (!strncmp(argv[1],"atom",4)) machine_type=ATOM;
    else if (!strncmp(argv[1],"sandybridge",11)) machine_type=SANDYBRIDGE;
-   else if (!strncmp(argv[1],"bobcat",6)) machine_type=BOBCAT;
+   else if (!strncmp(argv[1],"fam14h",6)) machine_type=FAM14H;
    else if (!strncmp(argv[1],"westmere",7)) machine_type=WESTMERE;
    else if (!strncmp(argv[1],"ivybridge",9)) machine_type=IVYBRIDGE;
    else if (!strncmp(argv[1],"haswell",7)) machine_type=HASWELL;
@@ -857,7 +857,7 @@ int main(int argc, char **argv) {
               /**************************/
 	 case PHENOM:
 	 case ISTANBUL:
-	 case BOBCAT:
+	 case FAM14H:
 	      if (j==RETIRED_INSTRUCTIONS) {
                  adjust_for_hw_interrupts(j);
 		 adjust_for_lazy_fp();
