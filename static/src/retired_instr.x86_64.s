@@ -2198,12 +2198,12 @@ misc_loop:
 
 
 	mov	$100000,%rdx         # gi 21
-        fld1                         # gi 22 TOP=7  
+        fld1                         # gi 22 TOP=7
 	                             # +1 gi first FP insn==extra?)
 	                             # +1 load (first FP insn?)
-				     
-.if FP==1	
-	
+
+.if FP==1
+
 floating_point:
 	push	%rdx             #  i 1  Store #1
 
@@ -2221,7 +2221,7 @@ floating_point:
 	fabs                     # i 3
 
 	# fadd (floating point add)
-	
+
 	fld1                     # i 4 TOP=6
 	fldpi                    # i 5 TOP=5
 
@@ -2230,14 +2230,14 @@ floating_point:
 
 	fadds	temp_float32     # i 8   Load #1
 	faddl	temp_float64     # i 9   Load #2
- 
+
            # replace st(1) with st(1)+st(0) and pop stack
 	fld1	                 # i10 TOP=4
 	faddp	                 # i11 TOP=5
 
 	fldpi                    # i12 TOP=4
 	faddp %st(0),%st(2)      # i13 TOP=5
-	
+
 	# fiadd (adds with 32-bit or 64-bit integer)
 
 	fiadds	temp_quad        # i14  Load #3
@@ -2246,40 +2246,40 @@ floating_point:
 	# fbstp (floating point store binary coded decimal)
 
 	fldpi                   # i16  TOP=4
-.if VALGRIND_FBSTP!=1	
+.if VALGRIND_FBSTP!=1
 	fbstp	temp_float80    # i17  Load #5 Store #2 TOP=5
 				#      +1 Store PentiumD
 
 	# fbld (floating-point load binary coded decimal)
-	
+
 	fbld	temp_float80     # i18  Load #6  TOP=4
 .endif
-	
+
 	# fchs (change sign of st(0)
-	
+
 	fld1                     # i19  TOP=3
 	fchs                     # i20
 
 	# fclex / fnclex (clear flags in x87 status word) n means wait first
-	
+
 	fclex                    # i21/i22 (fwait)  (i23  if AMD, PE set)
-	
+
 	#fldpi  This is a fast way to set PE to test the AMD anomaly
 	#fcos
-	#fcomp 
-	
+	#fcomp
+
 	fnclex                   # i23
-	
+
 	# fcmov
 
 	fcmovb		%st(1),%st(0)	# i24 # if cf==1
 	fcmovbe		%st(1),%st(0)	# i25 # if cf==1 || zf==1
 	fcmove		%st(1),%st(0)	# i26 # if zf==1
-	fcompp                   # i27  TOP=5	
+	fcompp                   # i27  TOP=5
 	fcompp                   # i28  TOP=7
 
 #.endif
-# Chunk 2	
+# Chunk 2
 #.if 0
 	fld1                            # i29     TOP=6
 	fld1                            # i30     TOP=5
@@ -2293,26 +2293,26 @@ floating_point:
 
 	fcom		                # i36 # compare st(0) and st(1)
 	fcom	%st(2)                  # i37
-.if VALGRIND_FCOMS!=1	
+.if VALGRIND_FCOMS!=1
 	fcoms	temp_float32            # i38  Load #7
 	fcoml	temp_float64            # i39  Load #8
-.endif	
+.endif
 
 	fld1                            # i40  TOP=4
 
 	     # compare st(0) and st(1) and pop x87 stack
-	fcomp                           # i41	TOP=5	
+	fcomp                           # i41	TOP=5
 	fld1                            # i42   TOP=4
 	fcomp	%st(2)                  # i43   TOP=5
 	fld1                            # i44   TOP=4
-.if VALGRIND_FCOMS!=1	
+.if VALGRIND_FCOMS!=1
 	fcomps	temp_float32            # i45   Load #9  TOP=5
 	fld1                            # i46   TOP=4
 	fcompl	temp_float64            # i47   Load 10  TOP=5
 	fld1                            # i48   TOP=4
-.endif	
+.endif
 	fld1                            # i49   TOP=3
-	
+
 	                # compare st(0) and st(1) and pop stack twice
 	fcompp		                # i50   TOP=5
 
@@ -2332,7 +2332,7 @@ floating_point:
 	fcompp                          # i57   TOP=7
 
 
-#.endif		
+#.endif
 # FP Chunk 3 Begin
 #.if 0
 
@@ -2342,7 +2342,7 @@ floating_point:
 	fcos		                # i59   Results in PE, C1=1
 					#          precision exception, rounding up?
 
-.if VALGRIND_FDECSTP!=1	
+.if VALGRIND_FDECSTP!=1
 	# fdecstp -- rotates stack pointer (can leave invalid data behind)
 	fdecstp	                        # i60	TOP=5
 
@@ -2350,7 +2350,7 @@ floating_point:
 	# fincstp - increment (rotate) x87 stack pointer
 	fincstp                         # i61   TOP=6
 .endif
-	
+
 	# fdiv / fdivp / fidiv  -- floating point divide
 	fldpi                           # i62   TOP=5
 	fld1                            # i63   TOP=4
@@ -2395,10 +2395,10 @@ floating_point:
 
         fcompp                          # i88  TOP=4
 	fcompp                          # i89  TOP=6
-	fcomp                           # i90  TOP=7	
+	fcomp                           # i90  TOP=7
 
 
-#.endif	
+#.endif
 # FP Chunk 4
 #.if 0
 
@@ -2437,22 +2437,22 @@ floating_point:
 	fists	temp_quad               # i107  Store 5
 	fistl	temp_quad               # i108  Store 6
 
-	fld1                            # i109  TOP=6   
+	fld1                            # i109  TOP=6
 	fld1                            # i110  TOP=5
 	fld1                            # i111  TOP=4
 	fistps	temp_quad               # i112  Store 7  TOP=5
 	fistpl	temp_quad               # i113  Store 8  TOP=6
 	fistpq	temp_quad               # i114  Store 9  TOP=7
 
-#.endif	
+#.endif
 # FP Chunk 5
 #.if 0
 
 	# fld -- load value and put on x87 stack
-	
+
 	fld1                            # i115  TOP=6
 	fld	%st(1)                  # i116  TOP=5
-	
+
 	fldpi                           # i117  TOP=4
 	fstps   temp_float32            # i118  Store 10 TOP=5
 					#       +2 Loads PentiumD
@@ -2472,10 +2472,10 @@ floating_point:
 
 	# fldl2t -- put log base 2 of 10 on stack
 	fldl2t                          # i126  TOP=1
-	
+
 	fcompp                          # i127  TOP=3
 	fcompp                          # i128  TOP=5
-	
+
 	# fldlg2 -- put log base 10 of 2 on stack
 	fldlg2                          # i129  TOP=4
 
@@ -2487,7 +2487,7 @@ floating_point:
 
 	# fldz -- put +0.0 on stack
 	fldz                            # i132 TOP=1
-	
+
 	fcompp                          # i133 TOP=3
 	fcompp                          # i134  TOP=5
 	fcompp                          # i135  TOP=7
@@ -2512,7 +2512,7 @@ floating_point:
 	fldcw   0(%eax)                 # i143  Load  30 # eax
 	mov     $cw,%ebx                # i144
 	fldcw   0(%ebx)                 # i145  Load  31 # ebx
-	mov     $cw,%ecx                # i146  
+	mov     $cw,%ecx                # i146
 	fldcw   0(%ecx)                 # i147  Load  32 # ecx
 	mov     $cw,%edx                # i148
 	fldcw   0(%edx)                 # i149  Load  33 # edx
@@ -2527,7 +2527,7 @@ floating_point:
 	fldcw   32(%ebx)                # i154  Load 35 # ebx + 8 bit offset
 	mov     %eax,%ecx               # i155
 	fldcw   32(%ecx)                # i156  Load 36 # ecx + 8 bit offset
-	mov     %eax,%edx               # i157  
+	mov     %eax,%edx               # i157
 	fldcw   32(%edx)                # i158  Load 37 # edx + 8 bit offset
 
 	# register + 32-bit offset
@@ -2536,7 +2536,7 @@ floating_point:
 	sub     $30000,%eax             # i160
 
 	fldcw   30000(%eax)             # i161  Load 38 # eax + 16 bit offset
-        mov     %eax,%ebx               # i162
+	mov     %eax,%ebx               # i162
 	fldcw   30000(%ebx)             # i163  Load 39 # ebx + 16 bit offset
 	mov     %eax,%ecx               # i164
 	fldcw   30000(%ecx)             # i165 Load 40 # ecx + 16 bit offset
@@ -2549,6 +2549,7 @@ floating_point:
 	movb    $12, %ah        # i171     # set cw for "round to zero"
 	movw    %ax, cw         # i172 # Store 16 # store back to memory
 	fldcw   cw              # i173 # Load 43  # save new rounding mode
+				# +4 instructions AMDFAM15h?
 	fistpl  temp_quad       # i174 # Store 17 # TOP=7 save integer to mem
 	fldcw   saved_cw        # i175 # Load 44  # restore old cw
 
@@ -2572,7 +2573,7 @@ floating_point:
 
 	fldenv	buffer1         # i181 Load  46  (+1 ins p4)
 				#       +6 Loads on PentiumD
-	
+
 	# fmul / fmulp / fimul -- floating point multiply
 
 	fld1                     # i182  TOP=6
@@ -2584,7 +2585,7 @@ floating_point:
 
 	fmuls	temp_float32     # i187  Load 47
 	fmull	temp_float64     # i188  Load 48
-	
+
 	fld1                     # i189  TOP=3
 	fmulp                    # i190  TOP=4
 	fld1                     # i191  TOP=3
@@ -2593,11 +2594,11 @@ floating_point:
 	fimuls	temp_quad        # i193  Load 49
 	fimull	temp_quad        # i194  Load 50
 
-.if VALGRIND_FNOP!=1	
+.if VALGRIND_FNOP!=1
 	# fnop  -- fp no-op
 	fnop                     # i195
 .endif
-	
+
 	# fpatan -- fp partial arctangent of st(1) / st(0), store in st(1), pop
 	fld1                     # i196  TOP=3
 	fld1                     # i197  TOP=2
@@ -2607,7 +2608,7 @@ floating_point:
 	fldpi                    # i199  TOP=2
 	fld1                     # i200  TOP=1
 	fprem                    # i201
-	
+
 	fcompp                   # i202  TOP=3
 	fcompp                   # i203  TOP=5
 
@@ -2619,13 +2620,13 @@ floating_point:
 	# fptan -- fp partial tangent -- st(0) = tan(st0), store 1.0 in st(1)
 	fldpi                    # i207  TOP=2
 	fptan                    # i208  TOP=1
-	
+
 	fcompp                   # i209  TOP=3
 
 	# frndint -- round st(0) to integer
 	fldpi                    # i210  TOP=2
 	frndint                  # i211
-	
+
 	fcompp                   # i212  TOP=4
 	fcompp                   # i213  TOP=6
 	fcomp                    # i214  TOP=7
@@ -2643,18 +2644,18 @@ floating_point:
 
 	frstor  buffer1		# i216  Load  51 TOP=7   (+1 on p4)
 				#       +22 Loads on PentiumD
-	
+
 	fsave	buffer1		# i217 / i218 Store 21 built in fwait TOP=0
 				#        +1 Load on Core2
 				#	 +22 Stores on PentiumD
 .endif
 	# fscale  -- multiply st(0) by 2^(int part of st(1))
 	fldpi                  # i219  TOP=7
-	
+
 	fldpi                  # i220  TOP=6
 
 	fscale                 # i221
-	
+
 	# fsin -- sine
 	fldpi                  # i222  TOP=5
 	fsin                   # i223
@@ -2663,14 +2664,14 @@ floating_point:
 	fldpi                  # i224  TOP=4
 	fsincos                # i225  TOP=3
 
-	# fsqrt -- square root	
+	# fsqrt -- square root
 	fldpi                  # i226  TOP=2
 	fsqrt                  # i227
-	
+
 	fcompp                 # i228  TOP=4
-	
+
 	# fst / fstp -- store st(0)
-	fldpi                  # i229  TOP=3  
+	fldpi                  # i229  TOP=3
 	fld1                   # i230  TOP=2
 	fst	%st(2)         # i231
 	fsts	result_fp      # i232  Store 22
@@ -2691,7 +2692,7 @@ floating_point:
 
         fcomp                  # i244  TOP=7
 
-	
+
 #.endif
 # FP Chunk 9
 #.if 0
@@ -2731,12 +2732,12 @@ floating_point:
 
 	# ftst -- fp test with zero
 	fld1                        # i269 TOP=2
-.if VALGRIND_FTST!=1	
+.if VALGRIND_FTST!=1
 	ftst                        # i270
 .endif
-	
+
 	# fucom / fucomp / fucompp -- compare st(0) with another fp reg
-	
+
 	fucom                       # i271
 	fucom	%st(2)              # i272
 
@@ -2748,7 +2749,7 @@ floating_point:
 	fldpi                       # i277 TOP=1
 	fucompp                     # i278 TOP=3
 
-	
+
 	# fxam  -- examine st(0) and set condition flags on Nan, inf, zero, etc
 	fxam                        # i279
 
@@ -2763,20 +2764,20 @@ floating_point:
 				#       +25 Stores PentiumD
 				#       +2 prefetches Core2
 
-.if VALGRIND_FXRSTOR!=1	
+.if VALGRIND_FXRSTOR!=1
 	fxrstor	buffer1		# i283 Load 60
 				#	+25 Loads PentiumD
 				#       +5 prefetches core2
-.endif	
-	
+.endif
+
 	# fxtract -- get exponent and sig from st0, put exp in st(0) and push s
 	fldpi                       # i284 TOP=2
 	fxtract                     # i285 TOP=1
-	
+
 	fcompp                      # i286 TOP=3
 	fcompp                      # i287 TOP=5
 
-	
+
 	# fyl2x -- compute st(1) * log base 2 st(0), results in st(1) and st(0)
 	fld1                        # i288 TOP=4
 	fldpi                       # i289 TOP=3
@@ -2789,15 +2790,15 @@ floating_point:
 
 	# wait fwait -- wait before proceeding (tested previously with
 	#               "n" type instructions)
-	
+
 # End Chunk 9
 #.endif
 	pop	%rdx                # i293  Load 61
 	dec	%rdx                # i294
 	jnz	floating_point      # i295  Branch #1
 .endif
-	
-	
+
+
 	####################################################
 	# MMX
 	####################################################
