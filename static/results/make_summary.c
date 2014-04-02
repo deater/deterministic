@@ -92,7 +92,8 @@ struct stat_type{
 #define IVYBRIDGE	11
 #define ATOM		12
 #define HASWELL		13
-#define MAX_NAME	14
+#define FAM15H		14
+#define MAX_NAME	15
 
 char machine_names[MAX_NAME][BUFSIZ]={
   "UNKNOWN",
@@ -104,11 +105,12 @@ char machine_names[MAX_NAME][BUFSIZ]={
   "Nehalem",
   "Nehalem-EX",
   "SandyBridge",
-	"Fam14h",
+	"AMD Fam14h",
 	"Westmere",
 	"IvyBridge",
 	"Atom",
 	"Haswell",
+	"AMD Fam15h",
 };
 
 long long remove_commas(char *temp_string) {
@@ -580,6 +582,7 @@ int main(int argc, char **argv) {
    else if (!strncmp(argv[1],"westmere",7)) machine_type=WESTMERE;
    else if (!strncmp(argv[1],"ivybridge",9)) machine_type=IVYBRIDGE;
    else if (!strncmp(argv[1],"haswell",7)) machine_type=HASWELL;
+   else if (!strncmp(argv[1],"fam15h",6)) machine_type=FAM15H;
    else machine_type=UNKNOWN;
 
    printf("Generating results for %s machine #%d\n",
@@ -855,9 +858,10 @@ int main(int argc, char **argv) {
 	      /**************************/
               /* AMD Fam10h/Fam14h      */
               /**************************/
-	 case PHENOM:
-	 case ISTANBUL:
-	 case FAM14H:
+	case PHENOM:
+	case ISTANBUL:
+	case FAM14H:
+	case FAM15H:
 	      if (j==RETIRED_INSTRUCTIONS) {
                  adjust_for_hw_interrupts(j);
 		 adjust_for_lazy_fp();
