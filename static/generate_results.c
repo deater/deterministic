@@ -271,6 +271,34 @@ struct event_table_t hsw_event_table = {
 	.sse_event =		"r538010:u",
 };
 
+struct event_table_t bdw_event_table = {
+	.hw_int_name = 		"HW_INTERRUPTS",
+	.hw_int_event =		"r5301cb:u",
+	.ret_instr_name =	"INSTRUCTION_RETIRED",
+	.ret_instr_event =	"instructions:u",
+	.branches_name =	"BR_INST_RETIRED",
+	.branches_event =	"branches:u",
+	.cond_branches_name =	"BR_INST_RETIRED:CONDITIONAL",
+	.cond_branches_event =	"r5301c4:u",
+	/* MEM_LOAD_UOPS_RETIRED ?*/
+	.loads_name =		"MEM_UOPS_RETIRED:ALL_LOADS",
+	.loads_event =		"r5381d0:u",
+	.stores_name =		"MEM_UOPS_RETIRED:ALL_STORES",
+	.stores_event =		"r5382d0:u",
+	.uops_name =		"UOPS_RETIRED:ALL",
+	.uops_event =		"r5301c2:u",
+	.muls_name =		"UOPS_ISSUED:SINGLE_MUL",
+	.muls_event =		"r53400e:u",
+	.divs_name =		"NONE",
+	.divs_event =		"NONE",
+	.fp1_name =		"FP_COMP_OPS_EXE:X87 (SNB)",
+	.fp1_event =		"r530110:u",
+	.fp2_name =		"INST_RETIRED:X87 (SNB)",
+	.fp2_event =		"r5302c0:u",
+	.sse_name =		"FP_COMP_OPS_EXE:SSE_DOUBLE_PRECISION (SNB)",
+	.sse_event =		"r538010:u",
+};
+
 struct event_table_t fam15h_event_table = {
 	/* SMIS_RECEIVED? */
 	.hw_int_name = 		"INTERRUPTS_TAKEN",
@@ -491,6 +519,11 @@ static int set_generic_modelname(int vendor, int family, int model) {
 		case 71:
 			strcpy(cpuinfo.generic_modelname,"haswell");
 			event_table=&hsw_event_table;
+			break;
+
+		case 79:
+			strcpy(cpuinfo.generic_modelname,"broadwell-ep");
+			event_table=&bdw_event_table;
 			break;
 
             default: strcpy(cpuinfo.generic_modelname,"UNKNOWN"); break;
