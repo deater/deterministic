@@ -1,0 +1,180 @@
+Generating results for Haswell machine #0
+	Hostname:  haswell-ep
+	Kernel:       Linux 4.13.0-1-amd64
+	Interface: perf_event
+	CPU:       6/63/2
+	CPU type:    haswell
+	CPU name:  Intel(R) Xeon(R) CPU E5-2640 v3 @ 2.60GHz
+	data gathered with tool version: 0.24
+	data analyzed with tool version: 0.24
+
+#############################################
+# Retired Instructions
+#############################################
+
+Retired Instructions
+	Expected value: 226990030
+	Raw Average:    227000426 +/- -11
+	All Values:     227000420, 227000429, 227000434, 227000426, 227000436, 227000436, 227000419, 227000426, 227000415, 227000421, )
+	Raw diff:       10396 +/- -11
+
+Attempting to adjust for overcount
+	Adjusting 1 for first-time FPU use
+	Adjusting 350 for hwints 
+	Affected by FP Exceptions
+	Adjusting 10,008 for first-time memory accesses
+	Adjusted Average: 226990067 +/- -13
+	==============================
+	Adjusted diff: 37 +/- -13
+
+	Issues adjusted for:
+		h: hardware interrupts also increment event count
+		p: page faults also incremement event count
+		E: x87 exceptions increment event count
+		F: Lazy-FPU handling causes an extra count
+
+
+#############################################
+# Retired Branches
+#############################################
+
+Retired Branches
+	Expected value: 9240001
+	Raw Average:    9250396 +/- 13
+	All Values:     9250402, 9250394, 9250393, 9250409, 9250396, 9250394, 9250396, 9250393, 9250398, 9250389, )
+	Raw diff:       10395 +/- 13
+
+Attempting to adjust for overcount
+	Adjusting 355 for hwints 
+	Adjusting 10,008 for first-time memory accesses
+	Adjusted Average: 9240033 +/- -20
+	==============================
+	Adjusted diff: 32 +/- -20
+
+	Issues adjusted for:
+		h: hardware interrupts also increment event count
+		p: page faults also incremement event count
+
+
+#############################################
+# Conditional Branches
+#############################################
+
+Conditional Branches
+	Expected value: 8220000
+	Raw Average:    8220000 +/- 0
+	All Values:     8220000, 8220000, 8220000, 8220000, 8220000, 8220000, 8220000, 8220000, 8220000, 8220000, )
+	Raw diff:       0 +/- 0
+
+	**** DETERMINISTIC ****
+
+#############################################
+# Retired Uops
+#############################################
+
+Retired Uops
+	Expected value: 0
+	Raw Average:    12129319781 +/- 21572
+	All Values:     12129320344, 12129313745, 12129315727, 12129312798, 12129312812, 12129341353, 12129318789, 12129314454, 12129323990, 12129323803, )
+	Raw diff:       12129319781 +/- 21572
+
+Attempting to adjust for overcount
+	Adjusting 351 for hwints 
+	Adjusted Average: 12129319430 +/- 21571
+	==============================
+	Adjusted diff: 12129319430 +/- 21571
+
+	This is a machine-specific event without a "known" correct result.
+
+#############################################
+# Retired Loads
+#############################################
+
+Retired Loads
+	Expected value: 79590000
+	Raw Average:    2462734669 +/- 5277
+	All Values:     2462733070, 2462739946, 2462733599, 2462734186, 2462733835, 2462737112, 2462734093, 2462733912, 2462733274, 2462733669, )
+	Raw diff:       2383144669 +/- 5277
+
+Attempting to adjust for overcount
+	Adjusted Average: 2462734669 +/- 5277
+	==============================
+	Adjusted diff: 2383144669 +/- 5277
+
+	Issues adjusted for:
+		U: This event measures uops, not instructions
+
+	On this machine loads are by uops not by instruction, hence the large overcount
+
+#############################################
+# Retired Stores
+#############################################
+
+Retired Stores
+	Expected value: 24060000
+	Raw Average:    132460209 +/- -56
+	All Values:     132460185, 132460192, 132460227, 132460169, 132460258, 132460261, 132460228, 132460209, 132460216, 132460153, )
+	Raw diff:       108400209 +/- -56
+
+Attempting to adjust for overcount
+	Adjusted Average: 132460209 +/- -56
+	==============================
+	Adjusted diff: 108400209 +/- -56
+
+	Issues adjusted for:
+		U: This event measures uops, not instructions
+
+	On this machine loads are by uops not by instruction, hence the large overcount
+
+#############################################
+# Multiplies
+#############################################
+
+Multiplies
+	Expected value: 0
+	Raw Average:    600045 +/- 33
+	All Values:     600048, 600030, 600030, 600036, 600042, 600048, 600066, 600041, 600078, 600036, )
+	Raw diff:       600045 +/- 33
+
+Attempting to adjust for overcount
+	Adjusted Average: 600045 +/- 33
+	==============================
+	Adjusted diff: 600045 +/- 33
+
+	This is a machine-specific event without a "known" correct result.
+
+#############################################
+# Divides
+#############################################
+
+No data found for this event
+
+#############################################
+# FP1
+#############################################
+
+No data found for this event
+
+#############################################
+# SSE
+#############################################
+
+No data found for this event
+
+#############################################
+# SW Prefetch NTA
+#############################################
+
+No data found for this event
+
+#############################################
+# SW Prefetch L1
+#############################################
+
+No data found for this event
+
+#############################################
+# SW Prefetch L2
+#############################################
+
+No data found for this event

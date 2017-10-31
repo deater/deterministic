@@ -513,7 +513,6 @@ static int set_generic_modelname(int vendor, int family, int model) {
                      break;
 
 		case 60: /* Haswell */
-		case 63: /* Some of these might be EP versions? */
 		case 69:
 		case 70:
 		case 71:
@@ -521,6 +520,13 @@ static int set_generic_modelname(int vendor, int family, int model) {
 			event_table=&hsw_event_table;
 			break;
 
+		/* Haswell-EP */
+		case 63:
+			strcpy(cpuinfo.generic_modelname,"haswell-ep");
+			event_table=&hsw_event_table;
+			break;
+
+		/* Broadwell-EP */
 		case 79:
 			strcpy(cpuinfo.generic_modelname,"broadwell-ep");
 			event_table=&bdw_event_table;
