@@ -30,7 +30,7 @@ deterministic_counters.pdf:	deterministic_counters.tex \
 			tables/machines.tex \
 			tables/results_instr_small.tex
 	pdflatex deterministic_counters.tex
-	bibtex deterministic_counters
+#	bibtex deterministic_counters
 	pdflatex deterministic_counters.tex
 	pdflatex deterministic_counters.tex
 
@@ -75,7 +75,7 @@ deterministic_counters.dvi:	deterministic_counters.tex \
 		latex deterministic_counters.tex	
 
 clean:
-		rm -f *~ *.ps *.pdf *.dvi *.aux *.log *.bbl *.blg *.bak
+		rm -f *~ *.ps *.pdf *.dvi *.aux *.log *.blg *.bak
 		cd tables && make clean
 		cd figures && make clean
 

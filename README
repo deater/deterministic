@@ -1,16 +1,27 @@
 This package includes tools for understanding the determinism of hardware
 performance counters.
 
-+ static/
-	includes a static hand-coded microbenchmark and analysis tools for
-	finding sources of nondeterminism
+This work so far has been primarily on x86.  Other architectures
+(such as ARM and Power) seem to have fewer problems with counter
+determinism.
+
+There are the following subdirectories:
 
 + automatic/
-	holds tools for finding issues automatically (TODO)
+	prototype tools for automatically finding counter determinism issues
+	this is a work in progress (TODO)
+
++ papers/
+	The most recent version of the counter writeups.
+	These often have more up-to-date results than the published versions.
 
 + spec/
 	holds results found when measuring determinism of the 
 	SPEC CPU 2000 and 2006 benchmarks
+
++ static/
+	includes a static hand-coded microbenchmark and analysis tools for
+	finding sources of nondeterminism
 
 See the README files in the relevant subdirectories for more information.
 
