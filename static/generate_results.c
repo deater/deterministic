@@ -601,62 +601,64 @@ static int get_cpuinfo(void) {
 	return 0;
 }
 
-static char dirname[BUFSIZ];
+static char dirname[BUFSIZ+32];
 
 static int create_output_dir(void) {
 
-   int result,next_avail;
+	int result,next_avail;
 
-   result=mkdir("results",0755);
-   if (result<0) {
-      if (errno==EEXIST) {
-         /* this is OK */
-      }
-      else {
-         fprintf(stderr,"ERROR creating results dir!\n");
-         return -1;
-      }
-   }
+	result=mkdir("results",0755);
+	if (result<0) {
+		if (errno==EEXIST) {
+		/* this is OK */
+		}
+		else {
+			fprintf(stderr,"ERROR creating results dir!\n");
+			return -1;
+		}
+   	}
 
-   get_cpuinfo();
+	get_cpuinfo();
 
-   sprintf(dirname,"results/%s",cpuinfo.generic_modelname);
+	sprintf(dirname,"results/%s",cpuinfo.generic_modelname);
 
-   result=mkdir(dirname,0755);
-   if (result<0) {
-      if (errno==EEXIST) {
-         /* this is OK */
-      }
-      else {
-         fprintf(stderr,"ERROR creating %s dir!\n",dirname);
-         return -1;
-      }
-   }
+	result=mkdir(dirname,0755);
+	if (result<0) {
+		if (errno==EEXIST) {
+			/* this is OK */
+		}
+		else {
+			fprintf(stderr,"ERROR creating %s dir!\n",dirname);
+			return -1;
+		}
+	}
 
-   next_avail=0;
-   while(1) {
+	next_avail=0;
 
-      sprintf(dirname,"results/%s/%d",cpuinfo.generic_modelname,next_avail);
 
-      result=mkdir(dirname,0755);
-      if (result<0) {
-         if (errno==EEXIST) {
-            /* already there move on */
-         }
-         else {
-            fprintf(stderr,"ERROR creating %s dir!\n",dirname);
-            return -1;
-         }
+	while(1) {
 
-      } else {
-         printf("Found available directory: %s\n",dirname);
-         return 0;
-      }
+		sprintf(dirname,"results/%s/%d",cpuinfo.generic_modelname,next_avail);
 
-      next_avail++;
-   }
+		result=mkdir(dirname,0755);
+		if (result<0) {
+			if (errno==EEXIST) {
+				/* already there move on */
+			}
+			else {
+				fprintf(stderr,"ERROR creating %s dir!\n",dirname);
+				return -1;
+			}
 
-   return 0;
+		} else {
+			printf("Found available directory: %s\n",dirname);
+			return 0;
+		}
+
+		next_avail++;
+	}
+
+	return 0;
 }
 
 
