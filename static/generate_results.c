@@ -13,12 +13,12 @@
 #include "version.h"
 
 struct cpuinfo_t {
-   int vendor;
-   int family;
-   int model;
-   int stepping;
-   char modelname[BUFSIZ];
-   char generic_modelname[BUFSIZ];
+	int vendor;
+	int family;
+	int model;
+	int stepping;
+	char modelname[BUFSIZ];
+	char generic_modelname[BUFSIZ];
 } cpuinfo;
 
 #define VENDOR_UNKNOWN 0
@@ -26,30 +26,30 @@ struct cpuinfo_t {
 #define VENDOR_INTEL   2
 
 struct event_table_t {
-   char hw_int_name[BUFSIZ];
-   char hw_int_event[BUFSIZ];
-   char ret_instr_name[BUFSIZ];
-   char ret_instr_event[BUFSIZ];
-   char branches_name[BUFSIZ];
-   char branches_event[BUFSIZ];
-   char cond_branches_name[BUFSIZ];
-   char cond_branches_event[BUFSIZ];
-   char loads_event[BUFSIZ];
-   char loads_name[BUFSIZ];
-   char stores_event[BUFSIZ];
-   char stores_name[BUFSIZ];
-   char uops_event[BUFSIZ];
-   char uops_name[BUFSIZ];
-   char muls_event[BUFSIZ];
-   char muls_name[BUFSIZ];
-   char divs_event[BUFSIZ];
-   char divs_name[BUFSIZ];
-   char fp1_event[BUFSIZ];
-   char fp1_name[BUFSIZ];
-   char fp2_event[BUFSIZ];
-   char fp2_name[BUFSIZ];
-   char sse_event[BUFSIZ];
-   char sse_name[BUFSIZ];
+	char hw_int_name[BUFSIZ];
+	char hw_int_event[BUFSIZ];
+	char ret_instr_name[BUFSIZ];
+	char ret_instr_event[BUFSIZ];
+	char branches_name[BUFSIZ];
+	char branches_event[BUFSIZ];
+	char cond_branches_name[BUFSIZ];
+	char cond_branches_event[BUFSIZ];
+	char loads_event[BUFSIZ];
+	char loads_name[BUFSIZ];
+	char stores_event[BUFSIZ];
+	char stores_name[BUFSIZ];
+	char uops_event[BUFSIZ];
+	char uops_name[BUFSIZ];
+	char muls_event[BUFSIZ];
+	char muls_name[BUFSIZ];
+	char divs_event[BUFSIZ];
+	char divs_name[BUFSIZ];
+	char fp1_event[BUFSIZ];
+	char fp1_name[BUFSIZ];
+	char fp2_event[BUFSIZ];
+	char fp2_name[BUFSIZ];
+	char sse_event[BUFSIZ];
+	char sse_name[BUFSIZ];
 } *event_table = NULL;
 
 
@@ -358,39 +358,39 @@ struct event_table_t fam10h_event_table = {
 
 static int set_generic_modelname(int vendor, int family, int model) {
 
-   if (vendor==VENDOR_AMD) {
-      /* 0fh */
-      if (family==15) {
-         strcpy(cpuinfo.generic_modelname,"opteron");
-         event_table=NULL; /* TODO */
-      }
-      /* 10h */
-      else if (family==16) {
-         strcpy(cpuinfo.generic_modelname,"fam10h");
-         event_table=&fam10h_event_table;
-      }
-      /* 14h -- bobcat */
-      else if (family==20) {
-         strcpy(cpuinfo.generic_modelname,"fam14h");
-         event_table=&fam14h_event_table;
-      }
-      /* 15h -- bulldozer/piledriver */
-      else if (family==21) {
-         strcpy(cpuinfo.generic_modelname,"fam15h");
-         event_table=&fam15h_event_table;
-      }
-      /* 16h -- jaguar */
-      else if (family==22) {
-         strcpy(cpuinfo.generic_modelname,"fam16h");
-         event_table=NULL; /* TODO */
-      } else {
-         strcpy(cpuinfo.generic_modelname,"UNKNOWN");
-      }
-      return 0;
-   }
+	if (vendor==VENDOR_AMD) {
+		/* 0fh */
+		if (family==15) {
+			strcpy(cpuinfo.generic_modelname,"opteron");
+			event_table=NULL; /* TODO */
+		}
+		/* 10h */
+		else if (family==16) {
+			strcpy(cpuinfo.generic_modelname,"fam10h");
+			event_table=&fam10h_event_table;
+		}
+		/* 14h -- bobcat */
+		else if (family==20) {
+			strcpy(cpuinfo.generic_modelname,"fam14h");
+			event_table=&fam14h_event_table;
+		}
+		/* 15h -- bulldozer/piledriver */
+		else if (family==21) {
+			strcpy(cpuinfo.generic_modelname,"fam15h");
+			event_table=&fam15h_event_table;
+		}
+		/* 16h -- jaguar */
+		else if (family==22) {
+			strcpy(cpuinfo.generic_modelname,"fam16h");
+			event_table=NULL; /* TODO */
+		} else {
+			strcpy(cpuinfo.generic_modelname,"UNKNOWN");
+		}
+		return 0;
+	}
 
-   if (vendor==VENDOR_INTEL) {
-      if (family==15) {
+	if (vendor==VENDOR_INTEL) {
+		if (family==15) {
          switch(model) {
 	    case 0:
 	    case 1:
@@ -928,13 +928,13 @@ int main (int argc, char **argv) {
 
    /* Retired Divides */
    /* flipped hw/div due to scheduling bug on older perf_event and core2 */
-         
+
    /* fam10h does this, and since we have the backward event order */
    /* going on here it's not trivial to detect this in the */
    /* generate_results function.                           */
    if (!strncmp(event_table->divs_event,"NONE",4)) {
       goto skip_divs;
-   }   
+   }
 
    generate_results(dirname,"divs_retired",
                     event_table->hw_int_event,
@@ -966,7 +966,7 @@ int main (int argc, char **argv) {
                     "all", RUNS);
 
 skip_divs:
-   
+
    /* Retired FP */
    generate_results(dirname,"fp_retired",
                     event_table->fp1_event,
