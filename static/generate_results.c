@@ -508,64 +508,64 @@ static int set_generic_modelname(int vendor, int family, int model) {
 
 static int get_cpuinfo(void) {
 
-   FILE *fff;
-   char temp_string[BUFSIZ],temp_string2[BUFSIZ];
-   char *result;
+	FILE *fff;
+	char temp_string[BUFSIZ],temp_string2[BUFSIZ];
+	char *result;
 
-   fff=fopen("/proc/cpuinfo","r");
-   if (fff==NULL) return -1;
+	fff=fopen("/proc/cpuinfo","r");
+	if (fff==NULL) return -1;
 
-   while(1) {
-      result=fgets(temp_string,BUFSIZ,fff);
-      if (result==NULL) break;
+	while(1) {
+		result=fgets(temp_string,BUFSIZ,fff);
+		if (result==NULL) break;
 
-      if (!strncmp(temp_string,"vendor_id",9)) {
-         sscanf(temp_string,"%*s%*s%s",temp_string2);
+		if (!strncmp(temp_string,"vendor_id",9)) {
+			sscanf(temp_string,"%*s%*s%s",temp_string2);
 
-         if (!strncmp(temp_string2,"GenuineIntel",12)) {
-            cpuinfo.vendor=VENDOR_INTEL;
-         } else
-         if (!strncmp(temp_string2,"AuthenticAMD",12)) {
-            cpuinfo.vendor=VENDOR_AMD;
-         }
-         else {
-            cpuinfo.vendor=VENDOR_UNKNOWN;
-         }
-      }
+			if (!strncmp(temp_string2,"GenuineIntel",12)) {
+				cpuinfo.vendor=VENDOR_INTEL;
+			} else
+				if (!strncmp(temp_string2,"AuthenticAMD",12)) {
+					cpuinfo.vendor=VENDOR_AMD;
+			}
+			else {
+				cpuinfo.vendor=VENDOR_UNKNOWN;
+			}
+		}
 
-      if (!strncmp(temp_string,"cpu family",10)) {
-         sscanf(temp_string,"%*s%*s%*s%d",&cpuinfo.family);
-      }
+		if (!strncmp(temp_string,"cpu family",10)) {
+			sscanf(temp_string,"%*s%*s%*s%d",&cpuinfo.family);
+		}
 
-      if (!strncmp(temp_string,"model",5)) {
-         sscanf(temp_string,"%*s%s",temp_string2);
-         if (temp_string2[0]==':') {
-            sscanf(temp_string,"%*s%*s%d",&cpuinfo.model);
-         } else {
-            result=strstr(temp_string,":");
-            strcpy(cpuinfo.modelname,result+2);
-            cpuinfo.modelname[strlen(cpuinfo.modelname)-1]=0;
-         }
+		if (!strncmp(temp_string,"model",5)) {
+			sscanf(temp_string,"%*s%s",temp_string2);
+			if (temp_string2[0]==':') {
+				sscanf(temp_string,"%*s%*s%d",&cpuinfo.model);
+			} else {
+				result=strstr(temp_string,":");
+				strcpy(cpuinfo.modelname,result+2);
+				cpuinfo.modelname[strlen(cpuinfo.modelname)-1]=0;
+			}
 
-      }
-      if (!strncmp(temp_string,"stepping",8)) {
-         sscanf(temp_string,"%*s%*s%d",&cpuinfo.stepping);
-      }
+		}
 
-   }
+		if (!strncmp(temp_string,"stepping",8)) {
+			sscanf(temp_string,"%*s%*s%d",&cpuinfo.stepping);
+		}
+	}
 
 
-   set_generic_modelname(cpuinfo.vendor,cpuinfo.family,cpuinfo.model);
+	set_generic_modelname(cpuinfo.vendor,cpuinfo.family,cpuinfo.model);
 
-   printf("Family:    %d\n",cpuinfo.family);
-   printf("Model:     %d\n",cpuinfo.model);
-   printf("Stepping:  %d\n",cpuinfo.stepping);
-   printf("Modelname: %s\n",cpuinfo.modelname);
-   printf("Generic:   %s\n",cpuinfo.generic_modelname);
+	printf("Family:    %d\n",cpuinfo.family);
+	printf("Model:     %d\n",cpuinfo.model);
+	printf("Stepping:  %d\n",cpuinfo.stepping);
+	printf("Modelname: %s\n",cpuinfo.modelname);
+	printf("Generic:   %s\n",cpuinfo.generic_modelname);
 
-   fclose(fff);
+	fclose(fff);
 
-   return 0;
+	return 0;
 }
 
 static char dirname[BUFSIZ];
