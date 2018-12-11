@@ -528,7 +528,7 @@ static int set_generic_modelname(int vendor, int family, int model) {
 		     break;
             case 45: /* Sandybridge EP (Romley) */
                      strcpy(cpuinfo.generic_modelname,"sandybridge-ep");
-                     event_table=&wsm_event_table;
+                     event_table=&snb_event_table;
                      break;
 
             case 58: /* Ivy Bridge */
