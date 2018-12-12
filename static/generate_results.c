@@ -440,6 +440,10 @@ static int set_generic_modelname(int vendor, int family, int model) {
 		else if (family==22) {
 			strcpy(cpuinfo.generic_modelname,"fam16h");
 			event_table=NULL; /* TODO */
+		}
+		else if (family==23) {
+			strcpy(cpuinfo.generic_modelname,"fam17h");
+			event_table=NULL; /* TODO */
 		} else {
 			strcpy(cpuinfo.generic_modelname,"UNKNOWN");
 		}
