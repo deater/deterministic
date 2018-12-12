@@ -328,6 +328,62 @@ struct event_table_t skl_event_table = {
 };
 
 
+struct event_table_t fam17h_event_table = {
+	.hw_int_name = 		"RETIRED_FALL_CONTROL_TRANSFERS",
+	.hw_int_event =		"r5300c6:u",
+	.ret_instr_name =	"RETIRED_INSTRUCTIONS",
+	.ret_instr_event =	"instructions:u",
+	.branches_name =	"RETIRED_BRANCH_INSTRUCTIONS",
+	.branches_event =	"branches:u",
+	.cond_branches_name =	"RETIRED_TAKEN_BRANCH_INSTRUCTIONS",
+	.cond_branches_event =	"r5300c4:u",
+	.loads_name =		"LS_DISPATCH:LD_DISPATCH",
+	.loads_event =		"r530129:u",
+	.stores_name =		"LS_DISPATCH:STORE_DISPATCH",
+	.stores_event =		"r530229:u",
+	.uops_name =		"RETIRED_UOPS",
+	.uops_event =		"r5300c1:u",
+	.muls_name ="RETIRED_SSE_AVX_OPERATIONS:SP_MULT_FLOPS:DP_MULT_FLOPS",
+	.muls_event =		"r532203:u",
+	.divs_name ="RETIRED_SSE_AVX_OPERATIONS:SP_DIV_FLOPS:DP_DIV_FLOPS",
+	.divs_event =		"r534403:u",
+	.fp1_name =
+"RETIRED_X87_FLOATING_POINT_OPERATIONS:MUL_OPS:ADD_SUB_OPS:DIV_SQR_R_OPS",
+	.fp1_event =		"r530702:u",
+	.fp2_name ="RETIRED_MMX_FP_INSTRUCTIONS:SSE_INSTR:MMX_INSTR:X87_INSTR",
+	.fp2_event =		"r5307cb:u",
+	.sse_name =		"RETIRED_SSE_AVX_OPERATIONS:ALL",
+	.sse_event =		"r53ff03:u",
+};
+
+struct event_table_t fam16h_event_table = {
+	/* SMIS_RECEIVED? */
+	.hw_int_name = 		"INTERRUPTS_TAKEN",
+	.hw_int_event =		"r5000cf:u",
+	.ret_instr_name =	"RETIRED_INSTRUCTIONS",
+	.ret_instr_event =	"instructions:u",
+	.branches_name =	"RETIRED_BRANCH_INSTRUCTIONS",
+	.branches_event =	"branches:u",
+	.cond_branches_name =	"RETIRED_TAKEN_BRANCH_INSTRUCTIONS",
+	.cond_branches_event =	"r5300c4:u",
+	.loads_name =		"LS_DISPATCH:LOADS",
+	.loads_event =		"r530129:u",
+	.stores_name =		"LS_DISPATCH:STORES",
+	.stores_event =		"r530229:u",
+	.uops_name =		"RETIRED_UOPS",
+	.uops_event =		"r5000c1:u",
+	.muls_name =		"RETIRED_SSE_OPS:SINGLE_MUL_OPS:DOUBLE_MUL_OPS",
+	.muls_event =		"r532203:u",
+	.divs_name =		"RETIRED_SSE_OPS:SINGLE_DIV_OPS:DOUBLE_DIV_OPS",
+	.divs_event =		"r534403:u",
+	.fp1_name =		"DISPATCHED_FPU_OPS:ALL",
+	.fp1_event =		"r53ff00:u",
+	.fp2_name =		"RETIRED_MMX_FP_INSTRUCTIONS:ALL",
+	.fp2_event =		"r5307cb:u",
+	.sse_name =		"RETIRED_SSE_OPS:ALL",
+	.sse_event =		"r53ff03:u",
+};
+
 struct event_table_t fam15h_event_table = {
 	/* SMIS_RECEIVED? */
 	.hw_int_name = 		"INTERRUPTS_TAKEN",
@@ -443,7 +499,7 @@ static int set_generic_modelname(int vendor, int family, int model) {
 		}
 		else if (family==23) {
 			strcpy(cpuinfo.generic_modelname,"fam17h");
-			event_table=NULL; /* TODO */
+			event_table=&fam17h_event_table;
 		} else {
 			strcpy(cpuinfo.generic_modelname,"UNKNOWN");
 		}
