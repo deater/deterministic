@@ -357,7 +357,6 @@ struct event_table_t fam17h_event_table = {
 };
 
 struct event_table_t fam16h_event_table = {
-	/* SMIS_RECEIVED? */
 	.hw_int_name = 		"INTERRUPTS_TAKEN",
 	.hw_int_event =		"r5000cf:u",
 	.ret_instr_name =	"RETIRED_INSTRUCTIONS",
@@ -372,15 +371,15 @@ struct event_table_t fam16h_event_table = {
 	.stores_event =		"r530229:u",
 	.uops_name =		"RETIRED_UOPS",
 	.uops_event =		"r5000c1:u",
-	.muls_name =		"RETIRED_SSE_OPS:SINGLE_MUL_OPS:DOUBLE_MUL_OPS",
+	.muls_name =		"RETIRED_SSE_AVX_OPERATIONS:SINGLE_MUL_OPS:DOUBLE_MUL_OPS",
 	.muls_event =		"r532203:u",
-	.divs_name =		"RETIRED_SSE_OPS:SINGLE_DIV_OPS:DOUBLE_DIV_OPS",
+	.divs_name =		"RETIRED_SSE_AVX_OPERATIONS:SINGLE_DIV_OPS:DOUBLE_DIV_OPS",
 	.divs_event =		"r534403:u",
 	.fp1_name =		"DISPATCHED_FPU_OPS:ALL",
 	.fp1_event =		"r53ff00:u",
 	.fp2_name =		"RETIRED_MMX_FP_INSTRUCTIONS:ALL",
 	.fp2_event =		"r5307cb:u",
-	.sse_name =		"RETIRED_SSE_OPS:ALL",
+	.sse_name =		"RETIRED_SSE_AVX_OPERATIONS:ALL",
 	.sse_event =		"r53ff03:u",
 };
 
@@ -495,7 +494,7 @@ static int set_generic_modelname(int vendor, int family, int model) {
 		/* 16h -- jaguar */
 		else if (family==22) {
 			strcpy(cpuinfo.generic_modelname,"fam16h");
-			event_table=NULL; /* TODO */
+			event_table=&fam16h_event_table;
 		}
 		else if (family==23) {
 			strcpy(cpuinfo.generic_modelname,"fam17h");
