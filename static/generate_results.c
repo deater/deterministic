@@ -715,7 +715,7 @@ static int generate_results(char *directory, char *name,
                       char *type, int count) {
 
    int i;
-   char filename[BUFSIZ],temp_string[BUFSIZ];
+   char filename[BUFSIZ*2],temp_string[BUFSIZ*3];
    FILE *fff;
    struct utsname uname_buf;
 
