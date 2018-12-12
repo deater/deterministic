@@ -500,10 +500,11 @@ static int read_stats(char *machine_type,
          }
       }
 
-      while(1) {
-	if (!strncmp(string,"### Interrupts",14)) break;
-	fgets(string,BUFSIZ,fff);
-      }
+	while(1) {
+		if (!strncmp(string,"### Interrupts",14)) break;
+		result=fgets(string,BUFSIZ,fff);
+		if (result==NULL) return -1;
+	}
 
       /**********************************/
       /* Read after-interrupt values    */
