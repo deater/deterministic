@@ -770,7 +770,7 @@ static int generate_results(char *directory, char *name,
                       char *name1, char *name2,
                       char *type, int count) {
 
-   int i;
+   int i,result;
    char filename[BUFSIZ*2],temp_string[BUFSIZ*3];
    FILE *fff;
    struct utsname uname_buf;
@@ -821,7 +821,11 @@ static int generate_results(char *directory, char *name,
                           "./binaries/retired_instr.%s.x86_64 1>/dev/null 2>>"
                           "%s",
                           event1,event2,type,filename);
-      system(temp_string);
+	result=system(temp_string);
+	if (result!=0) {
+		fprintf(stderr,"Error running perf!\n");
+	}
+
       /* after */
       sprintf(temp_string,"echo \"### Interrupts %d after\">> %s",
                            i,filename);
