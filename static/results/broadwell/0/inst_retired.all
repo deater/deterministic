@@ -1,0 +1,872 @@
+### System info
+Kernel:    Linux 4.16.0-1-amd64
+Interface: perf_event
+Hostname:  broadwell
+Family:    6
+Model:     61
+Stepping:  4
+Modelname: Intel(R) Core(TM) i7-5557U CPU @ 3.10GHz
+Generic:   broadwell
+Counters used: INSTRUCTION_RETIRED/HW_INTERRUPTS
+generate_results version: 0.24
+Runs:      10
+### Interrupts 0 before
+           CPU0       CPU1       CPU2       CPU3       
+  0:          6          0          0          0  IR-IO-APIC   2-edge      timer
+  3:          0          0          2          0  IR-IO-APIC   3-edge      nuvoton-cir
+  8:          0          0          1          0  IR-IO-APIC   8-edge      rtc0
+  9:          0          4          0          0  IR-IO-APIC   9-fasteoi   acpi
+ 18:          0          0          0          0  IR-IO-APIC  18-fasteoi   i801_smbus
+ 23:          0          0          0         35  IR-IO-APIC  23-fasteoi   ehci_hcd:usb3
+ 40:          0          0          0          0  DMAR-MSI   0-edge      dmar0
+ 41:          0          0          0          0  DMAR-MSI   1-edge      dmar1
+ 42:          0          0          0     161599  IR-PCI-MSI 409600-edge      eth0
+ 43:          0          0        220          0  IR-PCI-MSI 327680-edge      xhci_hcd
+ 44:          0     304034          0          0  IR-PCI-MSI 512000-edge      ahci[0000:00:1f.2]
+ 45:          0          0       3100          0  IR-PCI-MSI 32768-edge      i915
+ 46:          0          0          0         15  IR-PCI-MSI 360448-edge      mei_me
+ 47:        586          0          0          0  IR-PCI-MSI 442368-edge      snd_hda_intel:card1
+ 48:          0         87          0          0  IR-PCI-MSI 49152-edge      snd_hda_intel:card0
+NMI:         62         53         54         43   Non-maskable interrupts
+LOC:     210838     169927     198222     257583   Local timer interrupts
+SPU:          0          0          0          0   Spurious interrupts
+PMI:         62         53         54         43   Performance monitoring interrupts
+IWI:          0          0          0          0   IRQ work interrupts
+RTR:          1          0          0          0   APIC ICR read retries
+RES:       3463       4092       3519       5317   Rescheduling interrupts
+CAL:       4997       5206       5239       3649   Function call interrupts
+TLB:         46         35         56         40   TLB shootdowns
+TRM:          0          0          0          0   Thermal event interrupts
+THR:          0          0          0          0   Threshold APIC interrupts
+DFR:          0          0          0          0   Deferred Error APIC interrupts
+MCE:          0          0          0          0   Machine check exceptions
+MCP:        280        281        281        281   Machine check polls
+HYP:          0          0          0          0   Hypervisor callback interrupts
+HRE:          0          0          0          0   Hyper-V reenlightenment interrupts
+ERR:          0
+MIS:          0
+PIN:          0          0          0          0   Posted-interrupt notification event
+NPI:          0          0          0          0   Nested posted-interrupt event
+PIW:          0          0          0          0   Posted-interrupt wakeup event
+### Perf Results 0
+
+ Performance counter stats for './binaries/retired_instr.all.x86_64':
+
+       227,000,368      instructions:u                                              
+               326      r5301cb:u                                                   
+                 0      cs:u                                                        
+
+       1.317019926 seconds time elapsed
+
+### Interrupts 0 after
+           CPU0       CPU1       CPU2       CPU3       
+  0:          6          0          0          0  IR-IO-APIC   2-edge      timer
+  3:          0          0          2          0  IR-IO-APIC   3-edge      nuvoton-cir
+  8:          0          0          1          0  IR-IO-APIC   8-edge      rtc0
+  9:          0          4          0          0  IR-IO-APIC   9-fasteoi   acpi
+ 18:          0          0          0          0  IR-IO-APIC  18-fasteoi   i801_smbus
+ 23:          0          0          0         35  IR-IO-APIC  23-fasteoi   ehci_hcd:usb3
+ 40:          0          0          0          0  DMAR-MSI   0-edge      dmar0
+ 41:          0          0          0          0  DMAR-MSI   1-edge      dmar1
+ 42:          0          0          0     161601  IR-PCI-MSI 409600-edge      eth0
+ 43:          0          0        220          0  IR-PCI-MSI 327680-edge      xhci_hcd
+ 44:          0     304034          0          0  IR-PCI-MSI 512000-edge      ahci[0000:00:1f.2]
+ 45:          0          0       3100          0  IR-PCI-MSI 32768-edge      i915
+ 46:          0          0          0         15  IR-PCI-MSI 360448-edge      mei_me
+ 47:        586          0          0          0  IR-PCI-MSI 442368-edge      snd_hda_intel:card1
+ 48:          0         87          0          0  IR-PCI-MSI 49152-edge      snd_hda_intel:card0
+NMI:         63         53         54         43   Non-maskable interrupts
+LOC:     211182     169954     198248     257610   Local timer interrupts
+SPU:          0          0          0          0   Spurious interrupts
+PMI:         63         53         54         43   Performance monitoring interrupts
+IWI:          0          0          0          0   IRQ work interrupts
+RTR:          1          0          0          0   APIC ICR read retries
+RES:       3463       4092       3522       5317   Rescheduling interrupts
+CAL:       4997       5212       5245       3655   Function call interrupts
+TLB:         46         35         56         40   TLB shootdowns
+TRM:          0          0          0          0   Thermal event interrupts
+THR:          0          0          0          0   Threshold APIC interrupts
+DFR:          0          0          0          0   Deferred Error APIC interrupts
+MCE:          0          0          0          0   Machine check exceptions
+MCP:        280        281        281        281   Machine check polls
+HYP:          0          0          0          0   Hypervisor callback interrupts
+HRE:          0          0          0          0   Hyper-V reenlightenment interrupts
+ERR:          0
+MIS:          0
+PIN:          0          0          0          0   Posted-interrupt notification event
+NPI:          0          0          0          0   Nested posted-interrupt event
+PIW:          0          0          0          0   Posted-interrupt wakeup event
+### Interrupts 1 before
+           CPU0       CPU1       CPU2       CPU3       
+  0:          6          0          0          0  IR-IO-APIC   2-edge      timer
+  3:          0          0          2          0  IR-IO-APIC   3-edge      nuvoton-cir
+  8:          0          0          1          0  IR-IO-APIC   8-edge      rtc0
+  9:          0          4          0          0  IR-IO-APIC   9-fasteoi   acpi
+ 18:          0          0          0          0  IR-IO-APIC  18-fasteoi   i801_smbus
+ 23:          0          0          0         35  IR-IO-APIC  23-fasteoi   ehci_hcd:usb3
+ 40:          0          0          0          0  DMAR-MSI   0-edge      dmar0
+ 41:          0          0          0          0  DMAR-MSI   1-edge      dmar1
+ 42:          0          0          0     161603  IR-PCI-MSI 409600-edge      eth0
+ 43:          0          0        220          0  IR-PCI-MSI 327680-edge      xhci_hcd
+ 44:          0     304034          0          0  IR-PCI-MSI 512000-edge      ahci[0000:00:1f.2]
+ 45:          0          0       3100          0  IR-PCI-MSI 32768-edge      i915
+ 46:          0          0          0         15  IR-PCI-MSI 360448-edge      mei_me
+ 47:        586          0          0          0  IR-PCI-MSI 442368-edge      snd_hda_intel:card1
+ 48:          0         87          0          0  IR-PCI-MSI 49152-edge      snd_hda_intel:card0
+NMI:         63         53         54         43   Non-maskable interrupts
+LOC:     211182     169954     198248     257610   Local timer interrupts
+SPU:          0          0          0          0   Spurious interrupts
+PMI:         63         53         54         43   Performance monitoring interrupts
+IWI:          0          0          0          0   IRQ work interrupts
+RTR:          1          0          0          0   APIC ICR read retries
+RES:       3463       4092       3522       5317   Rescheduling interrupts
+CAL:       4997       5212       5245       3655   Function call interrupts
+TLB:         46         35         56         40   TLB shootdowns
+TRM:          0          0          0          0   Thermal event interrupts
+THR:          0          0          0          0   Threshold APIC interrupts
+DFR:          0          0          0          0   Deferred Error APIC interrupts
+MCE:          0          0          0          0   Machine check exceptions
+MCP:        280        281        281        281   Machine check polls
+HYP:          0          0          0          0   Hypervisor callback interrupts
+HRE:          0          0          0          0   Hyper-V reenlightenment interrupts
+ERR:          0
+MIS:          0
+PIN:          0          0          0          0   Posted-interrupt notification event
+NPI:          0          0          0          0   Nested posted-interrupt event
+PIW:          0          0          0          0   Posted-interrupt wakeup event
+### Perf Results 1
+
+ Performance counter stats for './binaries/retired_instr.all.x86_64':
+
+       227,000,369      instructions:u                                              
+               324      r5301cb:u                                                   
+                 0      cs:u                                                        
+
+       1.315984832 seconds time elapsed
+
+### Interrupts 1 after
+           CPU0       CPU1       CPU2       CPU3       
+  0:          6          0          0          0  IR-IO-APIC   2-edge      timer
+  3:          0          0          2          0  IR-IO-APIC   3-edge      nuvoton-cir
+  8:          0          0          1          0  IR-IO-APIC   8-edge      rtc0
+  9:          0          4          0          0  IR-IO-APIC   9-fasteoi   acpi
+ 18:          0          0          0          0  IR-IO-APIC  18-fasteoi   i801_smbus
+ 23:          0          0          0         35  IR-IO-APIC  23-fasteoi   ehci_hcd:usb3
+ 40:          0          0          0          0  DMAR-MSI   0-edge      dmar0
+ 41:          0          0          0          0  DMAR-MSI   1-edge      dmar1
+ 42:          0          0          0     161604  IR-PCI-MSI 409600-edge      eth0
+ 43:          0          0        220          0  IR-PCI-MSI 327680-edge      xhci_hcd
+ 44:          0     304034          0          0  IR-PCI-MSI 512000-edge      ahci[0000:00:1f.2]
+ 45:          0          0       3100          0  IR-PCI-MSI 32768-edge      i915
+ 46:          0          0          0         15  IR-PCI-MSI 360448-edge      mei_me
+ 47:        586          0          0          0  IR-PCI-MSI 442368-edge      snd_hda_intel:card1
+ 48:          0         87          0          0  IR-PCI-MSI 49152-edge      snd_hda_intel:card0
+NMI:         65         53         54         43   Non-maskable interrupts
+LOC:     211524     169969     198263     257630   Local timer interrupts
+SPU:          0          0          0          0   Spurious interrupts
+PMI:         65         53         54         43   Performance monitoring interrupts
+IWI:          0          0          0          0   IRQ work interrupts
+RTR:          1          0          0          0   APIC ICR read retries
+RES:       3463       4093       3523       5317   Rescheduling interrupts
+CAL:       4997       5218       5251       3661   Function call interrupts
+TLB:         46         35         56         40   TLB shootdowns
+TRM:          0          0          0          0   Thermal event interrupts
+THR:          0          0          0          0   Threshold APIC interrupts
+DFR:          0          0          0          0   Deferred Error APIC interrupts
+MCE:          0          0          0          0   Machine check exceptions
+MCP:        280        281        281        281   Machine check polls
+HYP:          0          0          0          0   Hypervisor callback interrupts
+HRE:          0          0          0          0   Hyper-V reenlightenment interrupts
+ERR:          0
+MIS:          0
+PIN:          0          0          0          0   Posted-interrupt notification event
+NPI:          0          0          0          0   Nested posted-interrupt event
+PIW:          0          0          0          0   Posted-interrupt wakeup event
+### Interrupts 2 before
+           CPU0       CPU1       CPU2       CPU3       
+  0:          6          0          0          0  IR-IO-APIC   2-edge      timer
+  3:          0          0          2          0  IR-IO-APIC   3-edge      nuvoton-cir
+  8:          0          0          1          0  IR-IO-APIC   8-edge      rtc0
+  9:          0          4          0          0  IR-IO-APIC   9-fasteoi   acpi
+ 18:          0          0          0          0  IR-IO-APIC  18-fasteoi   i801_smbus
+ 23:          0          0          0         35  IR-IO-APIC  23-fasteoi   ehci_hcd:usb3
+ 40:          0          0          0          0  DMAR-MSI   0-edge      dmar0
+ 41:          0          0          0          0  DMAR-MSI   1-edge      dmar1
+ 42:          0          0          0     161606  IR-PCI-MSI 409600-edge      eth0
+ 43:          0          0        220          0  IR-PCI-MSI 327680-edge      xhci_hcd
+ 44:          0     304034          0          0  IR-PCI-MSI 512000-edge      ahci[0000:00:1f.2]
+ 45:          0          0       3100          0  IR-PCI-MSI 32768-edge      i915
+ 46:          0          0          0         15  IR-PCI-MSI 360448-edge      mei_me
+ 47:        586          0          0          0  IR-PCI-MSI 442368-edge      snd_hda_intel:card1
+ 48:          0         87          0          0  IR-PCI-MSI 49152-edge      snd_hda_intel:card0
+NMI:         65         53         54         43   Non-maskable interrupts
+LOC:     211524     169969     198263     257630   Local timer interrupts
+SPU:          0          0          0          0   Spurious interrupts
+PMI:         65         53         54         43   Performance monitoring interrupts
+IWI:          0          0          0          0   IRQ work interrupts
+RTR:          1          0          0          0   APIC ICR read retries
+RES:       3463       4093       3523       5317   Rescheduling interrupts
+CAL:       4997       5218       5251       3661   Function call interrupts
+TLB:         46         35         56         40   TLB shootdowns
+TRM:          0          0          0          0   Thermal event interrupts
+THR:          0          0          0          0   Threshold APIC interrupts
+DFR:          0          0          0          0   Deferred Error APIC interrupts
+MCE:          0          0          0          0   Machine check exceptions
+MCP:        280        281        281        281   Machine check polls
+HYP:          0          0          0          0   Hypervisor callback interrupts
+HRE:          0          0          0          0   Hyper-V reenlightenment interrupts
+ERR:          0
+MIS:          0
+PIN:          0          0          0          0   Posted-interrupt notification event
+NPI:          0          0          0          0   Nested posted-interrupt event
+PIW:          0          0          0          0   Posted-interrupt wakeup event
+### Perf Results 2
+
+ Performance counter stats for './binaries/retired_instr.all.x86_64':
+
+       227,000,371      instructions:u                                              
+               327      r5301cb:u                                                   
+                 0      cs:u                                                        
+
+       1.316967555 seconds time elapsed
+
+### Interrupts 2 after
+           CPU0       CPU1       CPU2       CPU3       
+  0:          6          0          0          0  IR-IO-APIC   2-edge      timer
+  3:          0          0          2          0  IR-IO-APIC   3-edge      nuvoton-cir
+  8:          0          0          1          0  IR-IO-APIC   8-edge      rtc0
+  9:          0          4          0          0  IR-IO-APIC   9-fasteoi   acpi
+ 18:          0          0          0          0  IR-IO-APIC  18-fasteoi   i801_smbus
+ 23:          0          0          0         35  IR-IO-APIC  23-fasteoi   ehci_hcd:usb3
+ 40:          0          0          0          0  DMAR-MSI   0-edge      dmar0
+ 41:          0          0          0          0  DMAR-MSI   1-edge      dmar1
+ 42:          0          0          0     161607  IR-PCI-MSI 409600-edge      eth0
+ 43:          0          0        220          0  IR-PCI-MSI 327680-edge      xhci_hcd
+ 44:          0     304034          0          0  IR-PCI-MSI 512000-edge      ahci[0000:00:1f.2]
+ 45:          0          0       3100          0  IR-PCI-MSI 32768-edge      i915
+ 46:          0          0          0         15  IR-PCI-MSI 360448-edge      mei_me
+ 47:        586          0          0          0  IR-PCI-MSI 442368-edge      snd_hda_intel:card1
+ 48:          0         87          0          0  IR-PCI-MSI 49152-edge      snd_hda_intel:card0
+NMI:         66         53         54         43   Non-maskable interrupts
+LOC:     211867     169980     198275     257649   Local timer interrupts
+SPU:          0          0          0          0   Spurious interrupts
+PMI:         66         53         54         43   Performance monitoring interrupts
+IWI:          0          0          0          0   IRQ work interrupts
+RTR:          1          0          0          0   APIC ICR read retries
+RES:       3463       4095       3523       5318   Rescheduling interrupts
+CAL:       4997       5224       5257       3667   Function call interrupts
+TLB:         46         35         56         40   TLB shootdowns
+TRM:          0          0          0          0   Thermal event interrupts
+THR:          0          0          0          0   Threshold APIC interrupts
+DFR:          0          0          0          0   Deferred Error APIC interrupts
+MCE:          0          0          0          0   Machine check exceptions
+MCP:        280        281        281        281   Machine check polls
+HYP:          0          0          0          0   Hypervisor callback interrupts
+HRE:          0          0          0          0   Hyper-V reenlightenment interrupts
+ERR:          0
+MIS:          0
+PIN:          0          0          0          0   Posted-interrupt notification event
+NPI:          0          0          0          0   Nested posted-interrupt event
+PIW:          0          0          0          0   Posted-interrupt wakeup event
+### Interrupts 3 before
+           CPU0       CPU1       CPU2       CPU3       
+  0:          6          0          0          0  IR-IO-APIC   2-edge      timer
+  3:          0          0          2          0  IR-IO-APIC   3-edge      nuvoton-cir
+  8:          0          0          1          0  IR-IO-APIC   8-edge      rtc0
+  9:          0          4          0          0  IR-IO-APIC   9-fasteoi   acpi
+ 18:          0          0          0          0  IR-IO-APIC  18-fasteoi   i801_smbus
+ 23:          0          0          0         35  IR-IO-APIC  23-fasteoi   ehci_hcd:usb3
+ 40:          0          0          0          0  DMAR-MSI   0-edge      dmar0
+ 41:          0          0          0          0  DMAR-MSI   1-edge      dmar1
+ 42:          0          0          0     161609  IR-PCI-MSI 409600-edge      eth0
+ 43:          0          0        220          0  IR-PCI-MSI 327680-edge      xhci_hcd
+ 44:          0     304034          0          0  IR-PCI-MSI 512000-edge      ahci[0000:00:1f.2]
+ 45:          0          0       3100          0  IR-PCI-MSI 32768-edge      i915
+ 46:          0          0          0         15  IR-PCI-MSI 360448-edge      mei_me
+ 47:        586          0          0          0  IR-PCI-MSI 442368-edge      snd_hda_intel:card1
+ 48:          0         87          0          0  IR-PCI-MSI 49152-edge      snd_hda_intel:card0
+NMI:         66         53         54         43   Non-maskable interrupts
+LOC:     211867     169980     198275     257649   Local timer interrupts
+SPU:          0          0          0          0   Spurious interrupts
+PMI:         66         53         54         43   Performance monitoring interrupts
+IWI:          0          0          0          0   IRQ work interrupts
+RTR:          1          0          0          0   APIC ICR read retries
+RES:       3463       4095       3523       5318   Rescheduling interrupts
+CAL:       4997       5224       5257       3667   Function call interrupts
+TLB:         46         35         56         40   TLB shootdowns
+TRM:          0          0          0          0   Thermal event interrupts
+THR:          0          0          0          0   Threshold APIC interrupts
+DFR:          0          0          0          0   Deferred Error APIC interrupts
+MCE:          0          0          0          0   Machine check exceptions
+MCP:        280        281        281        281   Machine check polls
+HYP:          0          0          0          0   Hypervisor callback interrupts
+HRE:          0          0          0          0   Hyper-V reenlightenment interrupts
+ERR:          0
+MIS:          0
+PIN:          0          0          0          0   Posted-interrupt notification event
+NPI:          0          0          0          0   Nested posted-interrupt event
+PIW:          0          0          0          0   Posted-interrupt wakeup event
+### Perf Results 3
+
+ Performance counter stats for './binaries/retired_instr.all.x86_64':
+
+       227,000,370      instructions:u                                              
+               336      r5301cb:u                                                   
+                 0      cs:u                                                        
+
+       1.315643656 seconds time elapsed
+
+### Interrupts 3 after
+           CPU0       CPU1       CPU2       CPU3       
+  0:          6          0          0          0  IR-IO-APIC   2-edge      timer
+  3:          0          0          2          0  IR-IO-APIC   3-edge      nuvoton-cir
+  8:          0          0          1          0  IR-IO-APIC   8-edge      rtc0
+  9:          0          4          0          0  IR-IO-APIC   9-fasteoi   acpi
+ 18:          0          0          0          0  IR-IO-APIC  18-fasteoi   i801_smbus
+ 23:          0          0          0         35  IR-IO-APIC  23-fasteoi   ehci_hcd:usb3
+ 40:          0          0          0          0  DMAR-MSI   0-edge      dmar0
+ 41:          0          0          0          0  DMAR-MSI   1-edge      dmar1
+ 42:          0          0          0     161611  IR-PCI-MSI 409600-edge      eth0
+ 43:          0          0        220          0  IR-PCI-MSI 327680-edge      xhci_hcd
+ 44:          0     304038          0          0  IR-PCI-MSI 512000-edge      ahci[0000:00:1f.2]
+ 45:          0          0       3100          0  IR-PCI-MSI 32768-edge      i915
+ 46:          0          0          0         15  IR-PCI-MSI 360448-edge      mei_me
+ 47:        586          0          0          0  IR-PCI-MSI 442368-edge      snd_hda_intel:card1
+ 48:          0         87          0          0  IR-PCI-MSI 49152-edge      snd_hda_intel:card0
+NMI:         67         53         54         43   Non-maskable interrupts
+LOC:     212210     170001     198301     257676   Local timer interrupts
+SPU:          0          0          0          0   Spurious interrupts
+PMI:         67         53         54         43   Performance monitoring interrupts
+IWI:          0          0          0          0   IRQ work interrupts
+RTR:          1          0          0          0   APIC ICR read retries
+RES:       3463       4095       3525       5318   Rescheduling interrupts
+CAL:       4997       5230       5263       3673   Function call interrupts
+TLB:         46         35         56         40   TLB shootdowns
+TRM:          0          0          0          0   Thermal event interrupts
+THR:          0          0          0          0   Threshold APIC interrupts
+DFR:          0          0          0          0   Deferred Error APIC interrupts
+MCE:          0          0          0          0   Machine check exceptions
+MCP:        280        281        281        281   Machine check polls
+HYP:          0          0          0          0   Hypervisor callback interrupts
+HRE:          0          0          0          0   Hyper-V reenlightenment interrupts
+ERR:          0
+MIS:          0
+PIN:          0          0          0          0   Posted-interrupt notification event
+NPI:          0          0          0          0   Nested posted-interrupt event
+PIW:          0          0          0          0   Posted-interrupt wakeup event
+### Interrupts 4 before
+           CPU0       CPU1       CPU2       CPU3       
+  0:          6          0          0          0  IR-IO-APIC   2-edge      timer
+  3:          0          0          2          0  IR-IO-APIC   3-edge      nuvoton-cir
+  8:          0          0          1          0  IR-IO-APIC   8-edge      rtc0
+  9:          0          4          0          0  IR-IO-APIC   9-fasteoi   acpi
+ 18:          0          0          0          0  IR-IO-APIC  18-fasteoi   i801_smbus
+ 23:          0          0          0         35  IR-IO-APIC  23-fasteoi   ehci_hcd:usb3
+ 40:          0          0          0          0  DMAR-MSI   0-edge      dmar0
+ 41:          0          0          0          0  DMAR-MSI   1-edge      dmar1
+ 42:          0          0          0     161613  IR-PCI-MSI 409600-edge      eth0
+ 43:          0          0        220          0  IR-PCI-MSI 327680-edge      xhci_hcd
+ 44:          0     304038          0          0  IR-PCI-MSI 512000-edge      ahci[0000:00:1f.2]
+ 45:          0          0       3100          0  IR-PCI-MSI 32768-edge      i915
+ 46:          0          0          0         15  IR-PCI-MSI 360448-edge      mei_me
+ 47:        586          0          0          0  IR-PCI-MSI 442368-edge      snd_hda_intel:card1
+ 48:          0         87          0          0  IR-PCI-MSI 49152-edge      snd_hda_intel:card0
+NMI:         67         53         54         43   Non-maskable interrupts
+LOC:     212211     170002     198302     257677   Local timer interrupts
+SPU:          0          0          0          0   Spurious interrupts
+PMI:         67         53         54         43   Performance monitoring interrupts
+IWI:          0          0          0          0   IRQ work interrupts
+RTR:          1          0          0          0   APIC ICR read retries
+RES:       3463       4095       3525       5318   Rescheduling interrupts
+CAL:       4997       5230       5263       3673   Function call interrupts
+TLB:         46         35         56         40   TLB shootdowns
+TRM:          0          0          0          0   Thermal event interrupts
+THR:          0          0          0          0   Threshold APIC interrupts
+DFR:          0          0          0          0   Deferred Error APIC interrupts
+MCE:          0          0          0          0   Machine check exceptions
+MCP:        280        281        281        281   Machine check polls
+HYP:          0          0          0          0   Hypervisor callback interrupts
+HRE:          0          0          0          0   Hyper-V reenlightenment interrupts
+ERR:          0
+MIS:          0
+PIN:          0          0          0          0   Posted-interrupt notification event
+NPI:          0          0          0          0   Nested posted-interrupt event
+PIW:          0          0          0          0   Posted-interrupt wakeup event
+### Perf Results 4
+
+ Performance counter stats for './binaries/retired_instr.all.x86_64':
+
+       227,000,368      instructions:u                                              
+               324      r5301cb:u                                                   
+                 0      cs:u                                                        
+
+       1.315757817 seconds time elapsed
+
+### Interrupts 4 after
+           CPU0       CPU1       CPU2       CPU3       
+  0:          6          0          0          0  IR-IO-APIC   2-edge      timer
+  3:          0          0          2          0  IR-IO-APIC   3-edge      nuvoton-cir
+  8:          0          0          1          0  IR-IO-APIC   8-edge      rtc0
+  9:          0          4          0          0  IR-IO-APIC   9-fasteoi   acpi
+ 18:          0          0          0          0  IR-IO-APIC  18-fasteoi   i801_smbus
+ 23:          0          0          0         35  IR-IO-APIC  23-fasteoi   ehci_hcd:usb3
+ 40:          0          0          0          0  DMAR-MSI   0-edge      dmar0
+ 41:          0          0          0          0  DMAR-MSI   1-edge      dmar1
+ 42:          0          0          0     161615  IR-PCI-MSI 409600-edge      eth0
+ 43:          0          0        220          0  IR-PCI-MSI 327680-edge      xhci_hcd
+ 44:          0     304038          0          0  IR-PCI-MSI 512000-edge      ahci[0000:00:1f.2]
+ 45:          0          0       3100          0  IR-PCI-MSI 32768-edge      i915
+ 46:          0          0          0         15  IR-PCI-MSI 360448-edge      mei_me
+ 47:        586          0          0          0  IR-PCI-MSI 442368-edge      snd_hda_intel:card1
+ 48:          0         87          0          0  IR-PCI-MSI 49152-edge      snd_hda_intel:card0
+NMI:         68         53         54         43   Non-maskable interrupts
+LOC:     212552     170024     198323     257700   Local timer interrupts
+SPU:          0          0          0          0   Spurious interrupts
+PMI:         68         53         54         43   Performance monitoring interrupts
+IWI:          0          0          0          0   IRQ work interrupts
+RTR:          1          0          0          0   APIC ICR read retries
+RES:       3463       4096       3526       5318   Rescheduling interrupts
+CAL:       4997       5236       5269       3679   Function call interrupts
+TLB:         46         35         56         40   TLB shootdowns
+TRM:          0          0          0          0   Thermal event interrupts
+THR:          0          0          0          0   Threshold APIC interrupts
+DFR:          0          0          0          0   Deferred Error APIC interrupts
+MCE:          0          0          0          0   Machine check exceptions
+MCP:        280        281        281        281   Machine check polls
+HYP:          0          0          0          0   Hypervisor callback interrupts
+HRE:          0          0          0          0   Hyper-V reenlightenment interrupts
+ERR:          0
+MIS:          0
+PIN:          0          0          0          0   Posted-interrupt notification event
+NPI:          0          0          0          0   Nested posted-interrupt event
+PIW:          0          0          0          0   Posted-interrupt wakeup event
+### Interrupts 5 before
+           CPU0       CPU1       CPU2       CPU3       
+  0:          6          0          0          0  IR-IO-APIC   2-edge      timer
+  3:          0          0          2          0  IR-IO-APIC   3-edge      nuvoton-cir
+  8:          0          0          1          0  IR-IO-APIC   8-edge      rtc0
+  9:          0          4          0          0  IR-IO-APIC   9-fasteoi   acpi
+ 18:          0          0          0          0  IR-IO-APIC  18-fasteoi   i801_smbus
+ 23:          0          0          0         35  IR-IO-APIC  23-fasteoi   ehci_hcd:usb3
+ 40:          0          0          0          0  DMAR-MSI   0-edge      dmar0
+ 41:          0          0          0          0  DMAR-MSI   1-edge      dmar1
+ 42:          0          0          0     161617  IR-PCI-MSI 409600-edge      eth0
+ 43:          0          0        220          0  IR-PCI-MSI 327680-edge      xhci_hcd
+ 44:          0     304038          0          0  IR-PCI-MSI 512000-edge      ahci[0000:00:1f.2]
+ 45:          0          0       3100          0  IR-PCI-MSI 32768-edge      i915
+ 46:          0          0          0         15  IR-PCI-MSI 360448-edge      mei_me
+ 47:        586          0          0          0  IR-PCI-MSI 442368-edge      snd_hda_intel:card1
+ 48:          0         87          0          0  IR-PCI-MSI 49152-edge      snd_hda_intel:card0
+NMI:         68         53         54         43   Non-maskable interrupts
+LOC:     212552     170024     198323     257700   Local timer interrupts
+SPU:          0          0          0          0   Spurious interrupts
+PMI:         68         53         54         43   Performance monitoring interrupts
+IWI:          0          0          0          0   IRQ work interrupts
+RTR:          1          0          0          0   APIC ICR read retries
+RES:       3463       4096       3526       5318   Rescheduling interrupts
+CAL:       4997       5236       5269       3679   Function call interrupts
+TLB:         46         35         56         40   TLB shootdowns
+TRM:          0          0          0          0   Thermal event interrupts
+THR:          0          0          0          0   Threshold APIC interrupts
+DFR:          0          0          0          0   Deferred Error APIC interrupts
+MCE:          0          0          0          0   Machine check exceptions
+MCP:        280        281        281        281   Machine check polls
+HYP:          0          0          0          0   Hypervisor callback interrupts
+HRE:          0          0          0          0   Hyper-V reenlightenment interrupts
+ERR:          0
+MIS:          0
+PIN:          0          0          0          0   Posted-interrupt notification event
+NPI:          0          0          0          0   Nested posted-interrupt event
+PIW:          0          0          0          0   Posted-interrupt wakeup event
+### Perf Results 5
+
+ Performance counter stats for './binaries/retired_instr.all.x86_64':
+
+       227,000,445      instructions:u                                              
+               401      r5301cb:u                                                   
+                 0      cs:u                                                        
+
+       1.618846005 seconds time elapsed
+
+### Interrupts 5 after
+           CPU0       CPU1       CPU2       CPU3       
+  0:          6          0          0          0  IR-IO-APIC   2-edge      timer
+  3:          0          0          2          0  IR-IO-APIC   3-edge      nuvoton-cir
+  8:          0          0          1          0  IR-IO-APIC   8-edge      rtc0
+  9:          0          4          0          0  IR-IO-APIC   9-fasteoi   acpi
+ 18:          0          0          0          0  IR-IO-APIC  18-fasteoi   i801_smbus
+ 23:          0          0          0         35  IR-IO-APIC  23-fasteoi   ehci_hcd:usb3
+ 40:          0          0          0          0  DMAR-MSI   0-edge      dmar0
+ 41:          0          0          0          0  DMAR-MSI   1-edge      dmar1
+ 42:          0          0          0     161618  IR-PCI-MSI 409600-edge      eth0
+ 43:          0          0        220          0  IR-PCI-MSI 327680-edge      xhci_hcd
+ 44:          0     304038          0          0  IR-PCI-MSI 512000-edge      ahci[0000:00:1f.2]
+ 45:          0          0       3100          0  IR-PCI-MSI 32768-edge      i915
+ 46:          0          0          0         15  IR-PCI-MSI 360448-edge      mei_me
+ 47:        586          0          0          0  IR-PCI-MSI 442368-edge      snd_hda_intel:card1
+ 48:          0         87          0          0  IR-PCI-MSI 49152-edge      snd_hda_intel:card0
+NMI:         69         53         54         43   Non-maskable interrupts
+LOC:     212971     170043     198343     257721   Local timer interrupts
+SPU:          0          0          0          0   Spurious interrupts
+PMI:         69         53         54         43   Performance monitoring interrupts
+IWI:          0          0          0          0   IRQ work interrupts
+RTR:          1          0          0          0   APIC ICR read retries
+RES:       3464       4096       3526       5318   Rescheduling interrupts
+CAL:       4997       5242       5275       3685   Function call interrupts
+TLB:         46         35         56         40   TLB shootdowns
+TRM:          0          0          0          0   Thermal event interrupts
+THR:          0          0          0          0   Threshold APIC interrupts
+DFR:          0          0          0          0   Deferred Error APIC interrupts
+MCE:          0          0          0          0   Machine check exceptions
+MCP:        280        281        281        281   Machine check polls
+HYP:          0          0          0          0   Hypervisor callback interrupts
+HRE:          0          0          0          0   Hyper-V reenlightenment interrupts
+ERR:          0
+MIS:          0
+PIN:          0          0          0          0   Posted-interrupt notification event
+NPI:          0          0          0          0   Nested posted-interrupt event
+PIW:          0          0          0          0   Posted-interrupt wakeup event
+### Interrupts 6 before
+           CPU0       CPU1       CPU2       CPU3       
+  0:          6          0          0          0  IR-IO-APIC   2-edge      timer
+  3:          0          0          2          0  IR-IO-APIC   3-edge      nuvoton-cir
+  8:          0          0          1          0  IR-IO-APIC   8-edge      rtc0
+  9:          0          4          0          0  IR-IO-APIC   9-fasteoi   acpi
+ 18:          0          0          0          0  IR-IO-APIC  18-fasteoi   i801_smbus
+ 23:          0          0          0         35  IR-IO-APIC  23-fasteoi   ehci_hcd:usb3
+ 40:          0          0          0          0  DMAR-MSI   0-edge      dmar0
+ 41:          0          0          0          0  DMAR-MSI   1-edge      dmar1
+ 42:          0          0          0     161620  IR-PCI-MSI 409600-edge      eth0
+ 43:          0          0        220          0  IR-PCI-MSI 327680-edge      xhci_hcd
+ 44:          0     304038          0          0  IR-PCI-MSI 512000-edge      ahci[0000:00:1f.2]
+ 45:          0          0       3100          0  IR-PCI-MSI 32768-edge      i915
+ 46:          0          0          0         15  IR-PCI-MSI 360448-edge      mei_me
+ 47:        586          0          0          0  IR-PCI-MSI 442368-edge      snd_hda_intel:card1
+ 48:          0         87          0          0  IR-PCI-MSI 49152-edge      snd_hda_intel:card0
+NMI:         69         53         54         43   Non-maskable interrupts
+LOC:     212972     170044     198344     257722   Local timer interrupts
+SPU:          0          0          0          0   Spurious interrupts
+PMI:         69         53         54         43   Performance monitoring interrupts
+IWI:          0          0          0          0   IRQ work interrupts
+RTR:          1          0          0          0   APIC ICR read retries
+RES:       3464       4097       3526       5318   Rescheduling interrupts
+CAL:       4997       5242       5275       3685   Function call interrupts
+TLB:         46         35         56         40   TLB shootdowns
+TRM:          0          0          0          0   Thermal event interrupts
+THR:          0          0          0          0   Threshold APIC interrupts
+DFR:          0          0          0          0   Deferred Error APIC interrupts
+MCE:          0          0          0          0   Machine check exceptions
+MCP:        280        281        281        281   Machine check polls
+HYP:          0          0          0          0   Hypervisor callback interrupts
+HRE:          0          0          0          0   Hyper-V reenlightenment interrupts
+ERR:          0
+MIS:          0
+PIN:          0          0          0          0   Posted-interrupt notification event
+NPI:          0          0          0          0   Nested posted-interrupt event
+PIW:          0          0          0          0   Posted-interrupt wakeup event
+### Perf Results 6
+
+ Performance counter stats for './binaries/retired_instr.all.x86_64':
+
+       227,000,370      instructions:u                                              
+               335      r5301cb:u                                                   
+                 0      cs:u                                                        
+
+       1.317443879 seconds time elapsed
+
+### Interrupts 6 after
+           CPU0       CPU1       CPU2       CPU3       
+  0:          6          0          0          0  IR-IO-APIC   2-edge      timer
+  3:          0          0          2          0  IR-IO-APIC   3-edge      nuvoton-cir
+  8:          0          0          1          0  IR-IO-APIC   8-edge      rtc0
+  9:          0          4          0          0  IR-IO-APIC   9-fasteoi   acpi
+ 18:          0          0          0          0  IR-IO-APIC  18-fasteoi   i801_smbus
+ 23:          0          0          0         35  IR-IO-APIC  23-fasteoi   ehci_hcd:usb3
+ 40:          0          0          0          0  DMAR-MSI   0-edge      dmar0
+ 41:          0          0          0          0  DMAR-MSI   1-edge      dmar1
+ 42:          0          0          0     161621  IR-PCI-MSI 409600-edge      eth0
+ 43:          0          0        220          0  IR-PCI-MSI 327680-edge      xhci_hcd
+ 44:          0     304038          0          0  IR-PCI-MSI 512000-edge      ahci[0000:00:1f.2]
+ 45:          0          0       3100          0  IR-PCI-MSI 32768-edge      i915
+ 46:          0          0          0         15  IR-PCI-MSI 360448-edge      mei_me
+ 47:        586          0          0          0  IR-PCI-MSI 442368-edge      snd_hda_intel:card1
+ 48:          0         87          0          0  IR-PCI-MSI 49152-edge      snd_hda_intel:card0
+NMI:         70         53         54         43   Non-maskable interrupts
+LOC:     213314     170063     198368     257746   Local timer interrupts
+SPU:          0          0          0          0   Spurious interrupts
+PMI:         70         53         54         43   Performance monitoring interrupts
+IWI:          0          0          0          0   IRQ work interrupts
+RTR:          1          0          0          0   APIC ICR read retries
+RES:       3464       4098       3527       5318   Rescheduling interrupts
+CAL:       4997       5248       5281       3691   Function call interrupts
+TLB:         46         35         56         40   TLB shootdowns
+TRM:          0          0          0          0   Thermal event interrupts
+THR:          0          0          0          0   Threshold APIC interrupts
+DFR:          0          0          0          0   Deferred Error APIC interrupts
+MCE:          0          0          0          0   Machine check exceptions
+MCP:        280        281        281        281   Machine check polls
+HYP:          0          0          0          0   Hypervisor callback interrupts
+HRE:          0          0          0          0   Hyper-V reenlightenment interrupts
+ERR:          0
+MIS:          0
+PIN:          0          0          0          0   Posted-interrupt notification event
+NPI:          0          0          0          0   Nested posted-interrupt event
+PIW:          0          0          0          0   Posted-interrupt wakeup event
+### Interrupts 7 before
+           CPU0       CPU1       CPU2       CPU3       
+  0:          6          0          0          0  IR-IO-APIC   2-edge      timer
+  3:          0          0          2          0  IR-IO-APIC   3-edge      nuvoton-cir
+  8:          0          0          1          0  IR-IO-APIC   8-edge      rtc0
+  9:          0          4          0          0  IR-IO-APIC   9-fasteoi   acpi
+ 18:          0          0          0          0  IR-IO-APIC  18-fasteoi   i801_smbus
+ 23:          0          0          0         35  IR-IO-APIC  23-fasteoi   ehci_hcd:usb3
+ 40:          0          0          0          0  DMAR-MSI   0-edge      dmar0
+ 41:          0          0          0          0  DMAR-MSI   1-edge      dmar1
+ 42:          0          0          0     161623  IR-PCI-MSI 409600-edge      eth0
+ 43:          0          0        220          0  IR-PCI-MSI 327680-edge      xhci_hcd
+ 44:          0     304038          0          0  IR-PCI-MSI 512000-edge      ahci[0000:00:1f.2]
+ 45:          0          0       3100          0  IR-PCI-MSI 32768-edge      i915
+ 46:          0          0          0         15  IR-PCI-MSI 360448-edge      mei_me
+ 47:        586          0          0          0  IR-PCI-MSI 442368-edge      snd_hda_intel:card1
+ 48:          0         87          0          0  IR-PCI-MSI 49152-edge      snd_hda_intel:card0
+NMI:         70         53         54         43   Non-maskable interrupts
+LOC:     213314     170063     198368     257746   Local timer interrupts
+SPU:          0          0          0          0   Spurious interrupts
+PMI:         70         53         54         43   Performance monitoring interrupts
+IWI:          0          0          0          0   IRQ work interrupts
+RTR:          1          0          0          0   APIC ICR read retries
+RES:       3464       4098       3527       5318   Rescheduling interrupts
+CAL:       4997       5248       5281       3691   Function call interrupts
+TLB:         46         35         56         40   TLB shootdowns
+TRM:          0          0          0          0   Thermal event interrupts
+THR:          0          0          0          0   Threshold APIC interrupts
+DFR:          0          0          0          0   Deferred Error APIC interrupts
+MCE:          0          0          0          0   Machine check exceptions
+MCP:        280        281        281        281   Machine check polls
+HYP:          0          0          0          0   Hypervisor callback interrupts
+HRE:          0          0          0          0   Hyper-V reenlightenment interrupts
+ERR:          0
+MIS:          0
+PIN:          0          0          0          0   Posted-interrupt notification event
+NPI:          0          0          0          0   Nested posted-interrupt event
+PIW:          0          0          0          0   Posted-interrupt wakeup event
+### Perf Results 7
+
+ Performance counter stats for './binaries/retired_instr.all.x86_64':
+
+       227,000,369      instructions:u                                              
+               325      r5301cb:u                                                   
+                 0      cs:u                                                        
+
+       1.316105068 seconds time elapsed
+
+### Interrupts 7 after
+           CPU0       CPU1       CPU2       CPU3       
+  0:          6          0          0          0  IR-IO-APIC   2-edge      timer
+  3:          0          0          2          0  IR-IO-APIC   3-edge      nuvoton-cir
+  8:          0          0          1          0  IR-IO-APIC   8-edge      rtc0
+  9:          0          4          0          0  IR-IO-APIC   9-fasteoi   acpi
+ 18:          0          0          0          0  IR-IO-APIC  18-fasteoi   i801_smbus
+ 23:          0          0          0         35  IR-IO-APIC  23-fasteoi   ehci_hcd:usb3
+ 40:          0          0          0          0  DMAR-MSI   0-edge      dmar0
+ 41:          0          0          0          0  DMAR-MSI   1-edge      dmar1
+ 42:          0          0          0     161625  IR-PCI-MSI 409600-edge      eth0
+ 43:          0          0        220          0  IR-PCI-MSI 327680-edge      xhci_hcd
+ 44:          0     304042          0          0  IR-PCI-MSI 512000-edge      ahci[0000:00:1f.2]
+ 45:          0          0       3100          0  IR-PCI-MSI 32768-edge      i915
+ 46:          0          0          0         15  IR-PCI-MSI 360448-edge      mei_me
+ 47:        586          0          0          0  IR-PCI-MSI 442368-edge      snd_hda_intel:card1
+ 48:          0         87          0          0  IR-PCI-MSI 49152-edge      snd_hda_intel:card0
+NMI:         71         53         54         43   Non-maskable interrupts
+LOC:     213658     170084     198387     257766   Local timer interrupts
+SPU:          0          0          0          0   Spurious interrupts
+PMI:         71         53         54         43   Performance monitoring interrupts
+IWI:          0          0          0          0   IRQ work interrupts
+RTR:          1          0          0          0   APIC ICR read retries
+RES:       3464       4099       3530       5318   Rescheduling interrupts
+CAL:       4997       5254       5287       3697   Function call interrupts
+TLB:         46         35         56         40   TLB shootdowns
+TRM:          0          0          0          0   Thermal event interrupts
+THR:          0          0          0          0   Threshold APIC interrupts
+DFR:          0          0          0          0   Deferred Error APIC interrupts
+MCE:          0          0          0          0   Machine check exceptions
+MCP:        280        281        281        281   Machine check polls
+HYP:          0          0          0          0   Hypervisor callback interrupts
+HRE:          0          0          0          0   Hyper-V reenlightenment interrupts
+ERR:          0
+MIS:          0
+PIN:          0          0          0          0   Posted-interrupt notification event
+NPI:          0          0          0          0   Nested posted-interrupt event
+PIW:          0          0          0          0   Posted-interrupt wakeup event
+### Interrupts 8 before
+           CPU0       CPU1       CPU2       CPU3       
+  0:          6          0          0          0  IR-IO-APIC   2-edge      timer
+  3:          0          0          2          0  IR-IO-APIC   3-edge      nuvoton-cir
+  8:          0          0          1          0  IR-IO-APIC   8-edge      rtc0
+  9:          0          4          0          0  IR-IO-APIC   9-fasteoi   acpi
+ 18:          0          0          0          0  IR-IO-APIC  18-fasteoi   i801_smbus
+ 23:          0          0          0         35  IR-IO-APIC  23-fasteoi   ehci_hcd:usb3
+ 40:          0          0          0          0  DMAR-MSI   0-edge      dmar0
+ 41:          0          0          0          0  DMAR-MSI   1-edge      dmar1
+ 42:          0          0          0     161627  IR-PCI-MSI 409600-edge      eth0
+ 43:          0          0        220          0  IR-PCI-MSI 327680-edge      xhci_hcd
+ 44:          0     304042          0          0  IR-PCI-MSI 512000-edge      ahci[0000:00:1f.2]
+ 45:          0          0       3100          0  IR-PCI-MSI 32768-edge      i915
+ 46:          0          0          0         15  IR-PCI-MSI 360448-edge      mei_me
+ 47:        586          0          0          0  IR-PCI-MSI 442368-edge      snd_hda_intel:card1
+ 48:          0         87          0          0  IR-PCI-MSI 49152-edge      snd_hda_intel:card0
+NMI:         71         53         54         43   Non-maskable interrupts
+LOC:     213658     170084     198387     257766   Local timer interrupts
+SPU:          0          0          0          0   Spurious interrupts
+PMI:         71         53         54         43   Performance monitoring interrupts
+IWI:          0          0          0          0   IRQ work interrupts
+RTR:          1          0          0          0   APIC ICR read retries
+RES:       3464       4099       3530       5318   Rescheduling interrupts
+CAL:       4997       5254       5287       3697   Function call interrupts
+TLB:         46         35         56         40   TLB shootdowns
+TRM:          0          0          0          0   Thermal event interrupts
+THR:          0          0          0          0   Threshold APIC interrupts
+DFR:          0          0          0          0   Deferred Error APIC interrupts
+MCE:          0          0          0          0   Machine check exceptions
+MCP:        280        281        281        281   Machine check polls
+HYP:          0          0          0          0   Hypervisor callback interrupts
+HRE:          0          0          0          0   Hyper-V reenlightenment interrupts
+ERR:          0
+MIS:          0
+PIN:          0          0          0          0   Posted-interrupt notification event
+NPI:          0          0          0          0   Nested posted-interrupt event
+PIW:          0          0          0          0   Posted-interrupt wakeup event
+### Perf Results 8
+
+ Performance counter stats for './binaries/retired_instr.all.x86_64':
+
+       227,000,460      instructions:u                                              
+               415      r5301cb:u                                                   
+                 0      cs:u                                                        
+
+       1.673770045 seconds time elapsed
+
+### Interrupts 8 after
+           CPU0       CPU1       CPU2       CPU3       
+  0:          6          0          0          0  IR-IO-APIC   2-edge      timer
+  3:          0          0          2          0  IR-IO-APIC   3-edge      nuvoton-cir
+  8:          0          0          1          0  IR-IO-APIC   8-edge      rtc0
+  9:          0          4          0          0  IR-IO-APIC   9-fasteoi   acpi
+ 18:          0          0          0          0  IR-IO-APIC  18-fasteoi   i801_smbus
+ 23:          0          0          0         35  IR-IO-APIC  23-fasteoi   ehci_hcd:usb3
+ 40:          0          0          0          0  DMAR-MSI   0-edge      dmar0
+ 41:          0          0          0          0  DMAR-MSI   1-edge      dmar1
+ 42:          0          0          0     161629  IR-PCI-MSI 409600-edge      eth0
+ 43:          0          0        220          0  IR-PCI-MSI 327680-edge      xhci_hcd
+ 44:          0     304049          0          0  IR-PCI-MSI 512000-edge      ahci[0000:00:1f.2]
+ 45:          0          0       3100          0  IR-PCI-MSI 32768-edge      i915
+ 46:          0          0          0         15  IR-PCI-MSI 360448-edge      mei_me
+ 47:        586          0          0          0  IR-PCI-MSI 442368-edge      snd_hda_intel:card1
+ 48:          0         87          0          0  IR-PCI-MSI 49152-edge      snd_hda_intel:card0
+NMI:         74         53         55         43   Non-maskable interrupts
+LOC:     214090     170099     198409     257784   Local timer interrupts
+SPU:          0          0          0          0   Spurious interrupts
+PMI:         74         53         55         43   Performance monitoring interrupts
+IWI:          0          0          0          0   IRQ work interrupts
+RTR:          1          0          0          0   APIC ICR read retries
+RES:       3464       4099       3531       5319   Rescheduling interrupts
+CAL:       4997       5260       5293       3703   Function call interrupts
+TLB:         46         35         56         40   TLB shootdowns
+TRM:          0          0          0          0   Thermal event interrupts
+THR:          0          0          0          0   Threshold APIC interrupts
+DFR:          0          0          0          0   Deferred Error APIC interrupts
+MCE:          0          0          0          0   Machine check exceptions
+MCP:        280        281        281        281   Machine check polls
+HYP:          0          0          0          0   Hypervisor callback interrupts
+HRE:          0          0          0          0   Hyper-V reenlightenment interrupts
+ERR:          0
+MIS:          0
+PIN:          0          0          0          0   Posted-interrupt notification event
+NPI:          0          0          0          0   Nested posted-interrupt event
+PIW:          0          0          0          0   Posted-interrupt wakeup event
+### Interrupts 9 before
+           CPU0       CPU1       CPU2       CPU3       
+  0:          6          0          0          0  IR-IO-APIC   2-edge      timer
+  3:          0          0          2          0  IR-IO-APIC   3-edge      nuvoton-cir
+  8:          0          0          1          0  IR-IO-APIC   8-edge      rtc0
+  9:          0          4          0          0  IR-IO-APIC   9-fasteoi   acpi
+ 18:          0          0          0          0  IR-IO-APIC  18-fasteoi   i801_smbus
+ 23:          0          0          0         35  IR-IO-APIC  23-fasteoi   ehci_hcd:usb3
+ 40:          0          0          0          0  DMAR-MSI   0-edge      dmar0
+ 41:          0          0          0          0  DMAR-MSI   1-edge      dmar1
+ 42:          0          0          0     161631  IR-PCI-MSI 409600-edge      eth0
+ 43:          0          0        220          0  IR-PCI-MSI 327680-edge      xhci_hcd
+ 44:          0     304049          0          0  IR-PCI-MSI 512000-edge      ahci[0000:00:1f.2]
+ 45:          0          0       3100          0  IR-PCI-MSI 32768-edge      i915
+ 46:          0          0          0         15  IR-PCI-MSI 360448-edge      mei_me
+ 47:        586          0          0          0  IR-PCI-MSI 442368-edge      snd_hda_intel:card1
+ 48:          0         87          0          0  IR-PCI-MSI 49152-edge      snd_hda_intel:card0
+NMI:         74         53         55         43   Non-maskable interrupts
+LOC:     214090     170099     198409     257784   Local timer interrupts
+SPU:          0          0          0          0   Spurious interrupts
+PMI:         74         53         55         43   Performance monitoring interrupts
+IWI:          0          0          0          0   IRQ work interrupts
+RTR:          1          0          0          0   APIC ICR read retries
+RES:       3464       4099       3531       5319   Rescheduling interrupts
+CAL:       4997       5260       5293       3703   Function call interrupts
+TLB:         46         35         56         40   TLB shootdowns
+TRM:          0          0          0          0   Thermal event interrupts
+THR:          0          0          0          0   Threshold APIC interrupts
+DFR:          0          0          0          0   Deferred Error APIC interrupts
+MCE:          0          0          0          0   Machine check exceptions
+MCP:        280        281        281        281   Machine check polls
+HYP:          0          0          0          0   Hypervisor callback interrupts
+HRE:          0          0          0          0   Hyper-V reenlightenment interrupts
+ERR:          0
+MIS:          0
+PIN:          0          0          0          0   Posted-interrupt notification event
+NPI:          0          0          0          0   Nested posted-interrupt event
+PIW:          0          0          0          0   Posted-interrupt wakeup event
+### Perf Results 9
+
+ Performance counter stats for './binaries/retired_instr.all.x86_64':
+
+       227,000,369      instructions:u                                              
+               327      r5301cb:u                                                   
+                 0      cs:u                                                        
+
+       1.316861475 seconds time elapsed
+
+### Interrupts 9 after
+           CPU0       CPU1       CPU2       CPU3       
+  0:          6          0          0          0  IR-IO-APIC   2-edge      timer
+  3:          0          0          2          0  IR-IO-APIC   3-edge      nuvoton-cir
+  8:          0          0          1          0  IR-IO-APIC   8-edge      rtc0
+  9:          0          4          0          0  IR-IO-APIC   9-fasteoi   acpi
+ 18:          0          0          0          0  IR-IO-APIC  18-fasteoi   i801_smbus
+ 23:          0          0          0         35  IR-IO-APIC  23-fasteoi   ehci_hcd:usb3
+ 40:          0          0          0          0  DMAR-MSI   0-edge      dmar0
+ 41:          0          0          0          0  DMAR-MSI   1-edge      dmar1
+ 42:          0          0          0     161632  IR-PCI-MSI 409600-edge      eth0
+ 43:          0          0        220          0  IR-PCI-MSI 327680-edge      xhci_hcd
+ 44:          0     304049          0          0  IR-PCI-MSI 512000-edge      ahci[0000:00:1f.2]
+ 45:          0          0       3100          0  IR-PCI-MSI 32768-edge      i915
+ 46:          0          0          0         15  IR-PCI-MSI 360448-edge      mei_me
+ 47:        586          0          0          0  IR-PCI-MSI 442368-edge      snd_hda_intel:card1
+ 48:          0         87          0          0  IR-PCI-MSI 49152-edge      snd_hda_intel:card0
+NMI:         75         53         55         43   Non-maskable interrupts
+LOC:     214432     170120     198433     257808   Local timer interrupts
+SPU:          0          0          0          0   Spurious interrupts
+PMI:         75         53         55         43   Performance monitoring interrupts
+IWI:          0          0          0          0   IRQ work interrupts
+RTR:          1          0          0          0   APIC ICR read retries
+RES:       3464       4101       3533       5320   Rescheduling interrupts
+CAL:       4997       5266       5299       3709   Function call interrupts
+TLB:         46         35         56         40   TLB shootdowns
+TRM:          0          0          0          0   Thermal event interrupts
+THR:          0          0          0          0   Threshold APIC interrupts
+DFR:          0          0          0          0   Deferred Error APIC interrupts
+MCE:          0          0          0          0   Machine check exceptions
+MCP:        280        281        281        281   Machine check polls
+HYP:          0          0          0          0   Hypervisor callback interrupts
+HRE:          0          0          0          0   Hyper-V reenlightenment interrupts
+ERR:          0
+MIS:          0
+PIN:          0          0          0          0   Posted-interrupt notification event
+NPI:          0          0          0          0   Nested posted-interrupt event
+PIW:          0          0          0          0   Posted-interrupt wakeup event

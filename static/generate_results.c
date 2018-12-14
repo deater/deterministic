@@ -614,6 +614,12 @@ static int set_generic_modelname(int vendor, int family, int model) {
 			event_table=&hsw_event_table;
 			break;
 
+		/* Broadwell */
+		case 61:
+			strcpy(cpuinfo.generic_modelname,"broadwell");
+			event_table=&bdw_event_table;
+			break;
+
 		/* Broadwell-EP */
 		case 79:
 			strcpy(cpuinfo.generic_modelname,"broadwell-ep");
