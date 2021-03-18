@@ -105,6 +105,17 @@ that counts as an extra instruction.  This variation is more predictable
 than other interrupts, but can still be affected by the behavior of
 the operating system and other programs running on the system.
 
+The source of the overcount remained mysterious for a while, but some
+discussion on Twitter around 2020 gave a plausible hypothesis.
+The {\tt iret} interrupt return instruction is documented by
+Agner Fog as being broken into 4 uops.
+What likely happens is that some of these uops count as being retired
+in kernel space, but the tail end gets retired after the kernel/user
+transition happens, leading to an extra instruction being registered
+by the performance counters.
+This also explains why the various deterministic events are
+retired stores or conditional branches, as neither of those events
+would count for an {\tt iret} instruction.
 
 \subsubsection{Sources of Instruction Overcount}
 

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h> /* strdup() */
+#include <stdlib.h>
 
 #include "generic_asm.h"
 #include "x86_asm.h"

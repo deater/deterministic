@@ -15,6 +15,13 @@ discover the sources of divergence from expected count totals.
 Of all the counter events investigated, we find only a few
 that exhibit enough determinism to be used without adjustment in
 deterministic execution environments.  
+On these machines it appears that the {\tt iret} interrupt return
+instruction counts as a userspace instruction despite running
+in kernel space, which keeps the counts from being deterministic.
+The deterministic events we find are those
+that do not count for {\tt iret}, such as conditional branches
+and retired stores.
+
 We also briefly investigate ARM, IA64, POWER and SPARC systems
 and find that on these platforms the counter events have more
 determinism.  
